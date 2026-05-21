@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PowerShell Lernprojekt Dashboard</title>
+    <style>
+        :root {
+            --blue-dark: #0074C7;
+            --blue-light: #1F9EFF;
+            --background: #f4f7fb;
+            --text: #172033;
+            --muted: #627086;
+            --card: #ffffff;
+            --border: #d8e1ee;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, var(--background), #ffffff);
+            color: var(--text);
+        }
+
+        header {
+            padding: 32px 20px;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+            color: #ffffff;
+        }
+
+        main {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 24px 20px 48px 20px;
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        .subtitle {
+            max-width: 780px;
+            margin: 8px 0 0 0;
+            color: #e9f5ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .card {
+            padding: 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(23, 32, 51, 0.08);
+        }
+
+        .card p {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: var(--blue-dark);
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button.secondary {
+            background: #eaf4ff;
+            color: var(--blue-dark);
+            border: 1px solid #b9dcff;
+        }
+
+        button:hover {
+            filter: brightness(1.05);
+        }
+
+        .output {
+            margin-top: 16px;
+            min-height: 96px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #101828;
+            color: #d7f7d7;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #eaf4ff;
+            color: var(--blue-dark);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PowerShell Git Lernprojekt</h1>
+        <p class="subtitle">Diese Datei ist eine einzelne HTML-Seite mit Inline-CSS und Inline-JavaScript. Sie ist absichtlich standalone, damit du sofort etwas Sichtbares im Browser hast.</p>
+    </header>
+
+    <main>
+        <section class="grid">
+            <article class="card">
+                <span class="status">HTML</span>
+                <h2>Standalone-Datei</h2>
+                <p>Alles steckt in einer Datei: Struktur, Design und Logik. Das ist fuer ein Lernprojekt praktisch, aber fuer groessere Projekte nicht die sauberste Architektur.</p>
+            </article>
+
+            <article class="card">
+                <span class="status">PowerShell</span>
+                <h2>Skriptbezug</h2>
+                <p>Das Dashboard zeigt beispielhaft, welche Informationen dein PowerShell-Skript ausgeben koennte: Computername, Benutzername und Zeitstempel.</p>
+            </article>
+
+            <article class="card">
+                <span class="status">Git</span>
+                <h2>Uebungsobjekt</h2>
+                <p>Aendere Texte, Farben oder JavaScript-Funktionen und committe die Aenderungen. Genau daran lernst du Versionierung.</p>
+            </article>
+        </section>
+
+        <section class="card" style="margin-top: 20px;">
+            <h2>Interaktive Demo</h2>
+            <p>Klicke auf die Buttons. Die Ausgabe wird im Browser durch Inline-JavaScript erzeugt.</p>
+
+            <div class="button-row">
+                <button type="button" onclick="showSystemExample()">Beispieldaten anzeigen</button>
+                <button type="button" class="secondary" onclick="showGitExercise()">Git-Aufgabe anzeigen</button>
+                <button type="button" class="secondary" onclick="clearOutput()">Ausgabe leeren</button>
+            </div>
+
+            <div id="output" class="output">Bereit.</div>
+        </section>
+
+        <footer>
+            Lernhinweis: Inline-Code ist hier absichtlich erlaubt, weil das Ziel Sichtbarkeit und Einfachheit ist. Spaeter sollte CSS und JavaScript getrennt werden.
+        </footer>
+    </main>
+
+    <script>
+        function writeOutput(lines) {
+            document.getElementById("output").textContent = lines.join("\n");
+        }
+
+        function showSystemExample() {
+            var now = new Date();
+            var lines = [
+                "Demo-Ausgabe",
+                "------------",
+                "Computername: Beispiel-PC",
+                "Benutzer: Lernkonto",
+                "Zeitpunkt: " + now.toLocaleString("de-DE"),
+                "Quelle: Inline-JavaScript in web/index.html"
+            ];
+
+            writeOutput(lines);
+        }
+
+        function showGitExercise() {
+            var lines = [
+                "Git-Uebung",
+                "----------",
+                "1. Aendere eine Farbe in :root.",
+                "2. Speichere web/index.html.",
+                "3. Pruefe: git status",
+                "4. Committe: git add web/index.html",
+                "5. Committe: git commit -m \"Change dashboard color\""
+            ];
+
+            writeOutput(lines);
+        }
+
+        function clearOutput() {
+            writeOutput(["Bereit."]);
+        }
+    </script>
+</body>
+</html>
