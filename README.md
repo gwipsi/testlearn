@@ -13,6 +13,7 @@ Du lernst hier schrittweise:
 - Branches verwenden
 - Pull Requests verstehen
 - PowerShell-Skripte versionieren
+- Eine einfache standalone HTML-Datei mit Inline-CSS und Inline-JavaScript bearbeiten
 
 ## Projektstruktur
 
@@ -21,8 +22,10 @@ Du lernst hier schrittweise:
 |-- README.md
 |-- Aufgaben.md
 |-- .gitignore
-`-- scripts
-    `-- Get-SystemInfo.ps1
+|-- scripts
+|   `-- Get-SystemInfo.ps1
+`-- web
+    `-- index.html
 ```
 
 ## Start
@@ -40,6 +43,12 @@ Skript ausfuehren:
 powershell.exe -ExecutionPolicy Bypass -File .\scripts\Get-SystemInfo.ps1
 ```
 
+HTML-Demo oeffnen:
+
+```powershell
+Start-Process .\web\index.html
+```
+
 ## Erste Git-Uebung
 
 Aendere im Skript den Wert von `$ScriptVersion`, fuehre das Skript aus und erstelle danach deinen ersten Commit:
@@ -51,6 +60,17 @@ git commit -m "Update script version"
 git push
 ```
 
+## HTML-Uebung
+
+Aendere in `web\index.html` eine Farbe im Bereich `:root` oder passe einen Text an. Danach pruefst du die Aenderung im Browser und commitest sie:
+
+```powershell
+git status
+git add web\index.html
+git commit -m "Update dashboard demo"
+git push
+```
+
 ## Hinweis
 
-Das Skript ist absichtlich klein gehalten. Es soll als saubere Basis dienen, nicht als fertiges Admin-Framework.
+Das Skript und die HTML-Datei sind absichtlich klein gehalten. Sie sollen als saubere Basis dienen, nicht als fertiges Admin- oder Web-Framework.
