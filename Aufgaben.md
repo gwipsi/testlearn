@@ -1,6 +1,6 @@
 # Aufgaben
 
-Dieses Dokument enthaelt kleine Git- und PowerShell-Uebungen.
+Dieses Dokument enthaelt kleine Git-, PowerShell- und HTML-Uebungen.
 
 ## Aufgabe 1: Repository lokal klonen
 
@@ -64,6 +64,33 @@ Ziel: Verstehen, dass ein Pull Request eine kontrollierte Aenderung gegen den Ha
 Baue eine kleine falsche Variable ein, fuehre das Skript aus und beobachte die Fehlermeldung.
 
 Danach den Fehler korrigieren und committen.
+
+## Aufgabe 7: HTML-Demo oeffnen
+
+Oeffne die standalone HTML-Datei im Browser:
+
+```powershell
+Start-Process .\web\index.html
+```
+
+Klicke die Buttons in der Seite an und pruefe, wie die Ausgabe durch Inline-JavaScript veraendert wird.
+
+## Aufgabe 8: HTML sichtbar aendern
+
+Aendere in `web\index.html` im Bereich `:root` den Wert von `--blue-dark` oder passe einen Kartentext an.
+
+Danach:
+
+```powershell
+git status
+git add web\index.html
+git commit -m "Change dashboard demo"
+git push
+```
+
+## Aufgabe 9: Sinnvolle Trennung diskutieren
+
+Die HTML-Datei nutzt absichtlich Inline-CSS und Inline-JavaScript. Notiere fuer dich, ab wann du CSS und JavaScript in eigene Dateien auslagern wuerdest.
 
 ## Kritischer Hinweis
 
