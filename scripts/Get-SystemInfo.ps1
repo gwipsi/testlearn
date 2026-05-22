@@ -1,5 +1,5 @@
 $ScriptName = "Get-SystemInfo"
-$ScriptVersion = "1.0.0"
+$ScriptVersion = "1.0.1"
 $Script:Username = if (-not $env:USERNAME -or $env:USERNAME -eq "") { "UNKNOWN" } elseif ($env:USERNAME -match '\$$') { "SYSTEM" } else { $env:USERNAME }
 $LogDir = Join-Path -Path $PSScriptRoot -ChildPath "..\Logs"
 $LogDatei = Join-Path -Path $LogDir -ChildPath "$($ScriptName)$($ScriptVersion)$($Script:Username).log"
@@ -38,6 +38,15 @@ function Get-OperatingSystemInfo {
     }
 }
 
+function Get-ScriptRuntimeInfo {
+    return [PSCustomObject]@{
+        ScriptName = $ScriptName
+        ScriptVersion = $ScriptVersion
+        UserName = $Script:Username
+        PowerShellVersion = $PSVersionTable.PSVersion.ToString()
+    }
+}
+
 function Write-SystemInfo {
     param(
         [Parameter(Mandatory = $true)]
@@ -50,8 +59,23 @@ function Write-SystemInfo {
     Write-Log -Message "Build: $($SystemInfo.BuildNumber)" -Typ "Info"
 }
 
+function Write-ScriptRuntimeInfo {
+    param(
+        [Parameter(Mandatory = $true)]
+        [pscustomobject]$RuntimeInfo
+    )
+
+    Write-Log -Message "Skript: $($RuntimeInfo.ScriptName)" -Typ "Info"
+    Write-Log -Message "Skriptversion: $($RuntimeInfo.ScriptVersion)" -Typ "Info"
+    Write-Log -Message "Ausfuehrender Benutzer: $($RuntimeInfo.UserName)" -Typ "Info"
+    Write-Log -Message "PowerShell-Version: $($RuntimeInfo.PowerShellVersion)" -Typ "Info"
+}
+
 function Invoke-Main {
     Write-Log -Message "Start $($ScriptName) $($ScriptVersion)" -Typ "Info"
+
+    $RuntimeInfo = Get-ScriptRuntimeInfo
+    Write-ScriptRuntimeInfo -RuntimeInfo $RuntimeInfo
 
     $SystemInfo = Get-OperatingSystemInfo
     Write-SystemInfo -SystemInfo $SystemInfo
