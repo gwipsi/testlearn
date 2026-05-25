@@ -151,41 +151,36 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### ⚠️ WICHTIG: Update Timestamp on EVERY Change
+### ✅ Timestamp Auto-Update (Git Hook)
 
-**This is mandatory for every commit that changes `/docs/` files!**
+**No manual action needed!** A Git Pre-commit Hook automatically updates the timestamp whenever you commit changes to `/docs/`.
 
-**NOTE:** A Git Pre-commit Hook automatically enforces this rule. If you try to commit changes to `/docs/` without updating `data.json`, the commit will be rejected with instructions.
+**How it works:**
 
-When modifying any files in `/docs/`, you MUST update the timestamp in `data.json`:
+1. You make changes to HTML/CSS/JS in `/docs/`
+2. You run `git commit -m "Your message"`
+3. **Hook automatically:**
+   - Updates `lastUpdated` in `data.json` with current UTC time
+   - Adds the updated file to your commit
+   - Shows: `✅ Timestamp auto-updated: 2026-05-25T08:07:30Z`
+4. Commit succeeds with both your changes AND the timestamp update
 
-```json
-{
-  "lastUpdated": "2026-05-25T08:03:41Z",  // UPDATE THIS EVERY TIME!
-  ...
-}
+The homepage displays "Letztes Update: [date] ([minutes ago])" so users always see the latest version.
+
+**Example commit flow:**
+```bash
+$ git add docs/index.html
+$ git commit -m "Fix button styling"
+
+✅ Timestamp auto-updated: 2026-05-25T08:07:30Z
+[main abc1234] Fix button styling
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 ```
 
-The homepage displays "Letztes Update: [date] ([minutes ago])" so users can see if they have the latest version.
+**When it triggers:**
+- ✅ Any commit that changes files in `/docs/`
+- ✅ HTML/CSS/JS changes
+- ✅ Feature additions or bug fixes
+- ❌ NOT needed: Changes to scripts/, CLAUDE.md, etc. (files outside `/docs/`)
 
-**Workflow:**
-1. Make changes to HTML/CSS/JS
-2. **BEFORE committing:** Update `lastUpdated` in `data.json` with current UTC time
-3. Commit both the change AND the timestamp update together
-4. Push
-
-When you commit without updating the timestamp, you'll get an error:
-```
-❌ ERROR: You changed files in docs/ but didn't update the timestamp!
-```
-
-Just follow the instructions in the error message.
-
-**When to update:**
-- ✅ After any HTML/CSS/JS changes
-- ✅ After adding features or fixing bugs
-- ✅ Every commit that changes the user-facing page
-- ❌ NOT needed: Changes to non-docs files (scripts/, CLAUDE.md, etc.)
-
-**Format:** ISO 8601 UTC (YYYY-MM-DDTHH:MM:SSZ)
-- Get it: `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+**If something goes wrong:** The hook will show an error. Just run the commit again.
