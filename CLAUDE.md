@@ -151,22 +151,32 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### Update Timestamp on Every Change
+### ⚠️ WICHTIG: Update Timestamp on EVERY Change
 
-**Important:** When modifying any files in `/docs/`, update the timestamp in `data.json`:
+**This is mandatory for every commit that changes `/docs/` files!**
+
+When modifying any files in `/docs/`, you MUST update the timestamp in `data.json`:
 
 ```json
 {
-  "lastUpdated": "2026-05-25T07:45:00Z",  // ISO 8601 format - update to current date/time
+  "lastUpdated": "2026-05-25T07:59:52Z",  // UPDATE THIS EVERY TIME!
   ...
 }
 ```
 
 The homepage displays "Letztes Update: [date] ([minutes ago])" so users can see if they have the latest version.
 
-**When to update:**
-- After any HTML/CSS/JS changes
-- After adding features or fixing bugs
-- With every commit that changes the user-facing page
+**Workflow:**
+1. Make changes to HTML/CSS/JS
+2. **BEFORE committing:** Update `lastUpdated` in `data.json` with current UTC time
+3. Commit both the change AND the timestamp update together
+4. Push
 
-**Format:** ISO 8601 (YYYY-MM-DDTHH:MM:SSZ) — use UTC timezone
+**When to update:**
+- ✅ After any HTML/CSS/JS changes
+- ✅ After adding features or fixing bugs
+- ✅ Every commit that changes the user-facing page
+- ❌ NOT needed: Changes to non-docs files (scripts/, CLAUDE.md, etc.)
+
+**Format:** ISO 8601 UTC (YYYY-MM-DDTHH:MM:SSZ)
+- Get it: `date -u +"%Y-%m-%dT%H:%M:%SZ"`
