@@ -85,7 +85,45 @@ function loadProjectData() {
         });
 }
 
+function updateLastModifiedTime() {
+    fetch("data.json")
+        .then(response => response.json())
+        .then(data => {
+            if (data.lastUpdated) {
+                var lastUpdateDate = new Date(data.lastUpdated);
+                var now = new Date();
+                var minutesDiff = Math.floor((now - lastUpdateDate) / (1000 * 60));
+
+                var timeString = lastUpdateDate.toLocaleString("de-DE");
+                var relativeTime;
+
+                if (minutesDiff === 0) {
+                    relativeTime = "gerade eben";
+                } else if (minutesDiff === 1) {
+                    relativeTime = "vor 1 Minute";
+                } else if (minutesDiff < 60) {
+                    relativeTime = "vor " + minutesDiff + " Minuten";
+                } else if (minutesDiff < 1440) {
+                    var hours = Math.floor(minutesDiff / 60);
+                    relativeTime = "vor " + hours + " Stunden";
+                } else {
+                    var days = Math.floor(minutesDiff / 1440);
+                    relativeTime = "vor " + days + " Tagen";
+                }
+
+                var subtitle = document.querySelector(".subtitle");
+                if (subtitle) {
+                    subtitle.innerHTML = '🌐 Demo-Seite erreichbar unter: <strong>https://gwipsi.github.io/testlearn/</strong><br>' +
+                        '<small style="color: #999; font-size: 12px;">Letztes Update: ' + timeString + ' (' + relativeTime + ')</small>';
+                }
+            }
+        })
+        .catch(error => console.log("Konnte Zeitstempel nicht laden:", error));
+}
+
 document.addEventListener("DOMContentLoaded", function() {
+    updateLastModifiedTime();
+
     var buttons = document.querySelectorAll(".button-row button");
     buttons.forEach(function(button) {
         button.addEventListener("click", function() {
