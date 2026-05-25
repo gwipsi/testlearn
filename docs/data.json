@@ -1,0 +1,33 @@
+{
+  "projekt": {
+    "name": "testlearn",
+    "beschreibung": "Deutsches GitHub-Lernprojekt",
+    "version": "1.0.0"
+  },
+  "commits": [
+    {
+      "id": "e86deb2",
+      "nachricht": "Rename web to docs for GitHub Pages deployment",
+      "autor": "AI Assistant",
+      "datum": "2026-05-25"
+    },
+    {
+      "id": "45eba4b",
+      "nachricht": "Merge pull request #3 from gwipsi/claude-md-docs",
+      "autor": "gwipsi",
+      "datum": "2026-05-24"
+    },
+    {
+      "id": "a1f2c3d",
+      "nachricht": "Update dashboard colors",
+      "autor": "gwipsi",
+      "datum": "2026-05-23"
+    }
+  ],
+  "stats": {
+    "commits_gesamt": 15,
+    "branches": 4,
+    "contributors": 2,
+    "aufgaben": 9
+  }
+}

@@ -157,6 +157,7 @@
 
             <div class="button-row">
                 <button type="button" onclick="showSystemExample()">Beispieldaten anzeigen</button>
+                <button type="button" class="secondary" onclick="loadProjectData()">Externe Daten laden</button>
                 <button type="button" class="secondary" onclick="showGitExercise()">Git-Aufgabe anzeigen</button>
                 <button type="button" class="secondary" onclick="clearOutput()">Ausgabe leeren</button>
             </div>
@@ -204,6 +205,49 @@
 
         function clearOutput() {
             writeOutput(["Bereit."]);
+        }
+
+        function loadProjectData() {
+            fetch("data.json")
+                .then(response => response.json())
+                .then(data => {
+                    var lines = [
+                        "Projekt-Daten aus data.json",
+                        "============================",
+                        "",
+                        "Projekt: " + data.projekt.name,
+                        "Beschreibung: " + data.projekt.beschreibung,
+                        "Version: " + data.projekt.version,
+                        "",
+                        "Statistiken:",
+                        "  Commits gesamt: " + data.stats.commits_gesamt,
+                        "  Branches: " + data.stats.branches,
+                        "  Contributors: " + data.stats.contributors,
+                        "  Aufgaben: " + data.stats.aufgaben,
+                        "",
+                        "Neueste Commits:",
+                        "-----------------"
+                    ];
+
+                    data.commits.forEach(function(commit) {
+                        lines.push("  " + commit.id + " - " + commit.nachricht);
+                        lines.push("    Autor: " + commit.autor + " (" + commit.datum + ")");
+                    });
+
+                    lines.push("");
+                    lines.push("Diese Daten werden vom Browser aus data.json geladen.");
+                    lines.push("Das zeigt: HTML/JS ist nicht nur statisch!");
+
+                    writeOutput(lines);
+                })
+                .catch(error => {
+                    writeOutput([
+                        "Fehler beim Laden von data.json:",
+                        error.message,
+                        "",
+                        "Stelle sicher, dass die Datei im gleichen Verzeichnis ist."
+                    ]);
+                });
         }
     </script>
 </body>
