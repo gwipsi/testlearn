@@ -93,10 +93,9 @@ button:hover {
     background: #f3f9ff;
 }
 
-button.active,
 button.secondary.active {
     background: var(--blue-dark);
-    color: #ffffff;
+    color: #ffffff !important;
     border-color: var(--blue-dark);
 }
 
