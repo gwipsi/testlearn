@@ -155,11 +155,13 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 **This is mandatory for every commit that changes `/docs/` files!**
 
+**NOTE:** A Git Pre-commit Hook automatically enforces this rule. If you try to commit changes to `/docs/` without updating `data.json`, the commit will be rejected with instructions.
+
 When modifying any files in `/docs/`, you MUST update the timestamp in `data.json`:
 
 ```json
 {
-  "lastUpdated": "2026-05-25T07:59:52Z",  // UPDATE THIS EVERY TIME!
+  "lastUpdated": "2026-05-25T08:03:41Z",  // UPDATE THIS EVERY TIME!
   ...
 }
 ```
@@ -171,6 +173,13 @@ The homepage displays "Letztes Update: [date] ([minutes ago])" so users can see 
 2. **BEFORE committing:** Update `lastUpdated` in `data.json` with current UTC time
 3. Commit both the change AND the timestamp update together
 4. Push
+
+When you commit without updating the timestamp, you'll get an error:
+```
+❌ ERROR: You changed files in docs/ but didn't update the timestamp!
+```
+
+Just follow the instructions in the error message.
 
 **When to update:**
 - ✅ After any HTML/CSS/JS changes
