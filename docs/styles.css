@@ -1,11 +1,12 @@
 :root {
-    --blue-dark: #0074C7;
-    --blue-light: #1F9EFF;
-    --background: #f4f7fb;
-    --text: #172033;
-    --muted: #627086;
-    --card: #ffffff;
-    --border: #d8e1ee;
+    /* Fluent UI Color Palette */
+    --blue-dark: #0078D4;        /* Fluent Primary Blue */
+    --blue-light: #107C10;       /* Fluent Green (accent) */
+    --background: #F3F2F1;       /* Fluent Neutral Light */
+    --text: #323130;             /* Fluent Neutral Dark */
+    --muted: #666666;            /* Fluent Gray */
+    --card: #FFFFFF;             /* Fluent White */
+    --border: #E1DFDD;           /* Fluent Border Light */
 }
 
 * {
@@ -14,15 +15,16 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, var(--background), #ffffff);
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    background: var(--background);
     color: var(--text);
 }
 
 header {
-    padding: 32px 20px;
-    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    padding: 40px 20px;
+    background: var(--blue-dark);
     color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 main {
@@ -50,11 +52,11 @@ h2 {
 }
 
 .card {
-    padding: 18px;
+    padding: 20px;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(23, 32, 51, 0.08);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .card p {
@@ -71,22 +73,24 @@ h2 {
 
 button {
     border: 0;
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: 2px;
+    padding: 8px 16px;
     background: var(--blue-dark);
     color: #ffffff;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s ease;
 }
 
 button.secondary {
-    background: #eaf4ff;
+    background: transparent;
     color: var(--blue-dark);
-    border: 1px solid #b9dcff;
+    border: 1px solid var(--border);
 }
 
 button:hover {
-    filter: brightness(1.05);
+    opacity: 0.9;
 }
 
 .output {
@@ -119,9 +123,10 @@ footer {
 .story-section {
     margin-top: 32px;
     padding: 24px;
-    background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+    background: #F7F7F7;
     border-left: 4px solid var(--blue-dark);
-    border-radius: 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .story-section h2 {
