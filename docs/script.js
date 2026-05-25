@@ -1,3 +1,11 @@
+function setActiveButton(button) {
+    var buttons = document.querySelectorAll("button");
+    buttons.forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+    button.classList.add("active");
+}
+
 function writeOutput(lines) {
     document.getElementById("output").textContent = lines.join("\n");
 }
@@ -76,3 +84,12 @@ function loadProjectData() {
             ]);
         });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var buttons = document.querySelectorAll(".button-row button");
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            setActiveButton(this);
+        });
+    });
+});
