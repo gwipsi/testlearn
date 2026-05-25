@@ -148,3 +148,25 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 - **URL:** https://gwipsi.github.io/testlearn/
 - **Alternatives considered:** Netlify (with backend functions), Vercel, Uberspace (German hosting with privacy)
 - **Why GitHub Pages:** Simplicity for static HTML/CSS/JS learning project. No backend needed yet.
+
+## Maintenance Tasks
+
+### Update Timestamp on Every Change
+
+**Important:** When modifying any files in `/docs/`, update the timestamp in `data.json`:
+
+```json
+{
+  "lastUpdated": "2026-05-25T07:45:00Z",  // ISO 8601 format - update to current date/time
+  ...
+}
+```
+
+The homepage displays "Letztes Update: [date] ([minutes ago])" so users can see if they have the latest version.
+
+**When to update:**
+- After any HTML/CSS/JS changes
+- After adding features or fixing bugs
+- With every commit that changes the user-facing page
+
+**Format:** ISO 8601 (YYYY-MM-DDTHH:MM:SSZ) — use UTC timezone
