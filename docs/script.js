@@ -87,8 +87,13 @@ function loadProjectData() {
 
 function updateLastModifiedTime() {
     fetch("data.json")
-        .then(response => response.json())
-        .then(data => {
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error("HTTP error, status: " + response.status);
+            }
+            return response.json();
+        })
+        .then(function(data) {
             if (data.lastUpdated) {
                 var lastUpdateDate = new Date(data.lastUpdated);
                 var now = new Date();
@@ -117,7 +122,13 @@ function updateLastModifiedTime() {
                 }
             }
         })
-        .catch(error => console.log("Konnte Zeitstempel nicht laden:", error));
+        .catch(function(error) {
+            var timestampEl = document.getElementById("last-updated");
+            if (timestampEl) {
+                timestampEl.textContent = "⏱ Zeitstempel nicht verfügbar";
+            }
+            console.error("Fehler beim Laden des Zeitstempels:", error);
+        });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
