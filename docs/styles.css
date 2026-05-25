@@ -153,3 +153,30 @@ footer {
     font-weight: bold;
     color: var(--blue-dark);
 }
+
+.cloud-agent-hinweis {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #e8f4fd;
+    border: 1px solid #0078D4;
+    border-left: 4px solid var(--blue-dark);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 120, 212, 0.12);
+}
+
+.cloud-agent-hinweis p {
+    margin: 10px 0 0 0;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.cloud-agent-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--blue-dark);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
