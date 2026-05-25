@@ -111,10 +111,9 @@ function updateLastModifiedTime() {
                     relativeTime = "vor " + days + " Tagen";
                 }
 
-                var subtitle = document.querySelector(".subtitle");
-                if (subtitle) {
-                    subtitle.innerHTML = '🌐 Demo-Seite erreichbar unter: <strong>https://gwipsi.github.io/testlearn/</strong><br>' +
-                        '<small style="color: #999; font-size: 12px;">Letztes Update: ' + timeString + ' (' + relativeTime + ')</small>';
+                var timestampEl = document.getElementById("last-updated");
+                if (timestampEl) {
+                    timestampEl.textContent = "⏱ Letztes Update: " + timeString + " (" + relativeTime + ")";
                 }
             }
         })
