@@ -90,12 +90,14 @@ button.secondary {
 }
 
 button:hover {
-    opacity: 0.9;
+    background: #f3f9ff;
 }
 
-button.active {
+button.active,
+button.secondary.active {
     background: var(--blue-dark);
-    box-shadow: inset 0 0 0 2px #ffffff;
+    color: #ffffff;
+    border-color: var(--blue-dark);
 }
 
 .output {
