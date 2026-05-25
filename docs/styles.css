@@ -94,8 +94,8 @@ button:hover {
 }
 
 button.active {
-    background: var(--blue-light);
-    box-shadow: inset 0 0 0 2px var(--blue-dark);
+    background: var(--blue-dark);
+    box-shadow: inset 0 0 0 2px #ffffff;
 }
 
 .output {
