@@ -122,6 +122,33 @@
             color: var(--muted);
             font-size: 14px;
         }
+
+        .story-section {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+            border-left: 4px solid var(--blue-dark);
+            border-radius: 8px;
+        }
+
+        .story-section h2 {
+            color: var(--blue-dark);
+            margin-top: 0;
+        }
+
+        .story-section p {
+            line-height: 1.8;
+            color: var(--text);
+            margin: 12px 0;
+        }
+
+        .story-highlight {
+            background: rgba(31, 158, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--blue-dark);
+        }
     </style>
 </head>
 <body>
@@ -149,6 +176,29 @@
                 <h2>Update-Fluss</h2>
                 <p>Diese Karte wurde in einer eigenen Branch geaendert. So sieht man im Pull Request exakt, welche Zeilen angepasst wurden.</p>
             </article>
+        </section>
+
+        <section class="story-section">
+            <h2>📖 Die Geschichte von testlearn</h2>
+            <p>
+                Es war einmal ein neugieriger <span class="story-highlight">Entwickler</span>, der beschloss,
+                <span class="story-highlight">GitHub</span> zu erlernen. Nicht mit trockenen Tutorials, sondern mit
+                echtem, hands-on Code.
+            </p>
+            <p>
+                Mit <span class="story-highlight">PowerShell</span> auf Windows und einer einfachen HTML-Datei
+                im Browser begann die Reise. Jeder Commit war ein Lernschritt. Jeder Branch eine neue Erkenntnis.
+                Und jeder Pull Request brachte Klarheit.
+            </p>
+            <p>
+                Heute, nach vielen kleinen Änderungen und Git-Übungen, versteht dieser Entwickler nicht nur,
+                <em>wie</em> man Git nutzt — sondern auch <em>warum</em> es so mächtig ist.
+                Und das ist <strong>testlearn</strong> — ein Lernprojekt, das zeigt:
+                Anfangen ist einfacher als du denkst.
+            </p>
+            <p style="margin-top: 20px; font-style: italic; color: var(--muted);">
+                🚀 Die beste Reise beginnt mit dem ersten Commit.
+            </p>
         </section>
 
         <section class="card" style="margin-top: 20px;">
