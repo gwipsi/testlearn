@@ -233,6 +233,29 @@
             .toc ol { column-count: 1; }
             .two-col { grid-template-columns: 1fr; }
         }
+
+        .quickstart {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 1px solid #c5cae9;
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+        .quickstart h2 {
+            margin-top: 0;
+            color: #283593;
+        }
+        .quickstart ol {
+            color: var(--text);
+            line-height: 2;
+        }
+        .quickstart li { margin-bottom: 8px; }
+        .quickstart code {
+            background: rgba(0,0,0,0.08);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
@@ -245,6 +268,22 @@
     </header>
 
     <main>
+
+        <!-- Quick Start Banner -->
+        <section class="quickstart">
+            <h2>⚡ Schnelleinstieg: Die 7 wichtigsten Git-Befehle</h2>
+            <p>Du hast 2 Minuten? Hier sind die Befehle, die du täglich brauchst:</p>
+            <ol>
+                <li><code>git clone &lt;url&gt;</code> – Repository herunterladen</li>
+                <li><code>git checkout -b feature/name</code> – Neuen Branch erstellen</li>
+                <li><code>git add .</code> – Änderungen vorbereiten</li>
+                <li><code>git commit -m "Beschreibung"</code> – Snapshot speichern</li>
+                <li><code>git push origin feature/name</code> – Branch hochladen</li>
+                <li><code>git pull origin main</code> – Neuesten Stand holen</li>
+                <li><code>git merge feature/name</code> – Branch zusammenführen</li>
+            </ol>
+            <p style="font-size: 13px; color: #283593; margin-top: 14px;"><strong>💡 Tipp:</strong> Alle 7 Befehle in dieser Reihenfolge decken 95% deiner täglichen Arbeit ab.</p>
+        </section>
 
         <!-- Inhaltsverzeichnis -->
         <nav class="toc" aria-label="Inhaltsverzeichnis">
