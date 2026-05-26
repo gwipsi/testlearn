@@ -229,6 +229,22 @@
         }
         .back-link:hover { text-decoration: underline; }
 
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .back-to-top:hover {
+            color: var(--blue-dark);
+            text-decoration: underline;
+        }
+
         @media (max-width: 640px) {
             .toc ol { column-count: 1; }
             .two-col { grid-template-columns: 1fr; }
@@ -405,6 +421,8 @@ feature    = Zeiger auf E</div>
                 <strong>Das erklärt, warum man immer zurück kann:</strong>
                 Da Commits nie gelöscht werden (nur Zeiger bewegen sich), ist jeder frühere Zustand des Projekts dauerhaft im <code>.git/objects/</code>-Ordner gespeichert und erreichbar.
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
         <!-- 3. Kernbegriffe -->
@@ -553,6 +571,8 @@ git log HEAD~3..HEAD</div>
                 </div>
 
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
         <!-- 4. Lokal vs. Remote -->
@@ -607,6 +627,8 @@ git log HEAD~3..HEAD</div>
                 <strong>Praxistipp:</strong>
                 Committe regelmäßig lokal, auch wenn du noch nicht pushen willst. Lokale Commits kosten nichts und sichern deinen Fortschritt – gepusht wird, wenn du bereit bist.
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
         <!-- 5. Teamarbeit -->
