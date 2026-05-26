@@ -260,6 +260,63 @@
             text-decoration: underline;
         }
 
+        .merge-strategy-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .merge-strategy-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 20px;
+            border-top: 4px solid var(--blue-dark);
+        }
+        .merge-strategy-card h4 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: var(--blue-dark);
+        }
+        .merge-strategy-card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 6px 0;
+        }
+        .merge-strategy-card .pros,
+        .merge-strategy-card .cons {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+        .merge-strategy-card .pros strong,
+        .merge-strategy-card .cons strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        .merge-strategy-card .pros ul,
+        .merge-strategy-card .cons ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+        .merge-strategy-card .pros li { color: #2e7d32; }
+        .merge-strategy-card .cons li { color: #d32f2f; }
+
+        .git-diagram {
+            background: #1e1e2e;
+            color: #89dceb;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+            padding: 14px;
+            border-radius: 4px;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
         @media (max-width: 640px) {
             .toc ol { column-count: 1; }
             .two-col { grid-template-columns: 1fr; }
