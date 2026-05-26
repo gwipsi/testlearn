@@ -330,6 +330,9 @@
                 <li><a href="#ergebnisse-reviewen">Ergebnisse reviewen</a></li>
                 <li><a href="#merge-strategien">Merge-Strategien wählen</a></li>
 
+                <li class="toc-group">Teil 2b · Automatisierung</li>
+                <li><a href="#hooks-vs-actions">Git Hooks vs GitHub Actions</a></li>
+
                 <li class="toc-group">Teil 3 · Die Interfaces</li>
                 <li><a href="#interfaces-uebersicht">GitHub Web, Desktop & Mobile</a></li>
                 <li><a href="#github-web">GitHub.com Web-Interface</a></li>
@@ -660,6 +663,89 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
+        <!-- 8. Git Hooks vs GitHub Actions -->
+        <section class="section" id="hooks-vs-actions">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <h2>Automatisierung: Git Hooks vs GitHub Actions</h2>
+            </div>
+
+            <p>Du möchtest, dass bestimmte Dinge automatisch passieren – z.B. Timestamps aktualisieren, Code formatieren, Tests laufen. Dafür gibt es zwei Systeme, die völlig unterschiedlich funktionieren:</p>
+
+            <div class="concept-grid" style="margin-top: 20px;">
+
+                <div class="concept-card">
+                    <h3>🪝 Git Hooks</h3>
+                    <p><strong>Was das ist:</strong> Scripts, die auf <em>deinem PC</em> automatisch laufen, wenn du bestimmte Git-Operationen machst (z.B. vor jedem Commit).</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wo sie leben:</strong> Lokal in <code>.git/hooks/</code></p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wann sie laufen:</strong> Nur wenn du lokal <code>git commit</code> machst</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Problem:</strong> ❌ Läuft nicht in Remote-Sandboxen (Agent-Umgebung) ❌ Läuft nicht bei GitHub Web-Merges</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>⚡ GitHub Actions</h3>
+                    <p><strong>Was das ist:</strong> Automatisierungs-Workflows, die auf <em>GitHub's Servern</em> laufen, wenn bestimmte Events passieren (z.B. Push zu main).</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wo sie leben:</strong> Im Repository in <code>.github/workflows/</code></p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wann sie laufen:</strong> Bei jedem Push, Merge, oder anderen GitHub-Events</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Vorteil:</strong> ✅ Funktioniert überall ✅ Funktioniert mit Agenten ✅ Funktioniert mit GitHub Web</p>
+                </div>
+
+            </div>
+
+            <h3 style="margin-top: 28px;">Vergleich: Wann nutze ich was?</h3>
+
+            <table style="width: 100%; margin-top: 16px; border-collapse: collapse; color: var(--text); font-size: 14px;">
+                <tr style="background: #f5f5f5; border-bottom: 2px solid var(--border);">
+                    <th style="padding: 12px; text-align: left; font-weight: 700;">Aufgabe</th>
+                    <th style="padding: 12px; text-align: left; font-weight: 700;">Git Hook?</th>
+                    <th style="padding: 12px; text-align: left; font-weight: 700;">GitHub Action?</th>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 12px;">Code vor Commit formatieren</td>
+                    <td style="padding: 12px;">✅ Ja (lokal)</td>
+                    <td style="padding: 12px;">❌ Nicht nötig</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 12px;">Timestamp aktualisieren nach Merge</td>
+                    <td style="padding: 12px;">❌ Funktioniert nicht in Sandbox</td>
+                    <td style="padding: 12px;">✅ Ja (perfekt)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 12px;">Tests laufen lassen bei jedem Push</td>
+                    <td style="padding: 12px;">⚠️ Nur lokal</td>
+                    <td style="padding: 12px;">✅ Ja (alle Pushes)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 12px;">Deploy auslösen bei Merge zu main</td>
+                    <td style="padding: 12px;">❌ Nicht möglich</td>
+                    <td style="padding: 12px;">✅ Ja (genau dafür)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 12px;">Mit KI-Agenten arbeiten</td>
+                    <td style="padding: 12px;">❌ Funktioniert nicht</td>
+                    <td style="padding: 12px;">✅ Ja (immer)</td>
+                </tr>
+            </table>
+
+            <div class="infobox green" style="margin-top: 20px;">
+                <strong>Die Faustregel:</strong>
+                <p style="margin: 8px 0 0 0;"><strong>Für Teams mit Agenten:</strong> Nutze GitHub Actions, nicht Git Hooks. Actions funktionieren überall – lokal, in Remote-Sandboxen, auf GitHub.com, überall.</p>
+            </div>
+
+            <h3 style="margin-top: 28px;">Praktisches Beispiel: Timestamp-Automation</h3>
+
+            <div class="praxis-box">
+                <span class="praxis-label">🔧 In diesem Projekt</span>
+                <p style="margin: 0; margin-bottom: 8px;"><strong>Das Problem:</strong> Nach jedem Merge soll der Timestamp in <code>data.json</code> aktualisiert werden, damit die Website sagt „Letztes Update: vor 2 Sekunden" statt „vor 3 Tagen".</p>
+
+                <p style="margin: 8px 0;"><strong>Mit Git Hook:</strong> ❌ Funktioniert nur, wenn du lokal commitest. Wenn der Agent pusht oder du auf GitHub.com merkst, passiert nichts.</p>
+
+                <p style="margin: 8px 0;"><strong>Mit GitHub Action:</strong> ✅ Workflow in <code>.github/workflows/update-timestamp.yml</code> triggert bei jedem Push zu <code>/docs/</code>. Timestamp wird automatisch aktualisiert. Überall.</p>
+            </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
         <!-- ===== TEIL 3: DIE INTERFACES ===== -->
         <div class="learning-phase">
             <div class="phase-label">Teil 3 · Oberflächen</div>
@@ -667,10 +753,10 @@
             <p>Git hat mehrere Oberflächen. Jede ist für andere Aufgaben optimiert.</p>
         </div>
 
-        <!-- 8. Interfaces Übersicht -->
+        <!-- 9. Interfaces Übersicht -->
         <section class="section" id="interfaces-uebersicht">
             <div class="section-header">
-                <div class="section-number">8</div>
+                <div class="section-number">18</div>
                 <h2>Welche Oberfläche für welche Aufgabe?</h2>
             </div>
 
@@ -708,10 +794,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 9. GitHub Web -->
+        <!-- 10. GitHub Web -->
         <section class="section" id="github-web">
             <div class="section-header">
-                <div class="section-number">9</div>
+                <div class="section-number">18</div>
                 <h2>GitHub.com – deine zentrale Kommandozentrale</h2>
             </div>
 
@@ -769,10 +855,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 10. Andere Interfaces -->
+        <!-- 11. Andere Interfaces -->
         <section class="section" id="andere-interfaces">
             <div class="section-header">
-                <div class="section-number">10</div>
+                <div class="section-number">18</div>
                 <h2>GitHub Desktop, Mobile, Terminal – wenn du mehr brauchst</h2>
             </div>
 
@@ -824,10 +910,10 @@
             <p>Schritt-für-Schritt, was passiert in echten Situationen.</p>
         </div>
 
-        <!-- 11. Feature Workflow -->
+        <!-- 12. Feature Workflow -->
         <section class="section" id="feature-workflow">
             <div class="section-header">
-                <div class="section-number">11</div>
+                <div class="section-number">18</div>
                 <h2>Szenario: Ein neues Feature entwickeln</h2>
             </div>
 
@@ -882,10 +968,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 12. Review & Merge -->
+        <!-- 13. Review <!-- 12. Review & Merge --> Merge -->
         <section class="section" id="review-merge">
             <div class="section-header">
-                <div class="section-number">12</div>
+                <div class="section-number">18</div>
                 <h2>Deep Dive: PRs reviewen und mergen</h2>
             </div>
 
@@ -916,10 +1002,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 13. Hotfix Workflow -->
+        <!-- 14. Hotfix Workflow -->
         <section class="section" id="hotfix-workflow">
             <div class="section-header">
-                <div class="section-number">13</div>
+                <div class="section-number">18</div>
                 <h2>Notfall: Ein Hotfix in Produktion</h2>
             </div>
 
@@ -965,10 +1051,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 14. Mehrere Projekte -->
+        <!-- 15. Mehrere Projekte -->
         <section class="section" id="mehrere-projekte">
             <div class="section-header">
-                <div class="section-number">14</div>
+                <div class="section-number">18</div>
                 <h2>Mehrere Projekte – mehrere Repositories</h2>
             </div>
 
@@ -1006,10 +1092,10 @@
             <p>Wie Git intern funktioniert – nice to know, aber nicht nötig für den Alltag.</p>
         </div>
 
-        <!-- 15. Git intern -->
+        <!-- 16. Git intern -->
         <section class="section" id="git-intern">
             <div class="section-header">
-                <div class="section-number">15</div>
+                <div class="section-number">18</div>
                 <h2>Wie Git intern funktioniert</h2>
             </div>
 
@@ -1048,10 +1134,10 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 16. Weitere Konzepte -->
+        <!-- 17. Weitere Konzepte -->
         <section class="section" id="weitere-konzepte">
             <div class="section-header">
-                <div class="section-number">16</div>
+                <div class="section-number">18</div>
                 <h2>Weitere Konzepte – für Fortgeschrittene</h2>
             </div>
 
@@ -1089,10 +1175,10 @@
             <p>Wie ein echtes Kundenprojekt mit Git läuft – Start bis zum Deploy.</p>
         </div>
 
-        <!-- 17. Praktisches Beispiel -->
+        <!-- 18. Praktisches Beispiel -->
         <section class="section" id="praktisches-beispiel">
             <div class="section-header">
-                <div class="section-number">17</div>
+                <div class="section-number">18</div>
                 <h2>Praxis: Kunde Bauer GmbH – Monitoring-Tool</h2>
             </div>
 
