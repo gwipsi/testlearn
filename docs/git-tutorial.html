@@ -386,7 +386,7 @@
 <body>
     <header>
         <h1>Git-Leitfaden für Einsteiger</h1>
-        <p class="subtitle">Alle Begriffe, Konzepte und Workflows erklärt – für Entwickler, die noch nie mit Git gearbeitet haben.</p>
+        <p class="subtitle">Ein Lernpfad vom ersten Schritt bis zum Profi-Workflow – für Entwickler, die noch nie mit Git gearbeitet haben.</p>
         <p class="subtitle" style="font-size: 13px; margin-top: 8px;">
             Teil des <strong>testlearn</strong>-Projekts · <a href="index.html" style="color: #e9f5ff;">← Zurück zur Übersicht</a>
         </p>
@@ -407,26 +407,39 @@
                 <li><code>git pull origin main</code> – Neuesten Stand holen</li>
                 <li><code>git merge feature/name</code> – Branch zusammenführen</li>
             </ol>
-            <p style="font-size: 13px; color: #283593; margin-top: 14px;"><strong>💡 Tipp:</strong> Alle 7 Befehle in dieser Reihenfolge decken 95% deiner täglichen Arbeit ab.</p>
+            <p style="font-size: 13px; color: #283593; margin-top: 14px;"><strong>💡 Tipp:</strong> Alle 7 Befehle in dieser Reihenfolge decken 95% deiner täglichen Arbeit ab. Den Rest dieser Seite kannst du in deinem Tempo durchgehen.</p>
         </section>
 
         <!-- Inhaltsverzeichnis -->
         <nav class="toc" aria-label="Inhaltsverzeichnis">
-            <h2>Inhaltsverzeichnis</h2>
+            <h2>Dein Lernpfad</h2>
             <ol>
+                <li class="toc-group">Teil 1 · Grundlagen</li>
                 <li><a href="#was-ist-git">Was ist Git?</a></li>
-                <li><a href="#technik">Die technische Basis</a></li>
-                <li><a href="#begriffe">Kernbegriffe von A–Z</a></li>
+                <li><a href="#begriffe">Die wichtigsten Begriffe</a></li>
                 <li><a href="#lokal-remote">Lokal vs. Remote</a></li>
-                <li><a href="#teamarbeit">Im Team arbeiten</a></li>
-                <li><a href="#mehrere-repos">Mehrere Projekte</a></li>
+                <li class="toc-group">Teil 2 · So arbeitest du täglich</li>
+                <li><a href="#teamarbeit">Der tägliche Workflow</a></li>
+                <li><a href="#merge-strategies">Pull Requests &amp; Merge-Strategien</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li class="toc-group">Teil 3 · Werkzeuge &amp; Umgebung</li>
                 <li><a href="#werkzeuge">Windows-Werkzeuge</a></li>
                 <li><a href="#agenten">Mit KI-Agenten arbeiten</a></li>
-                <li><a href="#best-practices">Best Practices</a></li>
-                <li><a href="#merge-strategies">Merge-Strategien</a></li>
+                <li><a href="#mehrere-repos">Mehrere Projekte</a></li>
+                <li class="toc-group">Teil 4 · Tiefgang</li>
+                <li><a href="#technik">Wie Git wirklich funktioniert</a></li>
+                <li><a href="#weitere-begriffe">Weitere Begriffe</a></li>
+                <li class="toc-group">Abschluss</li>
                 <li><a href="#praxis">Praxis-Durchlauf: A bis Z</a></li>
             </ol>
         </nav>
+
+        <!-- ===== TEIL 1: GRUNDLAGEN ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Teil 1 · Hier anfangen</div>
+            <h2>Grundlagen</h2>
+            <p>Die Basis, die jeder kennen muss: Was ist Git, die wichtigsten Begriffe, und das Zusammenspiel von deinem PC mit der Cloud.</p>
+        </div>
 
         <!-- 1. Was ist Git? -->
         <section class="section" id="was-ist-git">
@@ -439,21 +452,14 @@
 
             <div class="summary-box">
                 <strong>In einem Satz:</strong>
-                Git ist wie ein Zeitmaschinen-Backup für deinen Code – speichere, experimentiere, und kehre jederzeit zu einem früheren Stand zurück.
+                Git ist wie ein unbegrenztes „Rückgängig" für dein gesamtes Projekt – speichere, experimentiere, und kehre jederzeit zu einem früheren Stand zurück, über Monate, Teams und Computer hinweg.
             </div>
 
-            <div class="infobox blue">
-                <strong>Kernidee in einem Satz:</strong>
-                Git ist wie ein unbegrenztes „Rückgängig" für dein gesamtes Projekt – über Monate, Teams und Computer hinweg.
-            </div>
-
-            <p>Git wurde 2005 von <strong>Linus Torvalds</strong> (dem Schöpfer von Linux) entwickelt, weil kein bestehendes Tool schnell genug für die Linux-Kernel-Entwicklung war. Heute ist Git der weltweite Standard in der Softwareentwicklung.</p>
-
-            <p><strong>Was Git löst:</strong></p>
+            <p><strong>Was Git im Alltag löst:</strong></p>
             <ul style="line-height: 1.9; color: var(--text);">
                 <li>„Welche Version hatte die Funktion, die noch funktioniert hat?"</li>
                 <li>„Kollege und ich haben dieselbe Datei gleichzeitig bearbeitet – was jetzt?"</li>
-                <li>„Ich möchte ein neues Feature ausprobieren, ohne die funktionierende Version zu zerstören."</li>
+                <li>„Ich möchte etwas Neues ausprobieren, ohne die funktionierende Version zu zerstören."</li>
                 <li>„Wer hat diese Zeile wann und warum geändert?"</li>
             </ul>
 
@@ -461,91 +467,18 @@
                 <span class="praxis-label">🔧 Im IT-Systemhaus</span>
                 Du hast für Kunde Müller GmbH ein PowerShell-Monitoring-Skript entwickelt. Drei Monate später ruft der Kunde an: „Seit dem letzten Windows-Update liefert das Skript falsche Werte." Mit Git siehst du in Sekunden, welche Änderung wann gemacht wurde und kannst den alten Stand wiederherstellen – anstatt in Dateien wie <code>Get-Info_v3_FINAL_neu2.ps1</code> zu suchen.
             </div>
-        </section>
-
-        <!-- 2. Die technische Basis -->
-        <section class="section" id="technik">
-            <div class="section-header">
-                <div class="section-number">2</div>
-                <h2>Die technische Basis – wie Git wirklich funktioniert</h2>
-            </div>
-
-            <p>Viele denken, Git speichere einfach Dateiversionen wie ein Papierkorb. In Wirklichkeit ist Git ein <strong>inhaltsadressierbares Dateisystem</strong> – eine elegante Objektdatenbank. Das Verständnis davon erklärt, warum Git so mächtig ist.</p>
-
-            <h3 style="margin-top: 28px;">Der .git-Ordner – das Herz des Repositories</h3>
-            <p>In jedem Git-Projekt gibt es einen versteckten <code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">.git</code>-Ordner. Darin liegt alles:</p>
-            <div class="diagram">.git/
-├── objects/         <span style="color:#6c7086;"># Die eigentliche Datenbank – alle Objekte</span>
-│   ├── 1a/
-│   │   └── b4c5d9...  <span style="color:#6c7086;"># Ein Objekt (Blob: Inhalt von index.html)</span>
-│   ├── 3f/
-│   │   └── e7a2b1...  <span style="color:#6c7086;"># Ein Objekt (Tree: Verzeichnis /docs)</span>
-│   └── c8/
-│       └── 2eab66...  <span style="color:#6c7086;"># Ein Objekt (Commit: "Add stars")</span>
-├── refs/
-│   └── heads/
-│       ├── main       <span style="color:#a6e3a1;"># Enthält: c82eab6... (nur ein SHA-Zeiger!)</span>
-│       └── feature    <span style="color:#a6e3a1;"># Enthält: 5b96f9f...</span>
-└── HEAD               <span style="color:#a6e3a1;"># Enthält: ref: refs/heads/main</span></div>
-
-            <div class="infobox yellow">
-                <strong>Wichtige Erkenntnis:</strong>
-                Die Dateien in deinem Projektordner (z.B. <code>docs/index.html</code>) sind nur eine <em>Ansicht</em> des aktuellen Commits. Die echten Daten liegen komprimiert im <code>.git/objects/</code>-Ordner.
-            </div>
-
-            <h3 style="margin-top: 28px;">Die 4 Git-Objekttypen</h3>
-            <div class="concept-grid" style="margin-top: 12px;">
-                <div class="concept-card">
-                    <h3>Blob</h3>
-                    <p>Der rohe Dateiinhalt – z.B. der gesamte Text einer JavaScript-Datei. Kein Dateiname, kein Pfad – nur reiner Inhalt.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>Tree</h3>
-                    <p>Eine Verzeichnisliste: zeigt auf Blobs (Dateien) und andere Trees (Unterordner). Entspricht einem Ordner in deinem Projekt.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>Commit</h3>
-                    <p>Ein Snapshot: zeigt auf einen Tree (Zustand des Projekts), den Parent-Commit, Autor, Zeitstempel und Beschreibung.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>Tag</h3>
-                    <p>Ein benannter Zeiger auf einen bestimmten Commit – z.B. <code>v1.0.0</code> für eine Release-Version.</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 28px;">SHA-1-Hashing – der Fingerabdruck</h3>
-            <p>Jedes Objekt wird durch den <strong>SHA-1-Hash seines Inhalts</strong> adressiert (z.B. <code>c82eab66b20d06953e...</code>). Ändert sich auch nur ein einziges Zeichen, entsteht ein komplett neuer Hash. Das garantiert:</p>
-            <ul style="line-height: 1.9;">
-                <li>🔒 <strong>Integrität</strong> – Du kannst sofort erkennen, ob ein Objekt verändert wurde</li>
-                <li>⚡ <strong>Effizienz</strong> – Identische Dateien werden nur einmal gespeichert</li>
-                <li>⏮️ <strong>Unveränderlichkeit</strong> – Alles bleibt erhalten, nichts wird überschrieben</li>
-            </ul>
-
-            <h3 style="margin-top: 28px;">Der Commit-Graph (DAG)</h3>
-            <p>Commits bilden einen <strong>gerichteten azyklischen Graphen</strong> (Directed Acyclic Graph). Jeder Commit zeigt auf seinen Vorgänger. Branches sind dabei nur <em>leichtgewichtige Zeiger</em> – eine simple Textdatei mit einem SHA-Hash:</p>
-            <div class="diagram">A ← B ← C ← F   (main)
-                  \   /
-                   D ← E   (feature/login)
-
-A, B, C... = einzelne Commits (unveränderliche Snapshots)
-F          = Merge-Commit (hat zwei Parents: C und E)
-main       = Zeiger auf F (nur ein SHA-Hash, kein echter "Zweig")
-feature    = Zeiger auf E</div>
-
-            <div class="infobox green">
-                <strong>Das erklärt, warum man immer zurück kann:</strong>
-                Da Commits nie gelöscht werden (nur Zeiger bewegen sich), ist jeder frühere Zustand des Projekts dauerhaft im <code>.git/objects/</code>-Ordner gespeichert und erreichbar.
-            </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 3. Kernbegriffe -->
+        <!-- 2. Die wichtigsten Begriffe -->
         <section class="section" id="begriffe">
             <div class="section-header">
-                <div class="section-number">3</div>
-                <h2>Kernbegriffe von A–Z</h2>
+                <div class="section-number">2</div>
+                <h2>Die wichtigsten Begriffe</h2>
             </div>
+
+            <p>Diese acht Begriffe bilden das Vokabular, mit dem du 95% deiner Arbeit erledigst. Weitere (etwas speziellere) Begriffe findest du später in <a href="#weitere-begriffe">Teil 4</a>.</p>
 
             <div class="concept-grid">
 
@@ -641,59 +574,15 @@ git push origin feature/neue-funktion
 <span class="c"># → Dann auf github.com den PR eröffnen</span></div>
                 </div>
 
-                <div class="concept-card">
-                    <h3>Fork</h3>
-                    <p>Eine eigene Kopie eines fremden Repositories auf GitHub – auf Server-Ebene, nicht nur lokal. Typisch bei Open-Source-Beiträgen.</p>
-                    <p class="analogy">Du legst eine Kopie des ganzen Projekts in deinem eigenen GitHub-Account an und arbeitest dort.</p>
-                    <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">Ablauf: Fork auf GitHub → lokaler Clone → Änderungen → PR an das Original-Repo</p>
-                </div>
-
-                <div class="concept-card">
-                    <h3>Revert</h3>
-                    <p>Erzeugt einen neuen Commit, der einen bestimmten früheren Commit exakt rückgängig macht. Die sicherste „Undo"-Methode für bereits gepushte Commits.</p>
-                    <p class="analogy">Du machst eine Änderung rückgängig, aber das Protokoll zeigt trotzdem, dass es sie gab.</p>
-                    <div class="code"><span class="c"># Einen bestimmten Commit rückgängig machen</span>
-git revert c82eab6
-
-<span class="c"># Ohne automatischen Commit (manuell bestätigen)</span>
-git revert --no-edit c82eab6</div>
-                </div>
-
-                <div class="concept-card">
-                    <h3>Staging Area</h3>
-                    <p>Eine Zwischenebene zwischen Working Directory und Commit. Du entscheidest bewusst, welche Änderungen in den nächsten Commit kommen.</p>
-                    <p class="analogy">Du legst Sachen in einen Karton, bevor du ihn abschickst – du kannst noch wählen, was reinkommt.</p>
-                    <div class="code"><span class="c"># Nur diese Datei für den Commit vorbereiten</span>
-git add docs/styles.css
-
-<span class="c"># Alle geänderten Dateien vorbereiten</span>
-git add .
-
-<span class="c"># Zeigen, was in der Staging Area liegt</span>
-git status</div>
-                </div>
-
-                <div class="concept-card">
-                    <h3>HEAD</h3>
-                    <p>Ein spezieller Zeiger, der angibt, wo du gerade „bist" – welcher Branch oder Commit aktiv ist. <code>.git/HEAD</code> ist schlicht eine Textdatei.</p>
-                    <p class="analogy">Die „Sie sind hier"-Markierung auf einer Karte.</p>
-                    <div class="code"><span class="c"># HEAD zeigt auf den aktuellen Branch</span>
-cat .git/HEAD
-<span class="c"># Ausgabe: ref: refs/heads/main</span>
-
-<span class="c"># Commits relativ zu HEAD ansehen</span>
-git log HEAD~3..HEAD</div>
-                </div>
-
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 4. Lokal vs. Remote -->
+        <!-- 3. Lokal vs. Remote -->
         <section class="section" id="lokal-remote">
             <div class="section-header">
-                <div class="section-number">4</div>
+                <div class="section-number">3</div>
                 <h2>Lokal vs. Remote – die zwei Welten</h2>
             </div>
 
@@ -746,14 +635,21 @@ git log HEAD~3..HEAD</div>
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 5. Teamarbeit -->
+        <!-- ===== TEIL 2: SO ARBEITEST DU TÄGLICH ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Teil 2 · Der Alltag</div>
+            <h2>So arbeitest du täglich</h2>
+            <p>Der praktische Kern: der Workflow von Branch bis Merge, wie Änderungen sauber in main kommen, und wie du dabei ordentlich bleibst.</p>
+        </div>
+
+        <!-- 4. Der tägliche Workflow -->
         <section class="section" id="teamarbeit">
             <div class="section-header">
-                <div class="section-number">5</div>
-                <h2>Im Team arbeiten – der Git-Workflow</h2>
+                <div class="section-number">4</div>
+                <h2>Der tägliche Workflow – allein und im Team</h2>
             </div>
 
-            <p>Der bekannteste Workflow für Teams ist der <strong>Feature-Branch-Workflow</strong>: Jedes neue Feature oder jeder Bugfix bekommt einen eigenen Branch. Nur fertige, geprüfte Änderungen kommen in <code>main</code>.</p>
+            <p>Der bekannteste Workflow ist der <strong>Feature-Branch-Workflow</strong>: Jedes neue Feature oder jeder Bugfix bekommt einen eigenen Branch. Nur fertige, geprüfte Änderungen kommen in <code>main</code>. Das funktioniert allein genauso wie im Team.</p>
 
             <h3>Der Standard-Ablauf</h3>
             <ol class="workflow-steps">
@@ -762,7 +658,7 @@ git log HEAD~3..HEAD</div>
                 <li><div class="step-num">3</div><div><strong>Coden und committen</strong><br>Regelmäßig kleine, sinnvolle Commits machen. Nicht alles auf einmal.</div></li>
                 <li><div class="step-num">4</div><div><strong>Branch pushen</strong><br><code style="font-size: 13px;">git push -u origin feature/login-button</code> – der Branch ist jetzt auf GitHub sichtbar.</div></li>
                 <li><div class="step-num">5</div><div><strong>Pull Request erstellen</strong><br>Auf GitHub: PR von deinem Branch in <code>main</code>. Kollegen können reviewen und kommentieren.</div></li>
-                <li><div class="step-num">6</div><div><strong>Review & Merge</strong><br>Nach Freigabe wird der Branch in <code>main</code> gemergt. CI-Tests laufen automatisch.</div></li>
+                <li><div class="step-num">6</div><div><strong>Review &amp; Merge</strong><br>Nach Freigabe wird der Branch in <code>main</code> gemergt. CI-Tests laufen automatisch.</div></li>
                 <li><div class="step-num">7</div><div><strong>Branch löschen</strong><br>Gemergter Branch kann gelöscht werden – er wird nicht mehr gebraucht.</div></li>
             </ol>
 
@@ -784,161 +680,147 @@ git log HEAD~3..HEAD</div>
                 <span class="praxis-label">🔧 Im IT-Systemhaus: geteiltes Inventarisierungs-Tool</span>
                 Du und Kollege Max entwickelt gemeinsam ein Tool zur Inventarisierung von Kundenhardware. Max schreibt die PowerShell-Logik (<code>feature/ps-abfrage</code>), du baust das HTML-Dashboard (<code>feature/dashboard</code>). Beide arbeiten parallel ohne Konflikte. Wenn Max fertig ist, macht er einen PR – du reviewst, ob seine Datenstruktur zu deinem Dashboard passt. Erst dann wird gemergt.
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 6. Mehrere Projekte -->
-        <section class="section" id="mehrere-repos">
+        <!-- 5. Pull Requests & Merge-Strategien -->
+        <section class="section" id="merge-strategies">
             <div class="section-header">
-                <div class="section-number">6</div>
-                <h2>Mehrere Projekte – mehrere Repositories</h2>
+                <div class="section-number">5</div>
+                <h2>Pull Requests &amp; Merge-Strategien</h2>
             </div>
 
-            <p>In einem Team arbeiten oft mehrere Personen an verschiedenen Projekten gleichzeitig. Jedes Projekt hat sein <em>eigenes</em> Repository.</p>
+            <p>Wenn ein Feature fertig ist und ein Pull Request genehmigt wurde, kommt der <strong>Merge</strong>. Git bietet drei verschiedene Strategien, um den Feature-Branch in main zu integrieren. Jede hat ihre Stärken.</p>
 
-            <div class="two-col">
-                <div>
-                    <h3>Typische Struktur lokal</h3>
-                    <div class="code">~/projekte/
-├── kunde-mueller-monitoring/  <span class="c"># Monitoring-Skripte Müller GmbH</span>
-│   └── .git/
-├── kunde-wagner-inventar/     <span class="c"># Inventarisierungstool Wagner KG</span>
-│   └── .git/
-├── intern-helpdesk-tool/      <span class="c"># Internes AD-Abfrage-Tool</span>
-│   └── .git/
-└── vorlagen-bibliothek/       <span class="c"># Wiederverwendbare PS-Funktionen</span>
-    └── .git/</div>
-                    <p style="font-size: 14px; color: var(--muted);">Jeder Ordner ist ein eigenständiges Repository. Git-Befehle beziehen sich immer auf das Repo im aktuellen Verzeichnis.</p>
-                </div>
-                <div>
-                    <h3>Wer arbeitet woran?</h3>
-                    <div class="card" style="margin: 0;">
-                        <p style="margin: 0; font-size: 14px; line-height: 1.8; color: var(--muted);">
-                            👩‍💻 <strong>Alice</strong> arbeitet im <code>frontend</code>-Repo an einer neuen Seite.<br>
-                            👨‍💻 <strong>Bob</strong> arbeitet im <code>backend-api</code>-Repo an einem neuen Endpoint.<br>
-                            Beide können pushen, ohne sich gegenseitig zu stören.<br><br>
-                            Wenn Alices Frontend die neue API von Bob braucht: Sie stimmen sich über den Branch-Stand ab und Alice pullt zur richtigen Zeit.
-                        </p>
+            <div class="merge-strategy-comparison">
+
+                <div class="merge-strategy-card">
+                    <h4>1️⃣ Merge Commit</h4>
+                    <p><strong>Was passiert:</strong> Ein spezieller "Merge-Commit" wird erstellt, der zeigt, dass ein Branch zusammengeführt wurde.</p>
+                    <div class="git-diagram">*   Merge Commit
+|\
+| * Feature Commit 2
+| * Feature Commit 1
+|/
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>Beide Feature-Commits bleiben sichtbar</li>
+                            <li>Zeigt klar, dass ein Branch existierte</li>
+                            <li>Nachvollziehbar für Code-Archäologie</li>
+                            <li>Ideal für große Features</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>main wird länger</li>
+                            <li>Tree-Struktur komplexer</li>
+                        </ul>
                     </div>
                 </div>
+
+                <div class="merge-strategy-card">
+                    <h4>2️⃣ Squash &amp; Merge</h4>
+                    <p><strong>Was passiert:</strong> Alle Feature-Commits werden zu <strong>1 Commit</strong> kombiniert und in main eingefügt.</p>
+                    <div class="git-diagram">* Squash Commit
+  (enthält Commit 1+2)
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>main bleibt kurz und linear</li>
+                            <li>Jedes Feature = 1 übersichtlicher Commit</li>
+                            <li>Perfekt für kleine Fixes/Features</li>
+                            <li>Saubere, lesbare History</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>Zwischenschritte nicht mehr sichtbar</li>
+                            <li>Einzelne Entwicklungsschritte verloren</li>
+                            <li>Aber: ~30 Tage im reflog erreichbar</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="merge-strategy-card">
+                    <h4>3️⃣ Rebase &amp; Merge</h4>
+                    <p><strong>Was passiert:</strong> Feature-Commits werden auf den aktuellen main "umgesetzt", als wäre alles direkt dort entwickelt worden.</p>
+                    <div class="git-diagram">* Feature Commit 2
+* Feature Commit 1
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>Commits bleiben sichtbar</li>
+                            <li>Lineare, saubere History</li>
+                            <li>Keine Merge-Commits</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>Verbirgt, dass ein Branch existierte</li>
+                            <li>Täuscht linearen Entwicklungsprozess vor</li>
+                            <li>Kann bei Teams zu Verwirrung führen</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="infobox blue" style="margin-top: 20px;">
-                <strong>GitHub-Organisation:</strong>
-                Wenn ein ganzes Team viele Repos verwaltet, legt man auf GitHub eine <strong>Organisation</strong> an (z.B. <code>github.com/mein-unternehmen</code>). Alle Repos der Firma liegen dort gesammelt, mit zentraler Rechteverwaltung.
+            <h3 style="margin-top: 32px;">Welche Strategie wann?</h3>
+
+            <div class="infobox blue">
+                <strong>Im IT-Systemhaus – praktisch:</strong>
+                <ul style="margin: 8px 0 0 0; padding-left: 16px; color: var(--text); font-size: 14px; line-height: 1.8;">
+                    <li><strong>Squash &amp; Merge:</strong> Kleine Kundenprojekte, Bug-Fixes, einfache Features (z.B. "Fix typo", "Add footer link")</li>
+                    <li><strong>Merge Commit:</strong> Große Features, komplexe Entwicklung mit mehreren Steps (z.B. "Implement complete inventory system")</li>
+                    <li><strong>Rebase &amp; Merge:</strong> Eher selten – nur wenn das Team eine super-lineare History möchte (Enterprise-Standard)</li>
+                </ul>
             </div>
+
+            <h3 style="margin-top: 28px;">Praktisches Beispiel</h3>
+
+            <div class="praxis-box">
+                <span class="praxis-label">🔧 Im IT-Systemhaus</span>
+                <p style="margin: 0;"><strong>Kunde Müller GmbH – Monitoring-Skript:</strong></p>
+                <p style="margin: 4px 0 0 0;">
+                    Du arbeitest 3 Tage an der CPU-Temperatur-Funktion (3 Commits: Basis, Parsing, Fehlerbehandlung).
+                    Beim Merge wählst du <strong>Merge Commit</strong> – so kann man später nachvollziehen, dass die 3 Schritte zusammengehören.
+                </p>
+                <p style="margin: 8px 0 0 0;">
+                    Dein Kollege verbessert schnell die Button-Farbe (1 Commit).
+                    Beim Merge wählt er <strong>Squash &amp; Merge</strong> – main bleibt übersichtlich.
+                </p>
+            </div>
+
+            <h3 style="margin-top: 28px;">In der Git App / GitHub</h3>
+
+            <p>Wenn du einen PR mergst, siehst du einen <strong>Dropdown-Button</strong>:</p>
+
+            <div class="code">
+            ▼ Merge pull request
+              ☐ Create a merge commit       ← Default
+              ☐ Squash and merge            ← Wähle diese für kleine Änderungen
+              ☐ Rebase and merge            ← Selten nötig
+            </div>
+
+            <p style="margin-top: 12px; font-size: 14px; color: var(--muted);">
+                <strong>Tipp:</strong> Der PR-Author (z.B. ein KI-Agent) kann in der PR-Beschreibung explizit empfehlen, welche Strategie zu wählen ist. Dann weißt du, was gewünscht ist.
+            </p>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 7. Windows-Werkzeuge -->
-        <section class="section" id="werkzeuge">
-            <div class="section-header">
-                <div class="section-number">7</div>
-                <h2>Windows-Werkzeuge – womit arbeitest du?</h2>
-            </div>
-
-            <div class="concept-grid">
-
-                <div class="tool-card">
-                    <div class="tool-badge badge-empfohlen">Empfohlen</div>
-                    <h3>VS Code + GitLens</h3>
-                    <p>Visual Studio Code hat eine eingebaute Git-Unterstützung (Source Control Tab, linke Leiste). Mit der Extension <strong>GitLens</strong> sieht man direkt im Code, wer wann was geändert hat (Git Blame). Das integrierte Terminal erlaubt git-Befehle direkt nebenher.</p>
-                    <div class="code" style="margin-top: 12px;"><span class="c"># GitLens im VS Code Extension-Tab suchen:</span>
-GitLens — Git supercharged</div>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-badge badge-einsteiger">Für Einsteiger</div>
-                    <h3>GitHub Desktop</h3>
-                    <p>Eine grafische Oberfläche speziell für Git – kein Terminal nötig. Zeigt Änderungen visuell (grün = hinzugefügt, rot = entfernt), macht Commits, Pushs und PRs per Klick. Ideal zum Einstieg.</p>
-                    <p style="margin-top: 10px; font-size: 13px;"><strong>Download:</strong> desktop.github.com</p>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-badge badge-profi">Profis</div>
-                    <h3>Terminal / PowerShell</h3>
-                    <p>Git für Windows installieren (<strong>git-scm.com</strong>), dann sind alle <code>git</code>-Befehle in PowerShell und CMD verfügbar. Am flexibelsten, läuft auf jedem System identisch. VS Code hat ein eingebautes Terminal, das direkt dafür genutzt werden kann.</p>
-                    <div class="code"><span class="c"># Git-Version prüfen</span>
-git --version</div>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-badge badge-einsteiger">Nützlich</div>
-                    <h3>Windows Terminal</h3>
-                    <p>Moderner Ersatz für die alte Windows-Konsole. Unterstützt mehrere Tabs, PowerShell, CMD und WSL in einem Fenster. Empfohlen als Standard-Terminal unter Windows 11.</p>
-                    <p style="margin-top: 10px; font-size: 13px;"><strong>Download:</strong> Microsoft Store → „Windows Terminal"</p>
-                </div>
-
-            </div>
-
-            <div class="infobox blue" style="margin-top: 24px;">
-                <strong>Empfohlenes Setup für Windows-Entwickler:</strong>
-                Git für Windows installieren → VS Code installieren → GitLens-Extension aktivieren → fertig. Das Terminal in VS Code ist direkt nutzbar.
-            </div>
-        </section>
-
-        <!-- 8. Mit KI-Agenten arbeiten -->
-        <section class="section" id="agenten">
-            <div class="section-header">
-                <div class="section-number">8</div>
-                <h2>Mit KI-Agenten arbeiten – wie Claude Code Git nutzt</h2>
-            </div>
-
-            <p>Wenn du mit einem KI-Agenten wie <strong>Claude Code</strong> arbeitest, interagiert dieser direkt mit Git in deinem Repository – ähnlich wie ein Kollege, der per Fernzugriff am selben Projekt arbeitet.</p>
-
-            <h3>Was passiert technisch im Hintergrund?</h3>
-            <div class="diagram">GitHub-Repository (origin)
-        |
-        | git clone (beim Session-Start)
-        ↓
-Remote Sandbox (Cloud-Container)
-  ├── Working Directory  (geklontes Repo)
-  ├── .git/              (vollständige History)
-  └── Claude Code        (hat Zugriff auf alle git-Befehle)
-        |
-        | git add, git commit, git push
-        ↓
-GitHub-Repository (origin) ← Änderungen landen hier</div>
-
-            <div class="two-col" style="margin-top: 20px;">
-                <div class="card">
-                    <h3 style="margin-top: 0;">Was der Agent tun kann</h3>
-                    <ul style="color: var(--muted); line-height: 1.9; font-size: 14px;">
-                        <li>Branches erstellen und wechseln</li>
-                        <li>Dateien lesen, bearbeiten, erstellen</li>
-                        <li>Commits mit sinnvollen Nachrichten erstellen</li>
-                        <li>Branches pushen</li>
-                        <li>Mergen und reverten</li>
-                        <li>Git-Historie analysieren</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3 style="margin-top: 0;">Was der Agent <em>nicht</em> tut (ohne Erlaubnis)</h3>
-                    <ul style="color: var(--muted); line-height: 1.9; font-size: 14px;">
-                        <li>Force-Push auf main (<code>--force</code>)</li>
-                        <li>Destructive operations ohne Nachfragen</li>
-                        <li>Direkt auf main committen (normalerweise)</li>
-                        <li>PRs ohne explizite Anfrage erstellen</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="infobox yellow" style="margin-top: 20px;">
-                <strong>Wichtig zu wissen: Git-Hooks im Agenten</strong>
-                Lokale Git-Hooks (z.B. ein Pre-Commit-Hook, der Timestamps automatisch aktualisiert) laufen möglicherweise <em>nicht</em> in der Remote-Sandbox – der Hook liegt zwar in <code>.git/hooks/</code>, aber Hooks werden bei einem frischen Clone oft nicht automatisch ausgeführt. Das erklärt, warum manche automatischen Aktionen (wie Timestamp-Updates) beim Agenten-Commit ausbleiben können.
-            </div>
-
-            <h3 style="margin-top: 24px;">Wie du sinnvoll mit einem Agenten zusammenarbeitest</h3>
-            <ol class="workflow-steps">
-                <li><div class="step-num">✓</div><div><strong>Klare Aufgaben beschreiben</strong> – „Ändere die Farbe der Überschriften auf Dunkelrot" ist besser als „mach die Seite schöner".</div></li>
-                <li><div class="step-num">✓</div><div><strong>Branch-Strategie besprechen</strong> – soll der Agent direkt auf main oder auf einem Feature-Branch arbeiten?</div></li>
-                <li><div class="step-num">✓</div><div><strong>Vor großen Änderungen nachfragen</strong> – ein guter Agent fragt bei riskanten Aktionen nach, bevor er sie ausführt.</div></li>
-                <li><div class="step-num">✓</div><div><strong>Geschichte im Blick behalten</strong> – <code>git log</code> zeigt dir genau, was der Agent committet hat.</div></li>
-            </ol>
-        </section>
-
-        <!-- 9. Best Practices -->
+        <!-- 6. Best Practices -->
         <section class="section" id="best-practices">
             <div class="section-header">
-                <div class="section-number">9</div>
+                <div class="section-number">6</div>
                 <h2>Best Practices – sauber arbeiten mit Git</h2>
             </div>
 
@@ -1023,143 +905,323 @@ git rebase origin/main</div>
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 11. Merge-Strategien -->
-        <section class="section" id="merge-strategies">
+        <!-- ===== TEIL 3: WERKZEUGE & UMGEBUNG ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Teil 3 · Werkzeuge &amp; Umgebung</div>
+            <h2>Womit und wo du arbeitest</h2>
+            <p>Die Tools für deinen Windows-Alltag, die Zusammenarbeit mit KI-Agenten und wie man mehrere Projekte parallel verwaltet.</p>
+        </div>
+
+        <!-- 7. Windows-Werkzeuge -->
+        <section class="section" id="werkzeuge">
             <div class="section-header">
-                <div class="section-number">11</div>
-                <h2>Merge-Strategien – wie man Features zusammenführt</h2>
+                <div class="section-number">7</div>
+                <h2>Windows-Werkzeuge – womit arbeitest du?</h2>
             </div>
 
-            <p>Wenn ein Feature fertig ist und ein Pull Request genehmigt wurde, kommt der <strong>Merge</strong>. Git bietet drei verschiedene Strategien, um den Feature-Branch in main zu integrieren. Jede hat ihre Stärken.</p>
+            <div class="concept-grid">
 
-            <div class="merge-strategy-comparison">
-
-                <div class="merge-strategy-card">
-                    <h4>1️⃣ Merge Commit</h4>
-                    <p><strong>Was passiert:</strong> Ein spezieller "Merge-Commit" wird erstellt, der zeigt, dass ein Branch zusammengeführt wurde.</p>
-                    <div class="git-diagram">*   Merge Commit
-|\
-| * Feature Commit 2
-| * Feature Commit 1
-|/
-* main Commit</div>
-                    <div class="pros">
-                        <strong>✅ Vorteile:</strong>
-                        <ul>
-                            <li>Beide Feature-Commits bleiben sichtbar</li>
-                            <li>Zeigt klar, dass ein Branch existierte</li>
-                            <li>Nachvollziehbar für Code-Archäologie</li>
-                            <li>Ideal für große Features</li>
-                        </ul>
-                    </div>
-                    <div class="cons">
-                        <strong>❌ Nachteile:</strong>
-                        <ul>
-                            <li>main wird länger</li>
-                            <li>Tree-Struktur komplexer</li>
-                        </ul>
-                    </div>
+                <div class="tool-card">
+                    <div class="tool-badge badge-empfohlen">Empfohlen</div>
+                    <h3>VS Code + GitLens</h3>
+                    <p>Visual Studio Code hat eine eingebaute Git-Unterstützung (Source Control Tab, linke Leiste). Mit der Extension <strong>GitLens</strong> sieht man direkt im Code, wer wann was geändert hat (Git Blame). Das integrierte Terminal erlaubt git-Befehle direkt nebenher.</p>
+                    <div class="code" style="margin-top: 12px;"><span class="c"># GitLens im VS Code Extension-Tab suchen:</span>
+GitLens — Git supercharged</div>
                 </div>
 
-                <div class="merge-strategy-card">
-                    <h4>2️⃣ Squash & Merge</h4>
-                    <p><strong>Was passiert:</strong> Alle Feature-Commits werden zu <strong>1 Commit</strong> kombiniert und in main eingefügt.</p>
-                    <div class="git-diagram">* Squash Commit
-  (enthält Commit 1+2)
-* main Commit</div>
-                    <div class="pros">
-                        <strong>✅ Vorteile:</strong>
-                        <ul>
-                            <li>main bleibt kurz und linear</li>
-                            <li>Jedes Feature = 1 übersichtlicher Commit</li>
-                            <li>Perfekt für kleine Fixes/Features</li>
-                            <li>Saubere, lesbare History</li>
-                        </ul>
-                    </div>
-                    <div class="cons">
-                        <strong>❌ Nachteile:</strong>
-                        <ul>
-                            <li>Zwischenschritte nicht mehr sichtbar</li>
-                            <li>Einzelne Entwicklungsschritte verloren</li>
-                            <li>Aber: ~30 Tage im reflog erreichbar</li>
-                        </ul>
-                    </div>
+                <div class="tool-card">
+                    <div class="tool-badge badge-einsteiger">Für Einsteiger</div>
+                    <h3>GitHub Desktop</h3>
+                    <p>Eine grafische Oberfläche speziell für Git – kein Terminal nötig. Zeigt Änderungen visuell (grün = hinzugefügt, rot = entfernt), macht Commits, Pushs und PRs per Klick. Ideal zum Einstieg.</p>
+                    <p style="margin-top: 10px; font-size: 13px;"><strong>Download:</strong> desktop.github.com</p>
                 </div>
 
-                <div class="merge-strategy-card">
-                    <h4>3️⃣ Rebase & Merge</h4>
-                    <p><strong>Was passiert:</strong> Feature-Commits werden auf den aktuellen main "umgesetzt", als wäre alles direkt dort entwickelt worden.</p>
-                    <div class="git-diagram">* Feature Commit 2
-* Feature Commit 1
-* main Commit</div>
-                    <div class="pros">
-                        <strong>✅ Vorteile:</strong>
-                        <ul>
-                            <li>Commits bleiben sichtbar</li>
-                            <li>Lineare, saubere History</li>
-                            <li>Keine Merge-Commits</li>
-                        </ul>
-                    </div>
-                    <div class="cons">
-                        <strong>❌ Nachteile:</strong>
-                        <ul>
-                            <li>Verbirgt, dass ein Branch existierte</li>
-                            <li>Täuscht linearen Entwicklungsprozess vor</li>
-                            <li>Kann bei Teams zu Verwirrung führen</li>
-                        </ul>
-                    </div>
+                <div class="tool-card">
+                    <div class="tool-badge badge-profi">Profis</div>
+                    <h3>Terminal / PowerShell</h3>
+                    <p>Git für Windows installieren (<strong>git-scm.com</strong>), dann sind alle <code>git</code>-Befehle in PowerShell und CMD verfügbar. Am flexibelsten, läuft auf jedem System identisch. VS Code hat ein eingebautes Terminal, das direkt dafür genutzt werden kann.</p>
+                    <div class="code"><span class="c"># Git-Version prüfen</span>
+git --version</div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-badge badge-einsteiger">Nützlich</div>
+                    <h3>Windows Terminal</h3>
+                    <p>Moderner Ersatz für die alte Windows-Konsole. Unterstützt mehrere Tabs, PowerShell, CMD und WSL in einem Fenster. Empfohlen als Standard-Terminal unter Windows 11.</p>
+                    <p style="margin-top: 10px; font-size: 13px;"><strong>Download:</strong> Microsoft Store → „Windows Terminal"</p>
                 </div>
 
             </div>
 
-            <h3 style="margin-top: 32px;">Welche Strategie wann?</h3>
-
-            <div class="infobox blue">
-                <strong>Im IT-Systemhaus – praktisch:</strong>
-                <ul style="margin: 8px 0 0 0; padding-left: 16px; color: var(--text); font-size: 14px; line-height: 1.8;">
-                    <li><strong>Squash & Merge:</strong> Kleine Kundenprojekte, Bug-Fixes, einfache Features (z.B. "Fix typo", "Add footer link")</li>
-                    <li><strong>Merge Commit:</strong> Große Features, komplexe Entwicklung mit mehreren Steps (z.B. "Implement complete inventory system")</li>
-                    <li><strong>Rebase & Merge:</strong> Eher selten – nur wenn das Team eine super-lineare History möchte (Enterprise-Standard)</li>
-                </ul>
+            <div class="infobox blue" style="margin-top: 24px;">
+                <strong>Empfohlenes Setup für Windows-Entwickler:</strong>
+                Git für Windows installieren → VS Code installieren → GitLens-Extension aktivieren → fertig. Das Terminal in VS Code ist direkt nutzbar.
             </div>
-
-            <h3 style="margin-top: 28px;">Praktisches Beispiel</h3>
-
-            <div class="praxis-box">
-                <span class="praxis-label">🔧 Im IT-Systemhaus</span>
-                <p style="margin: 0;"><strong>Kunde Müller GmbH – Monitoring-Skript:</strong></p>
-                <p style="margin: 4px 0 0 0;">
-                    Du arbeitest 3 Tage an der CPU-Temperatur-Funktion (3 Commits: Basis, Parsing, Fehlerbehandlung).
-                    Beim Merge wählst du <strong>Merge Commit</strong> – so kann man später nachvollziehen, dass die 3 Schritte zusammengehören.
-                </p>
-                <p style="margin: 8px 0 0 0;">
-                    Dein Kollege verbessert schnell die Button-Farbe (1 Commit).
-                    Beim Merge wählt er <strong>Squash & Merge</strong> – main bleibt übersichtlich.
-                </p>
-            </div>
-
-            <h3 style="margin-top: 28px;">In der Git App / GitHub</h3>
-
-            <p>Wenn du einen PR mergst, siehst du einen <strong>Dropdown-Button</strong>:</p>
-
-            <div class="code">
-            ▼ Merge pull request
-              ☐ Create a merge commit       ← Default
-              ☐ Squash and merge            ← Wähle diese für kleine Änderungen
-              ☐ Rebase and merge            ← Selten nötig
-            </div>
-
-            <p style="margin-top: 12px; font-size: 14px; color: var(--muted);">
-                <strong>Tipp:</strong> Der PR-Author (z.B. ich als Agent) kann in der PR-Beschreibung explizit empfehlen, welche Strategie zu wählen ist. Dann weißt du, was gewünscht ist.
-            </p>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 10. Praxis-Durchlauf -->
-        <section class="section" id="praxis">
+        <!-- 8. Mit KI-Agenten arbeiten -->
+        <section class="section" id="agenten">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <h2>Mit KI-Agenten arbeiten – wie Claude Code Git nutzt</h2>
+            </div>
+
+            <p>Wenn du mit einem KI-Agenten wie <strong>Claude Code</strong> arbeitest, interagiert dieser direkt mit Git in deinem Repository – ähnlich wie ein Kollege, der per Fernzugriff am selben Projekt arbeitet.</p>
+
+            <h3>Was passiert technisch im Hintergrund?</h3>
+            <div class="diagram">GitHub-Repository (origin)
+        |
+        | git clone (beim Session-Start)
+        ↓
+Remote Sandbox (Cloud-Container)
+  ├── Working Directory  (geklontes Repo)
+  ├── .git/              (vollständige History)
+  └── Claude Code        (hat Zugriff auf alle git-Befehle)
+        |
+        | git add, git commit, git push
+        ↓
+GitHub-Repository (origin) ← Änderungen landen hier</div>
+
+            <div class="two-col" style="margin-top: 20px;">
+                <div class="card">
+                    <h3 style="margin-top: 0;">Was der Agent tun kann</h3>
+                    <ul style="color: var(--muted); line-height: 1.9; font-size: 14px;">
+                        <li>Branches erstellen und wechseln</li>
+                        <li>Dateien lesen, bearbeiten, erstellen</li>
+                        <li>Commits mit sinnvollen Nachrichten erstellen</li>
+                        <li>Branches pushen</li>
+                        <li>Mergen und reverten</li>
+                        <li>Git-Historie analysieren</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0;">Was der Agent <em>nicht</em> tut (ohne Erlaubnis)</h3>
+                    <ul style="color: var(--muted); line-height: 1.9; font-size: 14px;">
+                        <li>Force-Push auf main (<code>--force</code>)</li>
+                        <li>Destructive operations ohne Nachfragen</li>
+                        <li>Direkt auf main committen (normalerweise)</li>
+                        <li>PRs ohne explizite Anfrage erstellen</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="infobox yellow" style="margin-top: 20px;">
+                <strong>Wichtig zu wissen: Git-Hooks im Agenten</strong>
+                Lokale Git-Hooks (z.B. ein Pre-Commit-Hook, der Timestamps automatisch aktualisiert) laufen möglicherweise <em>nicht</em> in der Remote-Sandbox – der Hook liegt zwar in <code>.git/hooks/</code>, aber Hooks werden bei einem frischen Clone oft nicht automatisch ausgeführt. Das erklärt, warum manche automatischen Aktionen (wie Timestamp-Updates) beim Agenten-Commit ausbleiben können.
+            </div>
+
+            <h3 style="margin-top: 24px;">Wie du sinnvoll mit einem Agenten zusammenarbeitest</h3>
+            <ol class="workflow-steps">
+                <li><div class="step-num">✓</div><div><strong>Klare Aufgaben beschreiben</strong> – „Ändere die Farbe der Überschriften auf Dunkelrot" ist besser als „mach die Seite schöner".</div></li>
+                <li><div class="step-num">✓</div><div><strong>Branch-Strategie besprechen</strong> – soll der Agent direkt auf main oder auf einem Feature-Branch arbeiten?</div></li>
+                <li><div class="step-num">✓</div><div><strong>Vor großen Änderungen nachfragen</strong> – ein guter Agent fragt bei riskanten Aktionen nach, bevor er sie ausführt.</div></li>
+                <li><div class="step-num">✓</div><div><strong>Geschichte im Blick behalten</strong> – <code>git log</code> zeigt dir genau, was der Agent committet hat.</div></li>
+            </ol>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- 9. Mehrere Projekte -->
+        <section class="section" id="mehrere-repos">
+            <div class="section-header">
+                <div class="section-number">9</div>
+                <h2>Mehrere Projekte – mehrere Repositories</h2>
+            </div>
+
+            <p>In einem Team arbeiten oft mehrere Personen an verschiedenen Projekten gleichzeitig. Jedes Projekt hat sein <em>eigenes</em> Repository.</p>
+
+            <div class="two-col">
+                <div>
+                    <h3>Typische Struktur lokal</h3>
+                    <div class="code">~/projekte/
+├── kunde-mueller-monitoring/  <span class="c"># Monitoring-Skripte Müller GmbH</span>
+│   └── .git/
+├── kunde-wagner-inventar/     <span class="c"># Inventarisierungstool Wagner KG</span>
+│   └── .git/
+├── intern-helpdesk-tool/      <span class="c"># Internes AD-Abfrage-Tool</span>
+│   └── .git/
+└── vorlagen-bibliothek/       <span class="c"># Wiederverwendbare PS-Funktionen</span>
+    └── .git/</div>
+                    <p style="font-size: 14px; color: var(--muted);">Jeder Ordner ist ein eigenständiges Repository. Git-Befehle beziehen sich immer auf das Repo im aktuellen Verzeichnis.</p>
+                </div>
+                <div>
+                    <h3>Wer arbeitet woran?</h3>
+                    <div class="card" style="margin: 0;">
+                        <p style="margin: 0; font-size: 14px; line-height: 1.8; color: var(--muted);">
+                            👩‍💻 <strong>Alice</strong> arbeitet im <code>frontend</code>-Repo an einer neuen Seite.<br>
+                            👨‍💻 <strong>Bob</strong> arbeitet im <code>backend-api</code>-Repo an einem neuen Endpoint.<br>
+                            Beide können pushen, ohne sich gegenseitig zu stören.<br><br>
+                            Wenn Alices Frontend die neue API von Bob braucht: Sie stimmen sich über den Branch-Stand ab und Alice pullt zur richtigen Zeit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="infobox blue" style="margin-top: 20px;">
+                <strong>GitHub-Organisation:</strong>
+                Wenn ein ganzes Team viele Repos verwaltet, legt man auf GitHub eine <strong>Organisation</strong> an (z.B. <code>github.com/mein-unternehmen</code>). Alle Repos der Firma liegen dort gesammelt, mit zentraler Rechteverwaltung.
+            </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- ===== TEIL 4: TIEFGANG ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Teil 4 · Tiefgang (optional)</div>
+            <h2>Wenn du mehr wissen willst</h2>
+            <p>Hier wird es technischer: Wie Git intern wirklich funktioniert, und weitere Begriffe für Fortgeschrittene. Du brauchst das nicht für den Alltag – aber es macht vieles klarer.</p>
+        </div>
+
+        <!-- 10. Wie Git wirklich funktioniert -->
+        <section class="section" id="technik">
             <div class="section-header">
                 <div class="section-number">10</div>
+                <h2>Wie Git wirklich funktioniert – die technische Basis</h2>
+            </div>
+
+            <p>Viele denken, Git speichere einfach Dateiversionen wie ein Papierkorb. In Wirklichkeit ist Git ein <strong>inhaltsadressierbares Dateisystem</strong> – eine elegante Objektdatenbank. Das Verständnis davon erklärt, warum Git so mächtig ist und warum man immer zu einem früheren Stand zurück kann.</p>
+
+            <h3 style="margin-top: 28px;">Der .git-Ordner – das Herz des Repositories</h3>
+            <p>In jedem Git-Projekt gibt es einen versteckten <code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">.git</code>-Ordner. Darin liegt alles:</p>
+            <div class="diagram">.git/
+├── objects/         <span style="color:#6c7086;"># Die eigentliche Datenbank – alle Objekte</span>
+│   ├── 1a/
+│   │   └── b4c5d9...  <span style="color:#6c7086;"># Ein Objekt (Blob: Inhalt von index.html)</span>
+│   ├── 3f/
+│   │   └── e7a2b1...  <span style="color:#6c7086;"># Ein Objekt (Tree: Verzeichnis /docs)</span>
+│   └── c8/
+│       └── 2eab66...  <span style="color:#6c7086;"># Ein Objekt (Commit: "Add stars")</span>
+├── refs/
+│   └── heads/
+│       ├── main       <span style="color:#a6e3a1;"># Enthält: c82eab6... (nur ein SHA-Zeiger!)</span>
+│       └── feature    <span style="color:#a6e3a1;"># Enthält: 5b96f9f...</span>
+└── HEAD               <span style="color:#a6e3a1;"># Enthält: ref: refs/heads/main</span></div>
+
+            <div class="infobox yellow">
+                <strong>Wichtige Erkenntnis:</strong>
+                Die Dateien in deinem Projektordner (z.B. <code>docs/index.html</code>) sind nur eine <em>Ansicht</em> des aktuellen Commits. Die echten Daten liegen komprimiert im <code>.git/objects/</code>-Ordner.
+            </div>
+
+            <h3 style="margin-top: 28px;">Die 4 Git-Objekttypen</h3>
+            <div class="concept-grid" style="margin-top: 12px;">
+                <div class="concept-card">
+                    <h3>Blob</h3>
+                    <p>Der rohe Dateiinhalt – z.B. der gesamte Text einer JavaScript-Datei. Kein Dateiname, kein Pfad – nur reiner Inhalt.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Tree</h3>
+                    <p>Eine Verzeichnisliste: zeigt auf Blobs (Dateien) und andere Trees (Unterordner). Entspricht einem Ordner in deinem Projekt.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Commit</h3>
+                    <p>Ein Snapshot: zeigt auf einen Tree (Zustand des Projekts), den Parent-Commit, Autor, Zeitstempel und Beschreibung.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Tag</h3>
+                    <p>Ein benannter Zeiger auf einen bestimmten Commit – z.B. <code>v1.0.0</code> für eine Release-Version.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 28px;">SHA-1-Hashing – der Fingerabdruck</h3>
+            <p>Jedes Objekt wird durch den <strong>SHA-1-Hash seines Inhalts</strong> adressiert (z.B. <code>c82eab66b20d06953e...</code>). Ändert sich auch nur ein einziges Zeichen, entsteht ein komplett neuer Hash. Das garantiert:</p>
+            <ul style="line-height: 1.9;">
+                <li>🔒 <strong>Integrität</strong> – Du kannst sofort erkennen, ob ein Objekt verändert wurde</li>
+                <li>⚡ <strong>Effizienz</strong> – Identische Dateien werden nur einmal gespeichert</li>
+                <li>⏮️ <strong>Unveränderlichkeit</strong> – Alles bleibt erhalten, nichts wird überschrieben</li>
+            </ul>
+
+            <h3 style="margin-top: 28px;">Der Commit-Graph (DAG)</h3>
+            <p>Commits bilden einen <strong>gerichteten azyklischen Graphen</strong> (Directed Acyclic Graph). Jeder Commit zeigt auf seinen Vorgänger. Branches sind dabei nur <em>leichtgewichtige Zeiger</em> – eine simple Textdatei mit einem SHA-Hash:</p>
+            <div class="diagram">A ← B ← C ← F   (main)
+                  \   /
+                   D ← E   (feature/login)
+
+A, B, C... = einzelne Commits (unveränderliche Snapshots)
+F          = Merge-Commit (hat zwei Parents: C und E)
+main       = Zeiger auf F (nur ein SHA-Hash, kein echter "Zweig")
+feature    = Zeiger auf E</div>
+
+            <div class="infobox green">
+                <strong>Das erklärt, warum man immer zurück kann:</strong>
+                Da Commits nie gelöscht werden (nur Zeiger bewegen sich), ist jeder frühere Zustand des Projekts dauerhaft im <code>.git/objects/</code>-Ordner gespeichert und erreichbar.
+            </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- 11. Weitere Begriffe -->
+        <section class="section" id="weitere-begriffe">
+            <div class="section-header">
+                <div class="section-number">11</div>
+                <h2>Weitere Begriffe – für Fortgeschrittene</h2>
+            </div>
+
+            <p>Diese Begriffe begegnen dir, sobald du tiefer einsteigst. Für den täglichen Workflow reichen die <a href="#begriffe">8 Kernbegriffe</a> aus Teil 1.</p>
+
+            <div class="concept-grid">
+
+                <div class="concept-card">
+                    <h3>Staging Area</h3>
+                    <p>Eine Zwischenebene zwischen Working Directory und Commit. Du entscheidest bewusst, welche Änderungen in den nächsten Commit kommen.</p>
+                    <p class="analogy">Du legst Sachen in einen Karton, bevor du ihn abschickst – du kannst noch wählen, was reinkommt.</p>
+                    <div class="code"><span class="c"># Nur diese Datei für den Commit vorbereiten</span>
+git add docs/styles.css
+
+<span class="c"># Alle geänderten Dateien vorbereiten</span>
+git add .
+
+<span class="c"># Zeigen, was in der Staging Area liegt</span>
+git status</div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>HEAD</h3>
+                    <p>Ein spezieller Zeiger, der angibt, wo du gerade „bist" – welcher Branch oder Commit aktiv ist. <code>.git/HEAD</code> ist schlicht eine Textdatei.</p>
+                    <p class="analogy">Die „Sie sind hier"-Markierung auf einer Karte.</p>
+                    <div class="code"><span class="c"># HEAD zeigt auf den aktuellen Branch</span>
+cat .git/HEAD
+<span class="c"># Ausgabe: ref: refs/heads/main</span>
+
+<span class="c"># Commits relativ zu HEAD ansehen</span>
+git log HEAD~3..HEAD</div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Fork</h3>
+                    <p>Eine eigene Kopie eines fremden Repositories auf GitHub – auf Server-Ebene, nicht nur lokal. Typisch bei Open-Source-Beiträgen.</p>
+                    <p class="analogy">Du legst eine Kopie des ganzen Projekts in deinem eigenen GitHub-Account an und arbeitest dort.</p>
+                    <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">Ablauf: Fork auf GitHub → lokaler Clone → Änderungen → PR an das Original-Repo</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Revert</h3>
+                    <p>Erzeugt einen neuen Commit, der einen bestimmten früheren Commit exakt rückgängig macht. Die sicherste „Undo"-Methode für bereits gepushte Commits.</p>
+                    <p class="analogy">Du machst eine Änderung rückgängig, aber das Protokoll zeigt trotzdem, dass es sie gab.</p>
+                    <div class="code"><span class="c"># Einen bestimmten Commit rückgängig machen</span>
+git revert c82eab6
+
+<span class="c"># Ohne automatischen Commit (manuell bestätigen)</span>
+git revert --no-edit c82eab6</div>
+                </div>
+
+            </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- ===== ABSCHLUSS ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Abschluss · Alles zusammen</div>
+            <h2>Jetzt in der Praxis</h2>
+            <p>Ein kompletter Durchlauf eines echten Kundenprojekts – alle Konzepte aus diesem Leitfaden in Aktion.</p>
+        </div>
+
+        <!-- 12. Praxis-Durchlauf -->
+        <section class="section" id="praxis">
+            <div class="section-header">
+                <div class="section-number">12</div>
                 <h2>Praxis-Durchlauf: Ein Kundenprojekt von A bis Z</h2>
             </div>
 
@@ -1271,6 +1333,8 @@ a3f9c12 Fix null reference when network drive is unreachable
                 <strong>Das Muster für jedes Projekt im Systemhaus:</strong>
                 Neues Projekt → <code>git init</code> + Remote anlegen → kleine Commits von Anfang an → Features in Branches → Kollege reviewed → Merge → Branch löschen. Egal ob das Projekt 2 Stunden oder 2 Jahre dauert.
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
         <footer style="margin-top: 0;">
