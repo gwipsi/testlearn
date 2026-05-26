@@ -129,6 +129,48 @@
         }
         .infobox strong { display: block; margin-bottom: 4px; }
 
+        .praxis-box {
+            background: #f4faf0;
+            border: 1px solid #c5e1b0;
+            border-left: 4px solid #4caf50;
+            border-radius: 4px;
+            padding: 14px 18px;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .praxis-box .praxis-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #2e7d32;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .scenario-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 28px;
+            align-items: flex-start;
+        }
+        .scenario-step-icon {
+            font-size: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .scenario-step-content h4 {
+            margin: 0 0 6px 0;
+            font-size: 15px;
+        }
+        .scenario-step-content p {
+            margin: 0 0 8px 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
         .workflow-steps { margin: 16px 0; padding: 0; list-style: none; }
         .workflow-steps li {
             display: flex;
@@ -217,6 +259,7 @@
                 <li><a href="#werkzeuge">Windows-Werkzeuge</a></li>
                 <li><a href="#agenten">Mit KI-Agenten arbeiten</a></li>
                 <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#praxis">Praxis-Durchlauf: A bis Z</a></li>
             </ol>
         </nav>
 
@@ -243,6 +286,11 @@
                 <li>„Ich möchte ein neues Feature ausprobieren, ohne die funktionierende Version zu zerstören."</li>
                 <li>„Wer hat diese Zeile wann und warum geändert?"</li>
             </ul>
+
+            <div class="praxis-box">
+                <span class="praxis-label">🔧 Im IT-Systemhaus</span>
+                Du hast für Kunde Müller GmbH ein PowerShell-Monitoring-Skript entwickelt. Drei Monate später ruft der Kunde an: „Seit dem letzten Windows-Update liefert das Skript falsche Werte." Mit Git siehst du in Sekunden, welche Änderung wann gemacht wurde und kannst den alten Stand wiederherstellen – anstatt in Dateien wie <code>Get-Info_v3_FINAL_neu2.ps1</code> zu suchen.
+            </div>
         </section>
 
         <!-- 2. Die technische Basis -->
@@ -353,10 +401,13 @@ git clone https://github.com/user/repo.git</div>
                     <p>Ein gespeicherter Snapshot des Projekts mit Beschreibung, Autor und Zeitstempel. Das Fundament von Git.</p>
                     <p class="analogy">Quicksave in einem Videospiel – du kannst jederzeit zu genau diesem Punkt zurück.</p>
                     <div class="code"><span class="c"># 1. Dateien für den Commit vorbereiten (Staging)</span>
-git add docs/index.html
+git add scripts/Get-SystemInfo.ps1
 
 <span class="c"># 2. Snapshot mit Beschreibung speichern</span>
-git commit -m "Fix button color in header"</div>
+git commit -m "Add disk space check to monitoring script"</div>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;">
+                        🔧 <em>Kunde Müller bekommt eine neue Funktion – jetzt committen, damit die Änderung sauber dokumentiert ist, bevor es zum nächsten Feature geht.</em>
+                    </p>
                 </div>
 
                 <div class="concept-card">
@@ -364,13 +415,16 @@ git commit -m "Fix button color in header"</div>
                     <p>Ein unabhängiger Entwicklungsstrang – eine eigene „Zeitleiste" für ein Feature oder einen Bugfix. Technisch nur ein Zeiger auf einen Commit.</p>
                     <p class="analogy">Eine Kopie des Dokuments zum Experimentieren, ohne das Original zu berühren.</p>
                     <div class="code"><span class="c"># Neuen Branch erstellen und wechseln</span>
-git checkout -b feature/neue-funktion
+git checkout -b feature/cpu-temperatur-wagner
 
-<span class="c"># Zurück zu main</span>
+<span class="c"># Zurück zu main (Basisskript für alle anderen)</span>
 git checkout main
 
 <span class="c"># Alle Branches anzeigen</span>
 git branch</div>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;">
+                        🔧 <em>Dein Standard-Skript läuft bei 5 Kunden. Kunde Wagner will CPU-Temperatur – aber nur er hat die passenden Sensoren. Branch für Wagner, der Rest bleibt unberührt.</em>
+                    </p>
                 </div>
 
                 <div class="concept-card">
@@ -549,6 +603,11 @@ git log HEAD~3..HEAD</div>
                 <strong>Konflikte vermeiden:</strong>
                 Häufig pullen (<code>git pull</code>) und in kleinen, überschaubaren Einheiten arbeiten. Je länger ein Branch lebt, ohne mit main synchronisiert zu werden, desto größer werden Konflikte.
             </div>
+
+            <div class="praxis-box">
+                <span class="praxis-label">🔧 Im IT-Systemhaus: geteiltes Inventarisierungs-Tool</span>
+                Du und Kollege Max entwickelt gemeinsam ein Tool zur Inventarisierung von Kundenhardware. Max schreibt die PowerShell-Logik (<code>feature/ps-abfrage</code>), du baust das HTML-Dashboard (<code>feature/dashboard</code>). Beide arbeiten parallel ohne Konflikte. Wenn Max fertig ist, macht er einen PR – du reviewst, ob seine Datenstruktur zu deinem Dashboard passt. Erst dann wird gemergt.
+            </div>
         </section>
 
         <!-- 6. Mehrere Projekte -->
@@ -564,11 +623,13 @@ git log HEAD~3..HEAD</div>
                 <div>
                     <h3>Typische Struktur lokal</h3>
                     <div class="code">~/projekte/
-├── frontend/       <span class="c"># git clone von repo-A</span>
+├── kunde-mueller-monitoring/  <span class="c"># Monitoring-Skripte Müller GmbH</span>
 │   └── .git/
-├── backend-api/    <span class="c"># git clone von repo-B</span>
+├── kunde-wagner-inventar/     <span class="c"># Inventarisierungstool Wagner KG</span>
 │   └── .git/
-└── docs-intern/    <span class="c"># git clone von repo-C</span>
+├── intern-helpdesk-tool/      <span class="c"># Internes AD-Abfrage-Tool</span>
+│   └── .git/
+└── vorlagen-bibliothek/       <span class="c"># Wiederverwendbare PS-Funktionen</span>
     └── .git/</div>
                     <p style="font-size: 14px; color: var(--muted);">Jeder Ordner ist ein eigenständiges Repository. Git-Befehle beziehen sich immer auf das Repo im aktuellen Verzeichnis.</p>
                 </div>
@@ -781,6 +842,123 @@ git rebase origin/main</div>
             <div class="infobox green" style="margin-top: 24px;">
                 <strong>Das wichtigste Prinzip:</strong>
                 Git ist dein Sicherheitsnetz – nicht dein Feind. Je öfter du commitest und pushst, desto weniger kann schiefgehen. Kein Commit ist in Stein gemeißelt: mit <code>git revert</code> oder <code>git reset</code> lässt sich fast jede Aktion rückgängig machen.
+            </div>
+        </section>
+
+        <!-- 10. Praxis-Durchlauf -->
+        <section class="section" id="praxis">
+            <div class="section-header">
+                <div class="section-number">10</div>
+                <h2>Praxis-Durchlauf: Ein Kundenprojekt von A bis Z</h2>
+            </div>
+
+            <p>Szenario: Kunde Bauer GmbH braucht ein PowerShell-Skript, das täglich Festplattenplatz prüft und eine Log-Datei schreibt. Das Projekt soll sauber mit Git verwaltet werden – auch wenn später Änderungen kommen.</p>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">📁</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 1: Repository anlegen</h4>
+                    <p>Neues Projekt, neues Repo. Einmalig am Anfang:</p>
+                    <div class="code">mkdir kunde-bauer-diskcheck
+cd kunde-bauer-diskcheck
+git init
+<span class="c"># Auf GitHub: neues Repo erstellen, dann verknüpfen:</span>
+git remote add origin https://github.com/mein-systemhaus/kunde-bauer-diskcheck.git</div>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">✏️</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 2: Erstes Skript, erster Commit</h4>
+                    <p>Die Grundstruktur steht. Noch nicht fertig, aber ein sinnvoller Zwischenstand:</p>
+                    <div class="code"><span class="c"># .gitignore anlegen – Logs sollen nie ins Repo</span>
+echo "Logs/" > .gitignore
+
+<span class="c"># Erste Version des Skripts committen</span>
+git add Get-DiskCheck.ps1 .gitignore
+git commit -m "Add initial disk check script with basic log output"
+git push -u origin main</div>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">🔧</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 3: Neues Feature – E-Mail-Benachrichtigung</h4>
+                    <p>Kunde will bei unter 10 % freiem Speicher eine E-Mail bekommen. Neues Feature = neuer Branch:</p>
+                    <div class="code">git checkout -b feature/email-benachrichtigung
+<span class="c"># … Funktion Send-Benachrichtigung entwickeln und testen …</span>
+git add Get-DiskCheck.ps1
+git commit -m "Add email alert when disk space below 10%"
+git push -u origin feature/email-benachrichtigung</div>
+                    <p>Dann auf GitHub einen <strong>Pull Request</strong> erstellen. Kollege Max reviewt den Code, bevor er produktiv geht.</p>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">🔀</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 4: Review und Merge</h4>
+                    <p>Max hat die E-Mail-Funktion freigegeben. PR in main mergen, Branch löschen:</p>
+                    <div class="code">git checkout main
+git merge feature/email-benachrichtigung
+git push origin main
+
+<span class="c"># Feature-Branch aufräumen</span>
+git branch -d feature/email-benachrichtigung
+git push origin --delete feature/email-benachrichtigung</div>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">🚨</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 5: Hotfix – Skript crasht beim Kunden</h4>
+                    <p>Zwei Wochen später: Anruf vom Kunden. Das Skript bricht mit einem Fehler ab. Hotfix direkt von main:</p>
+                    <div class="code">git checkout main
+git pull origin main
+git checkout -b hotfix/null-check-laufwerk
+
+<span class="c"># Schnell den Fehler beheben</span>
+git add Get-DiskCheck.ps1
+git commit -m "Fix null reference when network drive is unreachable"
+git push -u origin hotfix/null-check-laufwerk
+
+<span class="c"># PR → Merge → fertig. Kein Feature beeinflusst.</span></div>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">🔁</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 6: Zweiter Kunde will dasselbe Skript</h4>
+                    <p>Kunde Vogel GmbH braucht dasselbe Tool, aber mit anderen Schwellwerten und einem eigenen Log-Pfad. Optionen:</p>
+                    <ul style="font-size: 14px; color: var(--muted); line-height: 1.8; margin: 6px 0 0 0;">
+                        <li><strong>Neues Repo klonen:</strong> <code>git clone … kunde-vogel-diskcheck</code> – sauberste Lösung für Kundenprojekte mit eigener Entwicklung</li>
+                        <li><strong>Konfiguration auslagern:</strong> Werte in eine <code>config.json</code> auslagern, die <em>nicht</em> im Repo liegt (<code>.gitignore</code>) – ein Repo für beide Kunden</li>
+                        <li><strong>Branch pro Kunde:</strong> Nur sinnvoll bei sehr kleinen Unterschieden und wenn beide Kunden aktiv weiterentwickelt werden</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="scenario-step">
+                <div class="scenario-step-icon">📋</div>
+                <div class="scenario-step-content">
+                    <h4>Schritt 7: Dokumentieren im Commit-Log</h4>
+                    <p>Nach sechs Monaten schaut ein neuer Kollege ins Repo. Das Commit-Log ist seine Dokumentation:</p>
+                    <div class="code">git log --oneline
+<span class="c"># Ausgabe:</span>
+a3f9c12 Fix null reference when network drive is unreachable
+8b2e4a1 Add email alert when disk space below 10%
+3c7d9f0 Add initial disk check script with basic log output</div>
+                    <p>Drei Zeilen, die die gesamte Geschichte des Projekts erklären. Kein Word-Dokument, kein „v2_FINAL" im Dateinamen.</p>
+                </div>
+            </div>
+
+            <div class="infobox green">
+                <strong>Das Muster für jedes Projekt im Systemhaus:</strong>
+                Neues Projekt → <code>git init</code> + Remote anlegen → kleine Commits von Anfang an → Features in Branches → Kollege reviewed → Merge → Branch löschen. Egal ob das Projekt 2 Stunden oder 2 Jahre dauert.
             </div>
         </section>
 
