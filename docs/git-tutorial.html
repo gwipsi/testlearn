@@ -769,20 +769,19 @@
                 </p>
             </div>
 
-            <h3 style="margin-top: 28px;">In der Git App / GitHub</h3>
+            <h3 style="margin-top: 28px;">Die Merge-Strategie wählen – auf GitHub.com</h3>
 
-            <p>Wenn du einen PR mergst, siehst du einen <strong>Dropdown-Button</strong>:</p>
+            <p>Wenn du einen PR auf GitHub.com mergst, klickst du auf den <strong>Merge-Button</strong> und siehst ein Dropdown-Menü mit drei Optionen:</p>
 
-            <div class="code">
-            ▼ Merge pull request
-              ☐ Create a merge commit       ← Default
-              ☐ Squash and merge            ← Wähle diese für kleine Änderungen
-              ☐ Rebase and merge            ← Selten nötig
+            <ul style="font-size: 14px; color: var(--muted); line-height: 1.8; margin: 12px 0 0 0;">
+                <li><strong>Create a merge commit</strong> – Die Commits bleiben erhalten, ein spezieller "Merge-Commit" zeigt, dass ein Branch zusammengefügt wurde (Default, gut für große Features)</li>
+                <li><strong>Squash and merge</strong> – Alle Commits werden zu einem kombiniert (gut für kleine Fixes)</li>
+                <li><strong>Rebase and merge</strong> – Commits werden auf den aktuellen main "umgesetzt" (eher selten, sehr linear)</li>
+            </ul>
+
+            <div class="infobox blue" style="margin-top: 16px;">
+                <strong>💡 Tipp:</strong> Der PR-Author (z.B. ein KI-Agent) kann in der PR-Beschreibung eine Empfehlung geben: „Please use Squash & Merge for this PR". Dann weißt du, was der Agent sich wünscht – und du kannst es bestätigen oder eine andere Strategie wählen. Die finale Entscheidung liegt immer bei dir.
             </div>
-
-            <p style="margin-top: 12px; font-size: 14px; color: var(--muted);">
-                <strong>Tipp:</strong> Der PR-Author (z.B. ein KI-Agent) kann in der PR-Beschreibung explizit empfehlen, welche Strategie zu wählen ist. Dann weißt du, was gewünscht ist.
-            </p>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
@@ -915,6 +914,73 @@
                 Git für Windows installieren → VS Code installieren → GitLens-Extension aktivieren → fertig. Das Terminal in VS Code ist direkt nutzbar.
             </div>
 
+            <h3 style="margin-top: 32px;">Was kannst du mit welcher Oberfläche machen?</h3>
+
+            <div class="concept-grid" style="margin-top: 16px;">
+                <div class="concept-card">
+                    <h3>GitHub.com (Web)</h3>
+                    <p><strong>Perfekt für:</strong> Pull Requests erstellen, reviewen, mergen; kleine Dateien editieren; Branches verwalten</p>
+                    <ul style="font-size: 13px; color: var(--muted); line-height: 1.7; margin: 8px 0 0 0;">
+                        <li>✅ PR eröffnen, reviewen, kommentieren</li>
+                        <li>✅ Dateien direkt im Browser editieren</li>
+                        <li>✅ Commits direkt auf GitHub erstellen</li>
+                        <li>✅ Branches erstellen, löschen, zusammenführen</li>
+                        <li>✅ Merge-Strategie wählen (Merge Commit, Squash, Rebase)</li>
+                        <li>❌ Komplexe Merges mit Konflikten lösen</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>GitHub Desktop</h3>
+                    <p><strong>Perfekt für:</strong> Visuelle Arbeit mit Branches, Diffs anschauen, einfache Commits</p>
+                    <ul style="font-size: 13px; color: var(--muted); line-height: 1.7; margin: 8px 0 0 0;">
+                        <li>✅ Branches wechseln und erstellen</li>
+                        <li>✅ Änderungen visuell sehen (grün/rot)</li>
+                        <li>✅ Commits lokal erstellen</li>
+                        <li>✅ Pushen und Pullen</li>
+                        <li>✅ Einfache Merges</li>
+                        <li>⚠️ Merge-Konflikte sind möglich, aber kann kompliziert werden</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>GitHub Mobile App</h3>
+                    <p><strong>Perfekt für:</strong> Code-Reviews, PRs kommentieren, unterwegs arbeiten</p>
+                    <ul style="font-size: 13px; color: var(--muted); line-height: 1.7; margin: 8px 0 0 0;">
+                        <li>✅ PRs und Issues anschauen</li>
+                        <li>✅ Reviews und Kommentare hinzufügen</li>
+                        <li>✅ Branches mergen (im Notfall)</li>
+                        <li>✅ Notifications sehen</li>
+                        <li>❌ Komplexe Entwicklung</li>
+                        <li>❌ Datei-Bearbeitung</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Terminal / PowerShell</h3>
+                    <p><strong>Perfekt für:</strong> Alles, Automation, KI-Agenten, volle Kontrolle</p>
+                    <ul style="font-size: 13px; color: var(--muted); line-height: 1.7; margin: 8px 0 0 0;">
+                        <li>✅ 100% der Git-Funktionalität</li>
+                        <li>✅ Merge-Konflikte effizient lösen</li>
+                        <li>✅ Complex workflows</li>
+                        <li>✅ Automation und Scripts</li>
+                        <li>✅ Perfekt für Agenten</li>
+                        <li>⚠️ Steilere Lernkurve</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="infobox green" style="margin-top: 20px;">
+                <strong>Praktisch im Alltag:</strong>
+                <ul style="margin: 8px 0 0 0; padding-left: 16px; font-size: 14px; color: var(--text); line-height: 1.8;">
+                    <li><strong>Kleine Änderungen:</strong> GitHub.com Web (schnell editieren, committen, fertig)</li>
+                    <li><strong>Visuelle Arbeit:</strong> GitHub Desktop (Branches sehen, Diffs vergleichen)</li>
+                    <li><strong>Review unterwegs:</strong> Mobile App (PR kommentieren, im Zug freigeben)</li>
+                    <li><strong>Komplexe Workflows:</strong> Terminal (oder Agent mit voller Kontrolle)</li>
+                    <li><strong>Automatisierung:</strong> Immer Agenten (sie können via Terminal alles machen)</li>
+                </ul>
+            </div>
+
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
@@ -951,15 +1017,17 @@ GitHub-Repository (origin) ← Änderungen landen hier</div>
                         <li>Branches pushen</li>
                         <li>Mergen und reverten</li>
                         <li>Git-Historie analysieren</li>
+                        <li>Pull Requests öffnen mit Beschreibung</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3 style="margin-top: 0;">Was der Agent <em>nicht</em> tut (ohne Erlaubnis)</h3>
                     <ul style="color: var(--muted); line-height: 1.9; font-size: 14px;">
-                        <li>Force-Push auf main (<code>--force</code>)</li>
+                        <li>Force-Push auf main</li>
                         <li>Destructive operations ohne Nachfragen</li>
                         <li>Direkt auf main committen (normalerweise)</li>
-                        <li>PRs ohne explizite Anfrage erstellen</li>
+                        <li>Branch-Protection-Regeln umgehen</li>
+                        <li>Automatisch mergen (das machst du)</li>
                     </ul>
                 </div>
             </div>
