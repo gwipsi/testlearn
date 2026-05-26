@@ -61,6 +61,21 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 16px;
         }
+
+        .summary-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            border-left: 4px solid var(--blue-dark);
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .summary-box strong {
+            color: var(--blue-dark);
+            display: block;
+            margin-bottom: 6px;
+        }
         .concept-card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -326,6 +341,11 @@
             </div>
 
             <p>Git ist ein <strong>Versionskontrollsystem</strong> (Version Control System, kurz VCS). Es speichert nicht nur die aktuelle Version deiner Dateien, sondern die <em>gesamte Geschichte aller Änderungen</em> – wer wann was geändert hat, und warum.</p>
+
+            <div class="summary-box">
+                <strong>In einem Satz:</strong>
+                Git ist wie ein Zeitmaschinen-Backup für deinen Code – speichere, experimentiere, und kehre jederzeit zu einem früheren Stand zurück.
+            </div>
 
             <div class="infobox blue">
                 <strong>Kernidee in einem Satz:</strong>
