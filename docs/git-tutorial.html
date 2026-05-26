@@ -386,6 +386,7 @@
                 <li><a href="#werkzeuge">Windows-Werkzeuge</a></li>
                 <li><a href="#agenten">Mit KI-Agenten arbeiten</a></li>
                 <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#merge-strategies">Merge-Strategien</a></li>
                 <li><a href="#praxis">Praxis-Durchlauf: A bis Z</a></li>
             </ol>
         </nav>
@@ -981,6 +982,141 @@ git rebase origin/main</div>
                 <strong>Das wichtigste Prinzip:</strong>
                 Git ist dein Sicherheitsnetz – nicht dein Feind. Je öfter du commitest und pushst, desto weniger kann schiefgehen. Kein Commit ist in Stein gemeißelt: mit <code>git revert</code> oder <code>git reset</code> lässt sich fast jede Aktion rückgängig machen.
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- 11. Merge-Strategien -->
+        <section class="section" id="merge-strategies">
+            <div class="section-header">
+                <div class="section-number">11</div>
+                <h2>Merge-Strategien – wie man Features zusammenführt</h2>
+            </div>
+
+            <p>Wenn ein Feature fertig ist und ein Pull Request genehmigt wurde, kommt der <strong>Merge</strong>. Git bietet drei verschiedene Strategien, um den Feature-Branch in main zu integrieren. Jede hat ihre Stärken.</p>
+
+            <div class="merge-strategy-comparison">
+
+                <div class="merge-strategy-card">
+                    <h4>1️⃣ Merge Commit</h4>
+                    <p><strong>Was passiert:</strong> Ein spezieller "Merge-Commit" wird erstellt, der zeigt, dass ein Branch zusammengeführt wurde.</p>
+                    <div class="git-diagram">*   Merge Commit
+|\
+| * Feature Commit 2
+| * Feature Commit 1
+|/
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>Beide Feature-Commits bleiben sichtbar</li>
+                            <li>Zeigt klar, dass ein Branch existierte</li>
+                            <li>Nachvollziehbar für Code-Archäologie</li>
+                            <li>Ideal für große Features</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>main wird länger</li>
+                            <li>Tree-Struktur komplexer</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="merge-strategy-card">
+                    <h4>2️⃣ Squash & Merge</h4>
+                    <p><strong>Was passiert:</strong> Alle Feature-Commits werden zu <strong>1 Commit</strong> kombiniert und in main eingefügt.</p>
+                    <div class="git-diagram">* Squash Commit
+  (enthält Commit 1+2)
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>main bleibt kurz und linear</li>
+                            <li>Jedes Feature = 1 übersichtlicher Commit</li>
+                            <li>Perfekt für kleine Fixes/Features</li>
+                            <li>Saubere, lesbare History</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>Zwischenschritte nicht mehr sichtbar</li>
+                            <li>Einzelne Entwicklungsschritte verloren</li>
+                            <li>Aber: ~30 Tage im reflog erreichbar</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="merge-strategy-card">
+                    <h4>3️⃣ Rebase & Merge</h4>
+                    <p><strong>Was passiert:</strong> Feature-Commits werden auf den aktuellen main "umgesetzt", als wäre alles direkt dort entwickelt worden.</p>
+                    <div class="git-diagram">* Feature Commit 2
+* Feature Commit 1
+* main Commit</div>
+                    <div class="pros">
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>Commits bleiben sichtbar</li>
+                            <li>Lineare, saubere History</li>
+                            <li>Keine Merge-Commits</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <strong>❌ Nachteile:</strong>
+                        <ul>
+                            <li>Verbirgt, dass ein Branch existierte</li>
+                            <li>Täuscht linearen Entwicklungsprozess vor</li>
+                            <li>Kann bei Teams zu Verwirrung führen</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <h3 style="margin-top: 32px;">Welche Strategie wann?</h3>
+
+            <div class="infobox blue">
+                <strong>Im IT-Systemhaus – praktisch:</strong>
+                <ul style="margin: 8px 0 0 0; padding-left: 16px; color: var(--text); font-size: 14px; line-height: 1.8;">
+                    <li><strong>Squash & Merge:</strong> Kleine Kundenprojekte, Bug-Fixes, einfache Features (z.B. "Fix typo", "Add footer link")</li>
+                    <li><strong>Merge Commit:</strong> Große Features, komplexe Entwicklung mit mehreren Steps (z.B. "Implement complete inventory system")</li>
+                    <li><strong>Rebase & Merge:</strong> Eher selten – nur wenn das Team eine super-lineare History möchte (Enterprise-Standard)</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 28px;">Praktisches Beispiel</h3>
+
+            <div class="praxis-box">
+                <span class="praxis-label">🔧 Im IT-Systemhaus</span>
+                <p style="margin: 0;"><strong>Kunde Müller GmbH – Monitoring-Skript:</strong></p>
+                <p style="margin: 4px 0 0 0;">
+                    Du arbeitest 3 Tage an der CPU-Temperatur-Funktion (3 Commits: Basis, Parsing, Fehlerbehandlung).
+                    Beim Merge wählst du <strong>Merge Commit</strong> – so kann man später nachvollziehen, dass die 3 Schritte zusammengehören.
+                </p>
+                <p style="margin: 8px 0 0 0;">
+                    Dein Kollege verbessert schnell die Button-Farbe (1 Commit).
+                    Beim Merge wählt er <strong>Squash & Merge</strong> – main bleibt übersichtlich.
+                </p>
+            </div>
+
+            <h3 style="margin-top: 28px;">In der Git App / GitHub</h3>
+
+            <p>Wenn du einen PR mergst, siehst du einen <strong>Dropdown-Button</strong>:</p>
+
+            <div class="code">
+            ▼ Merge pull request
+              ☐ Create a merge commit       ← Default
+              ☐ Squash and merge            ← Wähle diese für kleine Änderungen
+              ☐ Rebase and merge            ← Selten nötig
+            </div>
+
+            <p style="margin-top: 12px; font-size: 14px; color: var(--muted);">
+                <strong>Tipp:</strong> Der PR-Author (z.B. ich als Agent) kann in der PR-Beschreibung explizit empfehlen, welche Strategie zu wählen ist. Dann weißt du, was gewünscht ist.
+            </p>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
         <!-- 10. Praxis-Durchlauf -->
