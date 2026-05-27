@@ -47,4 +47,4 @@ jobs:
           git commit -m "⏱️ Auto-update: timestamp for /docs changes" || echo "No changes to commit"
 
       - name: Push changes
-        run: git push
+        run: git push origin HEAD
