@@ -19,6 +19,26 @@ This file documents the repository structure, conventions, and workflows for AI 
 - **Vision Analysis:** Only on explicit request. Do NOT automatically analyze images with Claude's vision capabilities (expensive in tokens).
 - **Token Efficiency:** Avoid unnecessary image processing. Trust code correctness for logic changes.
 
+### AI Assistant Workflow Rules
+
+**IMPORTANT: Always follow this workflow for code changes:**
+
+1. **Create feature branch** or work on assigned branch (e.g., `claude/demo-headline-colors-NuUZE`)
+2. **Make changes** and commit with clear messages
+3. **Push to feature branch** (`git push -u origin <branch-name>`)
+4. **Create PR to main** using `mcp__github__create_pull_request` — never push directly to main
+5. **Let user merge** the PR (via web interface or git app)
+
+**Why:** 
+- `main` is branch-protected (requires PR reviews)
+- AI assistants must respect this protection
+- User merges the PR, maintaining control over what lands on main
+
+**Common mistake to avoid:**
+- ❌ Push changes directly to `main` without PR
+- ❌ Forget to create PR after pushing to feature branch
+- ✅ Always create PR, always let user merge
+
 ### Decision Log
 
 - **2026-05-25:** Separated CSS and JavaScript from `index.html` into `styles.css` and `script.js` for better maintainability and professional structure.
@@ -151,43 +171,92 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### 🔧 Quick Status Commands (Prompt Instructions)
+### ✅ "Letztes Update" — client-side, no committed timestamp
 
-**When user types these keywords, execute the corresponding git commands and format the output exactly as specified:**
+The homepage shows "Letztes Update: [date] ([relative])" by fetching the date of
+the **latest commit touching `docs/`** directly from the GitHub API at page load.
 
-#### **`fix`** — Auto-fix detected problems
-When user types "fix", scan current branch for common issues and attempt to fix them:
+**How it works:**
+- `script.js` → `updateLastModifiedTime()` calls
+  `https://api.github.com/repos/gwipsi/testlearn/commits?path=docs&per_page=1`
+- It reads `commit.committer.date` of the newest commit and renders it.
+- On error / rate limit it shows "⏱ Zeitstempel nicht verfügbar" (graceful fallback).
 
-**Auto-detect and fix:**
-- **Unpushed commits** → Run `git push origin [branch]`
-- **Merge conflicts (PR mergeable_state=dirty)** → Run `git pull origin main` then resolve conflicts with `git checkout --ours` for feature branch files, or `git checkout --theirs` for main files. Then commit and push.
-- **Branch behind main** → Run `git pull origin main` to sync
-- **Stashed changes** → Offer to pop stashes with `git stash pop`
+**Why this design (important — do NOT reintroduce a committed timestamp):**
+- Previously a GitHub Action wrote `lastUpdated` into `docs/data.json` on every push.
+  That value diverged between `main` and feature branches and caused a **merge conflict
+  on the same line every single time**. See the conflict-detection notes below.
+- Nothing per-push-changing is committed anymore → **zero timestamp merge conflicts**,
+  no bot `⏱️ Auto-update` commits cluttering history, no branch-protection workarounds.
+- Tradeoff: one unauthenticated GitHub API call per page load (60/hr per IP). Fine for a
+  learning demo; covered by a fallback message.
 
-**Output:** Show what was fixed or what couldn't be auto-fixed, then run `gitstat` to show new status.
+**If the timestamp shows "nicht verfügbar":** usually API rate limiting — it recovers on
+its own. There is no Action and no `lastUpdated` field to maintain.
 
 ---
 
-#### **`gitstat`** — Quick working tree check
-Execute: `git status`
-Output format: Show basic status (branch, changes, tracking). No explanation needed.
+## Quick Commands
 
-#### **`repostat`** — Comprehensive repository snapshot
-Execute: `git status`, `git branch -v`, `git log`, `git diff`, PR status, conflicts check
+### `repostat` / `gitstat`
+**Trigger:** User types "repostat" or "gitstat"
 
-Output format: **As a Markdown code block** (with triple backticks):
+**Action:** Display comprehensive git + GitHub status (branch, workdir, unpushed,
+remote-ahead, vs-main, conflicts, PRs, branches, stashes, last commit).
 
+#### ⚠️ Conflict detection — read this before reporting "keine Konflikte"
+
+Conflict detection in this repo has failed repeatedly. Follow this exact order
+of trust. **NEVER report "no conflicts" based on a local test against local HEAD.**
+
+**1. AUTHORITATIVE — GitHub API (use this whenever an open PR exists):**
+   - `mcp__github__pull_request_read` → field `mergeable_state`:
+     - `dirty`   → **MERGE CONFLICT** (cannot merge, must resolve)
+     - `blocked` → no conflict; blocked by branch protection (needs review/approval) — user action
+     - `behind`  → no conflict; branch must update from base first
+     - `clean`   → ready to merge
+     - `unknown` → GitHub still computing; wait and re-query, do NOT assume clean
+   - This is the source of truth. If it says `dirty`, there IS a conflict even if
+     a local test disagrees.
+
+**2. LOCAL fallback (only when no PR exists, e.g. pre-push):**
+   - `git fetch origin --quiet` FIRST (mandatory).
+   - Test the REMOTE refs in the PR direction, never local HEAD:
+     `git merge-tree $(git merge-base origin/main origin/<branch>) origin/main origin/<branch>`
+   - Conflict if output contains `changed in both` or `<<<<<<<`.
+
+**Why local-HEAD tests give false negatives (the recurring bug):**
+- The `update-timestamp` GitHub Action pushes an extra `⏱️ Auto-update` commit to
+  the feature branch AFTER you push. Your local HEAD is then stale / behind
+  `origin/<branch>`, so a merge test against local HEAD tests the wrong tree.
+- A merge test needs a fresh `git fetch`; a stale `origin/main` ref also lies.
+- `git diff --diff-filter=U` only reports files during an ACTIVE merge — useless before one.
+
+**Root cause of the repeated conflicts (so we can avoid them):**
+- `docs/data.json` `lastUpdated` is edited on BOTH main (from previously merged PRs)
+  and the feature branch (by the Action). The same line diverges every time → guaranteed
+  conflict on that one line. Resolve by **keeping the newer timestamp** (`git checkout --ours docs/data.json` when merging main into the feature branch).
+- Reusing one long-lived branch makes histories cross (large "N ahead / N behind").
+  **Prefer fresh, short-lived branches per change**; delete the branch after its PR merges.
+
+**Other data sources:** `git status --porcelain` (workdir), `git log @{u}..HEAD`
+(unpushed), `git log HEAD..@{u}` (remote ahead), `git rev-list --count origin/main...HEAD`
+(vs main), `git stash list`, `git branch -r`, `mcp__github__list_pull_requests` (open PRs).
+
+### Output Format & Fazit
+
+**Display as Markdown code block** with this structure:
 ```
 🔍 testlearn  (gwipsi/testlearn)
 ────────────────────────────────────────
-branch:   [current branch name]
+branch:   [current branch]
 
 ✅ Workdir        sauber | ⚠️ [X files changed]
-⚠️ Nicht gepusht  [N] Commits | ✅ Alles gepusht
-⚠️ Remote voraus  [N] Commits | ✅ Lokal aktuell
+⚠️ Nicht gepusht  [N] | ✅ Alles gepusht
+⚠️ Remote voraus  [N] | ✅ Lokal aktuell
 ⚠️ Branch↔main   [X ahead / Y behind] | ✅ Syncron
-✅ Konflikte      keine | ⚠️ [N] Konflikte
-✅ Offene PRs     [N] (PR #XX) | ✅ Keine
+✅ Konflikte      keine | ⚠️ Ja
+✅ Offene PRs     [N] | ⚠️ [N] (blocked/dirty)
 🌿 Branches       [N] (außer main)
 📦 Stashes        [N]
 
@@ -200,65 +269,27 @@ Fazit: [Status summary]
 Trigger: repostat | gitstat
 ```
 
-**Format details:**
-- Each line with value shown like: `✅/⚠️ Label  value`
-- Timestamp format: `YYYY-MM-DD HH:MM  (vor Xm/Xh)`
-- Always render as Markdown code block (``` fence)
-- No additional text, just the box
-
 **Fazit Format (Multi-line when problems exist):**
-- If ✅ all green: `Fazit: ✅ [Short summary]`
-- If ⚠️ problems: Include:
-  1. **Problem statement:** What's wrong (e.g., "PR #21 hat Konflikte")
-  2. **Root cause:** Why it happened (e.g., "mergeable_state=dirty, main hat neue Commits")
-  3. **Solution:** Quick command user can type to fix (e.g., "Schreib 'fix-pr-21' → ich behebe die Konflikte")
+- If ✅ all green: `Fazit: ✅ [Summary]`
+- If ⚠️ problems exist: Show all three lines:
+  1. **Problem:** What's wrong (e.g., "PR #21 hat Konflikte")
+  2. **Grund:** Root cause in one line (e.g., "mergeable_state=dirty")
+  3. **Lösung:** Action user can take (e.g., "Schreib 'fix' → ich behebe es")
 
-Example problem Fazit:
+Example:
 ```
 Fazit: ⚠️ PR #21 hat Konflikte (mergeable_state=dirty)
 Grund: Main hat neue Commits, die mit dieser Branch kollidieren
-Lösung: Schreib "fix-conflicts" → ich behebe es
+Lösung: Schreib "fix" → ich behebe die Konflikte
 ```
 
-**⚠️ IMPORTANT: Conflict Detection Method**
-- **DO NOT** rely on local `git status` for conflict detection
-- **MUST** use GitHub API to check PR merge status: `mergeable_state`
-  - `"dirty"` = Conflicts present → Show ⚠️ Konflikte vorhanden
-  - `"clean"` = No conflicts → Show ✅ Konflikte keine
-  - `"blocked"` = Branch protection issues → Show ⚠️ Branch protection
-  - `"unknown"` = GitHub still calculating → Show ⏳ Wird berechnet
-- This is the **authoritative source** for merge conflicts, not local checks
+### `fix` — Auto-fix detected problems
+**Trigger:** User types "fix"
 
-### ✅ Timestamp Auto-Update (Git Hook)
+**Action:** Scan current branch for common issues and attempt auto-fix:
+- **Unpushed commits** → `git push origin [branch]`
+- **Merge conflicts (PR dirty)** → `git pull origin main --no-rebase`, resolve with `git checkout --ours/--theirs` as needed, commit, push
+- **Branch behind main** → `git pull origin main`
+- **Stashed changes** → `git stash pop`
 
-**No manual action needed!** A Git Pre-commit Hook automatically updates the timestamp whenever you commit changes to `/docs/`.
-
-**How it works:**
-
-1. You make changes to HTML/CSS/JS in `/docs/`
-2. You run `git commit -m "Your message"`
-3. **Hook automatically:**
-   - Updates `lastUpdated` in `data.json` with current UTC time
-   - Adds the updated file to your commit
-   - Shows: `✅ Timestamp auto-updated: 2026-05-25T08:07:30Z`
-4. Commit succeeds with both your changes AND the timestamp update
-
-The homepage displays "Letztes Update: [date] ([minutes ago])" so users always see the latest version.
-
-**Example commit flow:**
-```bash
-$ git add docs/index.html
-$ git commit -m "Fix button styling"
-
-✅ Timestamp auto-updated: 2026-05-25T08:07:30Z
-[main abc1234] Fix button styling
- 2 files changed, 3 insertions(+), 1 deletion(-)
-```
-
-**When it triggers:**
-- ✅ Any commit that changes files in `/docs/`
-- ✅ HTML/CSS/JS changes
-- ✅ Feature additions or bug fixes
-- ❌ NOT needed: Changes to scripts/, CLAUDE.md, etc. (files outside `/docs/`)
-
-**If something goes wrong:** The hook will show an error. Just run the commit again.
+**Output:** Show what was fixed (or what couldn't be), then run `gitstat` to display new status.

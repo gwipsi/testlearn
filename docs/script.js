@@ -85,45 +85,45 @@ function loadProjectData() {
         });
 }
 
+function formatRelativeTime(date) {
+    var minutesDiff = Math.floor((new Date() - date) / (1000 * 60));
+    if (minutesDiff <= 0) {
+        return "gerade eben";
+    } else if (minutesDiff === 1) {
+        return "vor 1 Minute";
+    } else if (minutesDiff < 60) {
+        return "vor " + minutesDiff + " Minuten";
+    } else if (minutesDiff < 1440) {
+        return "vor " + Math.floor(minutesDiff / 60) + " Stunden";
+    }
+    return "vor " + Math.floor(minutesDiff / 1440) + " Tagen";
+}
+
+// Holt das Datum des letzten Commits, der /docs/ geändert hat, direkt von GitHub.
+// Kein committeter Zeitstempel mehr -> keine Merge-Konflikte in data.json.
 function updateLastModifiedTime() {
-    fetch("data.json")
+    var apiUrl = "https://api.github.com/repos/gwipsi/testlearn/commits?path=docs&per_page=1";
+    var timestampEl = document.getElementById("last-updated");
+
+    fetch(apiUrl)
         .then(function(response) {
             if (!response.ok) {
-                throw new Error("HTTP error, status: " + response.status);
+                throw new Error("GitHub API error, status: " + response.status);
             }
             return response.json();
         })
-        .then(function(data) {
-            if (data.lastUpdated) {
-                var lastUpdateDate = new Date(data.lastUpdated);
-                var now = new Date();
-                var minutesDiff = Math.floor((now - lastUpdateDate) / (1000 * 60));
-
-                var timeString = lastUpdateDate.toLocaleString("de-DE");
-                var relativeTime;
-
-                if (minutesDiff === 0) {
-                    relativeTime = "gerade eben";
-                } else if (minutesDiff === 1) {
-                    relativeTime = "vor 1 Minute";
-                } else if (minutesDiff < 60) {
-                    relativeTime = "vor " + minutesDiff + " Minuten";
-                } else if (minutesDiff < 1440) {
-                    var hours = Math.floor(minutesDiff / 60);
-                    relativeTime = "vor " + hours + " Stunden";
-                } else {
-                    var days = Math.floor(minutesDiff / 1440);
-                    relativeTime = "vor " + days + " Tagen";
-                }
-
-                var timestampEl = document.getElementById("last-updated");
-                if (timestampEl) {
-                    timestampEl.textContent = "⏱ Letztes Update: " + timeString + " (" + relativeTime + ")";
-                }
+        .then(function(commits) {
+            if (!commits.length) {
+                throw new Error("Keine Commits gefunden");
+            }
+            var commitDate = new Date(commits[0].commit.committer.date);
+            if (timestampEl) {
+                timestampEl.textContent = "⏱ Letztes Update: "
+                    + commitDate.toLocaleString("de-DE")
+                    + " (" + formatRelativeTime(commitDate) + ")";
             }
         })
         .catch(function(error) {
-            var timestampEl = document.getElementById("last-updated");
             if (timestampEl) {
                 timestampEl.textContent = "⏱ Zeitstempel nicht verfügbar";
             }
