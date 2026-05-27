@@ -194,6 +194,15 @@ Trigger: repostat | gitstat
 - Always render as Markdown code block (``` fence)
 - No additional text, just the box
 
+**⚠️ IMPORTANT: Conflict Detection Method**
+- **DO NOT** rely on local `git status` for conflict detection
+- **MUST** use GitHub API to check PR merge status: `mergeable_state`
+  - `"dirty"` = Conflicts present → Show ⚠️ Konflikte vorhanden
+  - `"clean"` = No conflicts → Show ✅ Konflikte keine
+  - `"blocked"` = Branch protection issues → Show ⚠️ Branch protection
+  - `"unknown"` = GitHub still calculating → Show ⏳ Wird berechnet
+- This is the **authoritative source** for merge conflicts, not local checks
+
 ### ✅ Timestamp Auto-Update (Git Hook)
 
 **No manual action needed!** A Git Pre-commit Hook automatically updates the timestamp whenever you commit changes to `/docs/`.
