@@ -350,6 +350,9 @@
 
                 <li class="toc-group">Praxis</li>
                 <li><a href="#praktisches-beispiel">Ein echtes Projekt A bis Z</a></li>
+
+                <li class="toc-group">Advanced · DevOps</li>
+                <li><a href="#automatisierte-deployments">Automatisierte Deployments mit Azure Key Vault</a></li>
             </ol>
         </nav>
 
@@ -1254,6 +1257,273 @@
                 <strong>Das Muster für jedes Projekt:</strong>
                 <p style="margin: 8px 0 0 0;">Repo anlegen → Basis committen → Features in Branches → PRs reviewen → Mergen → Deploy. Egal ob das Projekt 2 Stunden oder 2 Jahre dauert. Die History dokumentiert alles.</p>
             </div>
+
+            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
+        </section>
+
+        <!-- ===== ADVANCED ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Advanced · Automation & DevOps</div>
+            <h2>Automatisierte Deployments mit Secrets Management</h2>
+            <p>Wie man sicher automatisiert deployed – mit Azure Key Vault und GitHub Actions.</p>
+        </div>
+
+        <!-- 19. Automatisierte Deployments -->
+        <section class="section" id="automatisierte-deployments">
+            <div class="section-header">
+                <div class="section-number">19</div>
+                <h2>Automatisierte Deployments mit Azure Key Vault</h2>
+            </div>
+
+            <p><strong>Ziel:</strong> Wenn ein PR auf <code>main</code> gemergt wird, sollen automatisch Dateien zu SharePoint (oder anderen Zielen) deployed werden — <strong>sicher</strong>, ohne hardcodierte Credentials.</p>
+
+            <h3>Warum nicht einfach GitHub Secrets?</h3>
+            <div class="infobox yellow">
+                <p><strong>Das Problem:</strong> GitHub Secrets sind verschlüsselt, aber zentral im GitHub-Konto. Wenn mehrere Teams/Projekte arbeiten, ist die Credential-Verwaltung schnell chaotisch. Außerdem: keine echte Rotation, keine granularen Berechtigungen.</p>
+                <p><strong>Die Lösung:</strong> <strong>Azure Key Vault</strong> — ein sicherer Tresor, den nur autorisierte Services nutzen können. Credentials werden dort verschlüsselt verwahrt und GitHub Actions holt sie <em>nur zur Runtime</em>.</p>
+            </div>
+
+            <h3>Setup: Schritt für Schritt</h3>
+
+            <h4>Schritt 1: Azure Service Principal erstellen</h4>
+            <p>Ein Service Principal ist eine Art "Roboter-Benutzer", der sich bei Azure anmelden kann ohne interaktive Login-Prompts.</p>
+            <pre><code>az ad sp create-for-rbac \
+  --name "testlearn-deployer" \
+  --role "Contributor" \
+  --scopes /subscriptions/{subscription-id} \
+  --output json
+</code></pre>
+            <p><strong>Das gibt dir:</strong></p>
+            <pre><code>{
+  "clientId": "xxxxxxxx-xxxx-...",
+  "clientSecret": "***",
+  "tenantId": "yyyyyyyy-yyyy-...",
+  "subscriptionId": "zzzz..."
+}
+</code></pre>
+
+            <h4>Schritt 2: Azure Key Vault anlegen</h4>
+            <pre><code>az keyvault create \
+  --name "testlearn-kv" \
+  --resource-group "my-rg" \
+  --location "East US"
+</code></pre>
+
+            <h4>Schritt 3: Secrets in den Vault legen</h4>
+            <pre><code>az keyvault secret set \
+  --vault-name "testlearn-kv" \
+  --name "SharePointClientSecret" \
+  --value "your-actual-secret-here"
+
+az keyvault secret set \
+  --vault-name "testlearn-kv" \
+  --name "SharePointClientId" \
+  --value "your-client-id-here"
+
+az keyvault secret set \
+  --vault-name "testlearn-kv" \
+  --name "SharePointTenant" \
+  --value "yourtenant.onmicrosoft.com"
+</code></pre>
+
+            <h4>Schritt 4: Service Principal Zugriff auf Key Vault geben</h4>
+            <pre><code>az keyvault set-policy \
+  --name "testlearn-kv" \
+  --spn {clientId-des-service-principals} \
+  --secret-permissions get list
+</code></pre>
+
+            <h4>Schritt 5: GitHub Actions Secrets für Azure-Login</h4>
+            <p>Gehe zu <strong>GitHub Repo → Settings → Secrets and variables → Actions</strong> und erstelle:</p>
+            <pre><code>AZURE_CLIENT_ID = (aus Schritt 1)
+AZURE_CLIENT_SECRET = (aus Schritt 1)
+AZURE_TENANT_ID = (aus Schritt 1)
+AZURE_SUBSCRIPTION_ID = (aus Schritt 1)
+AZURE_KEYVAULT_NAME = testlearn-kv
+</code></pre>
+            <p><strong>Wichtig:</strong> Nur diese 5 Secrets in GitHub. Die echten SharePoint-Credentials bleiben im Key Vault!</p>
+
+            <h3>GitHub Actions Workflow</h3>
+            <p>Neue Datei: <code>.github/workflows/deploy.yml</code></p>
+            <pre><code>name: Deploy to SharePoint
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code checken
+      - uses: actions/checkout@v4
+
+      # 2. Bei Azure anmelden (benutzt nur die 5 GitHub Secrets)
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # 3. Secrets aus Key Vault holen
+      - name: Get secrets from Azure Key Vault
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.AZURE_KEYVAULT_NAME }}
+          secrets: 'SharePointClientSecret,SharePointClientId,SharePointTenant'
+        id: kvSecrets
+
+      # 4. Dateien filtern (Whitelist)
+      - name: Filter files for deployment
+        run: |
+          mkdir -p deploy_staging
+          # Nur docs/ deployen
+          cp -r docs/* deploy_staging/ 2>/dev/null || true
+          # Nur PowerShell-Skripte deployen
+          cp scripts/Get-SystemInfo.ps1 deploy_staging/ 2>/dev/null || true
+          echo "Files ready for deployment:"
+          ls -la deploy_staging/
+
+      # 5. Deploy zu SharePoint
+      - name: Deploy to SharePoint
+        env:
+          SP_CLIENT_ID: ${{ steps.kvSecrets.outputs.SharePointClientId }}
+          SP_CLIENT_SECRET: ${{ steps.kvSecrets.outputs.SharePointClientSecret }}
+          SP_TENANT: ${{ steps.kvSecrets.outputs.SharePointTenant }}
+        run: |
+          # Oder Python-Script aufrufen:
+          # python3 scripts/deploy_to_sharepoint.py
+          echo "Deployment gestartet..."
+          # (hier kommt dein Deploy-Script rein)
+
+      # 6. Bei Fehler: Notification (optional)
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Deployment zu SharePoint fehlgeschlagen. Siehe [Actions Log](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})'
+            })
+</code></pre>
+
+            <h3>Python-Script für SharePoint-Upload</h3>
+            <p>Datei: <code>scripts/deploy_to_sharepoint.py</code></p>
+            <pre><code>#!/usr/bin/env python3
+import os
+import requests
+import json
+
+# Credentials aus Umgebungsvariablen (von GitHub Actions)
+client_id = os.getenv("SP_CLIENT_ID")
+client_secret = os.getenv("SP_CLIENT_SECRET")
+tenant = os.getenv("SP_TENANT")
+
+# 1. Token von Azure AD holen
+def get_access_token():
+    url = f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token"
+    payload = {
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "scope": "https://graph.microsoft.com/.default",
+        "grant_type": "client_credentials"
+    }
+    response = requests.post(url, data=payload)
+    if response.status_code != 200:
+        raise Exception(f"Auth failed: {response.text}")
+    return response.json()["access_token"]
+
+# 2. Dateien zu SharePoint hochladen
+def upload_files(access_token, site_id, drive_id):
+    headers = {"Authorization": f"Bearer {access_token}"}
+
+    for file in os.listdir("deploy_staging"):
+        file_path = os.path.join("deploy_staging", file)
+
+        # Nur reguläre Dateien, keine Verzeichnisse
+        if not os.path.isfile(file_path):
+            continue
+
+        with open(file_path, "rb") as f:
+            # SharePoint REST API Endpoint
+            upload_url = (
+                f"https://graph.microsoft.com/v1.0/sites/{site_id}/"
+                f"drive/root:/{file}:/content"
+            )
+            response = requests.put(upload_url, headers=headers, data=f.read())
+
+            if response.status_code in [200, 201]:
+                print(f"✅ Uploaded: {file}")
+            else:
+                print(f"❌ Failed: {file} — {response.text}")
+
+if __name__ == "__main__":
+    try:
+        print("🔐 Authentifizierung...")
+        token = get_access_token()
+
+        print("📤 Uploading to SharePoint...")
+        # Hier: site_id und drive_id müssen du konfigurieren
+        # oder dynamisch abrufen
+        upload_files(token, "YOUR_SITE_ID", "YOUR_DRIVE_ID")
+
+        print("✅ Deployment erfolgreich!")
+    except Exception as e:
+        print(f"❌ Deployment fehlgeschlagen: {e}")
+        exit(1)
+</code></pre>
+
+            <h3>Whitelist-Konfiguration</h3>
+            <p>Datei: <code>deploy_config.yml</code> (optional, für mehr Kontrolle)</p>
+            <pre><code">deploy:
+  # Was deployt werden SOLL
+  include:
+    - "docs/**"              # Alle HTML/CSS/JS
+    - "scripts/Get-SystemInfo.ps1"
+    - "README.md"
+
+  # Was NICHT deployt werden darf (Sicherheit)
+  exclude:
+    - "**/.env"
+    - "**/*.log"
+    - "**/node_modules"
+    - "**/.git"
+    - "CLAUDE.md"
+    - ".github/**"
+</code></pre>
+
+            <h3>Sicherheits-Checkliste</h3>
+            <div class="infobox green">
+                <strong>Bevor du live gehst:</strong>
+                <ul style="margin: 12px 0; padding-left: 24px;">
+                    <li>✅ Service Principal hat <strong>nur Read-Zugriff</strong> auf Key Vault (nicht Admin!)</li>
+                    <li>✅ GitHub-Secrets enthalten <strong>nur Azure-Credentials</strong>, nicht die eigentlichen SharePoint-Secrets</li>
+                    <li>✅ Workflow hat <code>permissions: contents: read</code> (nur Lesen, keine Schreibzugriffe)</li>
+                    <li>✅ Agents (wie Claude) haben <strong>keinen Schreibzugriff</strong> auf <code>.github/workflows/</code></li>
+                    <li>✅ <code>deploy_config.yml</code> ist im Repo und versioniert (damit änderungen sichtbar sind)</li>
+                    <li>✅ Log-Maskierung: GitHub maskiert Secrets automatisch — aber teste es!</li>
+                    <li>✅ Branch-Protection: PRs müssen reviewed werden vor Merge</li>
+                </ul>
+            </div>
+
+            <h3>Troubleshooting</h3>
+            <p><strong>„Authentication failed"</strong><br/>
+            → Service Principal ist nicht korrekt konfiguriert. Prüfe: <code>az ad sp list --filter "displayName eq 'testlearn-deployer'"</code></p>
+
+            <p><strong>„Permission denied on Key Vault"</strong><br/>
+            → Key Vault Policy ist nicht gesetzt. Wiederhole Schritt 4.</p>
+
+            <p><strong>„Secrets sind leer in Workflow"</strong><br/>
+            → Die Azure-Login ist vor dem get-keyvault-secrets fehlgeschlagen. Schau in die Logs.</p>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
