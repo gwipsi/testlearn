@@ -190,9 +190,22 @@ Trigger: repostat | gitstat
 **Format details:**
 - Each line with value shown like: `✅/⚠️ Label  value`
 - Timestamp format: `YYYY-MM-DD HH:MM  (vor Xm/Xh)`
-- Fazit should be one line summary of action items
 - Always render as Markdown code block (``` fence)
 - No additional text, just the box
+
+**Fazit Format (Multi-line when problems exist):**
+- If ✅ all green: `Fazit: ✅ [Short summary]`
+- If ⚠️ problems: Include:
+  1. **Problem statement:** What's wrong (e.g., "PR #21 hat Konflikte")
+  2. **Root cause:** Why it happened (e.g., "mergeable_state=dirty, main hat neue Commits")
+  3. **Solution:** Quick command user can type to fix (e.g., "Schreib 'fix-pr-21' → ich behebe die Konflikte")
+
+Example problem Fazit:
+```
+Fazit: ⚠️ PR #21 hat Konflikte (mergeable_state=dirty)
+Grund: Main hat neue Commits, die mit dieser Branch kollidieren
+Lösung: Schreib "fix-conflicts" → ich behebe es
+```
 
 **⚠️ IMPORTANT: Conflict Detection Method**
 - **DO NOT** rely on local `git status` for conflict detection
