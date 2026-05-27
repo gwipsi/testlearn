@@ -161,7 +161,8 @@ Output format: Show basic status (branch, changes, tracking). No explanation nee
 
 #### **`repostat`** — Comprehensive repository snapshot
 Execute: `git status`, `git branch -v`, `git log`, `git diff`, PR status, conflicts check
-Output format: **Formatted box with emojis and statistics:**
+
+Output format: **As a Markdown code block** (with triple backticks):
 
 ```
 🔍 testlearn  (gwipsi/testlearn)
@@ -173,23 +174,25 @@ branch:   [current branch name]
 ⚠️ Remote voraus  [N] Commits | ✅ Lokal aktuell
 ⚠️ Branch↔main   [X ahead / Y behind] | ✅ Syncron
 ✅ Konflikte      keine | ⚠️ [N] Konflikte
-✅ Offene PRs     [0] | ⚠️ [N] offene PRs
+✅ Offene PRs     [N] (PR #XX) | ✅ Keine
 🌿 Branches       [N] (außer main)
 📦 Stashes        [N]
 
 Letzter Commit:
-[commit hash]  [commit message] (vor [time])
+YYYY-MM-DD HH:MM  (vor Xm/Xh)
+[hash]  [message]
 
-Fazit: [Zusammenfassung des Status]
+Fazit: [Status summary]
 ────────────────────────────────────────
 Trigger: repostat | gitstat
 ```
 
-**Rules:**
-- ✅ grüner Haken = alles ok
-- ⚠️ Orange Warnung = Aktion nötig (unpushed, Konflikte, etc.)
-- Keine weiteren Erklärungen — nur die Übersicht
-- Immer aktuell abrufen (nicht cachen)
+**Format details:**
+- Each line with value shown like: `✅/⚠️ Label  value`
+- Timestamp format: `YYYY-MM-DD HH:MM  (vor Xm/Xh)`
+- Fazit should be one line summary of action items
+- Always render as Markdown code block (``` fence)
+- No additional text, just the box
 
 ### ✅ Timestamp Auto-Update (Git Hook)
 
