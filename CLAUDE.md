@@ -1,10 +1,24 @@
 # CLAUDE.md
 
+> ⚠️ **VERPFLICHTEND — `CLAUDE.md` und `AGENTS.md` synchron halten**
+>
+> Diese beiden Dateien (`CLAUDE.md` und `AGENTS.md`) müssen **inhaltlich identisch** bleiben.
+> Jede Änderung an einer der Dateien MUSS sofort (im selben Commit) auch in die andere
+> übernommen werden — in **beide** Richtungen: CLAUDE.md → AGENTS.md **und** AGENTS.md → CLAUDE.md.
+>
+> **Warum:** Claude liest meist `CLAUDE.md`, andere KI-Agenten lesen oft `AGENTS.md`. Nur wenn
+> beide dieselben Regeln enthalten, verhalten sich alle Agenten konsistent.
+>
+> **Einzige Ausnahme (absoluter Extremfall — möglichst vermeiden):** Anweisungen, die
+> *ausschließlich* mit Claude kompatibel sind, bleiben nur in `CLAUDE.md`; Anweisungen, die mit
+> Claude *inkompatibel* sind, bleiben nur in `AGENTS.md`. Jede solche Ausnahme ist an Ort und
+> Stelle als `⚠️ NICHT SYNCHRONISIEREN — <Grund>` zu kennzeichnen.
+
 This file documents the repository structure, conventions, and workflows for AI assistants working in this codebase.
 
 ## 🤖 AI Assistant Collaboration Rules
 
-**Important:** The AI assistant has NO memory between sessions. This CLAUDE.md is the **only persistent storage** for:
+**Important:** The AI assistant has NO memory between sessions. These instructions (mirrored in `CLAUDE.md` **and** `AGENTS.md`) are the **only persistent storage** for:
 - Project rules, conventions, and best practices
 - Behavioral guidelines for the assistant
 - Hosting and deployment decisions
@@ -55,7 +69,8 @@ Primary documentation is in German. Code comments, variable names, log messages,
 
 ```
 testlearn/
-├── CLAUDE.md               # This file (AI assistant guide & decision log)
+├── CLAUDE.md               # AI assistant guide & decision log (keep in sync with AGENTS.md)
+├── AGENTS.md               # Mirror of CLAUDE.md for non-Claude agents (keep in sync with CLAUDE.md)
 ├── README.md               # Project overview and quick-start (German)
 ├── Aufgaben.md             # Structured learning exercises 1–9 (German)
 ├── .gitignore              # Excludes Logs/, *.log, editor folders, OS files
@@ -65,7 +80,8 @@ testlearn/
     ├── index.html          # HTML structure (dashboard)
     ├── styles.css          # CSS styling (separate from HTML)
     ├── script.js           # JavaScript logic (separate from HTML)
-    └── data.json           # Sample data for dynamic loading
+    ├── data.json           # Sample data for dynamic loading
+    └── git-tutorial.html   # Git guide for AI/agent-driven teams
 ```
 
 **Gitignored at runtime:**
