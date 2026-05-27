@@ -151,19 +151,45 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### 🔧 Quick Status Commands
+### 🔧 Quick Status Commands (Prompt Instructions)
 
-**User can request status snapshots with these keywords:**
+**When user types these keywords, execute the corresponding git commands and format the output exactly as specified:**
 
-- **`gitstat`** — Run `git status` and display working tree status
-  - Shows: Current branch, uncommitted changes, tracking status
-  - Output: Clean text format
-  
-- **`repostat`** — Run comprehensive repo status check
-  - Shows: Branch list with commits, recent commits (10), remote status compared to main
-  - Output: Markdown table format with branch/commit info
-  
-**Action:** When user types these keywords, immediately execute the commands and format output clearly (Markdown tables preferred). No explanations needed unless status is problematic.
+#### **`gitstat`** — Quick working tree check
+Execute: `git status`
+Output format: Show basic status (branch, changes, tracking). No explanation needed.
+
+#### **`repostat`** — Comprehensive repository snapshot
+Execute: `git status`, `git branch -v`, `git log`, `git diff`, PR status, conflicts check
+Output format: **Formatted box with emojis and statistics:**
+
+```
+🔍 testlearn  (gwipsi/testlearn)
+────────────────────────────────────────
+branch:   [current branch name]
+
+✅ Workdir        sauber | ⚠️ [X files changed]
+⚠️ Nicht gepusht  [N] Commits | ✅ Alles gepusht
+⚠️ Remote voraus  [N] Commits | ✅ Lokal aktuell
+⚠️ Branch↔main   [X ahead / Y behind] | ✅ Syncron
+✅ Konflikte      keine | ⚠️ [N] Konflikte
+✅ Offene PRs     [0] | ⚠️ [N] offene PRs
+🌿 Branches       [N] (außer main)
+📦 Stashes        [N]
+
+Letzter Commit:
+[commit hash]  [commit message] (vor [time])
+
+Fazit: [Zusammenfassung des Status]
+────────────────────────────────────────
+Trigger: repostat | gitstat
+```
+
+**Rules:**
+- ✅ grüner Haken = alles ok
+- ⚠️ Orange Warnung = Aktion nötig (unpushed, Konflikte, etc.)
+- Keine weiteren Erklärungen — nur die Übersicht
+- Immer aktuell abrufen (nicht cachen)
 
 ### ✅ Timestamp Auto-Update (Git Hook)
 
