@@ -151,6 +151,20 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
+### 🔧 Quick Status Commands
+
+**User can request status snapshots with these keywords:**
+
+- **`gitstat`** — Run `git status` and display working tree status
+  - Shows: Current branch, uncommitted changes, tracking status
+  - Output: Clean text format
+  
+- **`repostat`** — Run comprehensive repo status check
+  - Shows: Branch list with commits, recent commits (10), remote status compared to main
+  - Output: Markdown table format with branch/commit info
+  
+**Action:** When user types these keywords, immediately execute the commands and format output clearly (Markdown tables preferred). No explanations needed unless status is problematic.
+
 ### ✅ Timestamp Auto-Update (Git Hook)
 
 **No manual action needed!** A Git Pre-commit Hook automatically updates the timestamp whenever you commit changes to `/docs/`.
