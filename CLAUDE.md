@@ -208,26 +208,44 @@ The homepage displays "Letztes Update: [date] ([minutes ago])" so users always s
 ### `repostat` / `gitstat`
 **Trigger:** User types "repostat" or "gitstat"
 
-**Action:** Display comprehensive git + GitHub status:
-- Current branch and working directory state
-- Unpushed commits, remote ahead status
-- Comparison with main branch
-- **Merge conflict detection** (real test, not just working directory)
-- Stashes, branches
-- Open pull requests
-- Summary: all synchronized ✅ or outstanding issues ⚠️
+**Action:** Display comprehensive git + GitHub status (branch, workdir, unpushed,
+remote-ahead, vs-main, conflicts, PRs, branches, stashes, last commit).
 
-**Data sources:**
-- `git fetch --quiet` (before every measurement)
-- `git status --porcelain` (working directory)
-- `git log @{u}..HEAD` (unpushed commits)
-- `git log HEAD..@{u}` (remote ahead)
-- `git log HEAD..origin/main` / `origin/main..HEAD` (vs main)
-- **`git merge --no-commit --no-ff origin/main` (ACTUAL merge test, then abort)** ⚠️ RELIABLE
-  - NOT: `git diff --diff-filter=U` (only works during active merge)
-- `git stash list` (stashed changes)
-- `git branch -r` (remote branches)
-- GitHub MCP: `mcp__github__list_pull_requests` (open PRs)
-- Time calculation: hours or days since last commit
+#### ⚠️ Conflict detection — read this before reporting "keine Konflikte"
 
-**⚠️ CRITICAL:** The `git diff --diff-filter=U` method is UNRELIABLE for detecting merge conflicts before a merge attempt. Always perform an actual dry-run merge with `--no-commit --no-ff` and then abort to detect real conflicts.
+Conflict detection in this repo has failed repeatedly. Follow this exact order
+of trust. **NEVER report "no conflicts" based on a local test against local HEAD.**
+
+**1. AUTHORITATIVE — GitHub API (use this whenever an open PR exists):**
+   - `mcp__github__pull_request_read` → field `mergeable_state`:
+     - `dirty`   → **MERGE CONFLICT** (cannot merge, must resolve)
+     - `blocked` → no conflict; blocked by branch protection (needs review/approval) — user action
+     - `behind`  → no conflict; branch must update from base first
+     - `clean`   → ready to merge
+     - `unknown` → GitHub still computing; wait and re-query, do NOT assume clean
+   - This is the source of truth. If it says `dirty`, there IS a conflict even if
+     a local test disagrees.
+
+**2. LOCAL fallback (only when no PR exists, e.g. pre-push):**
+   - `git fetch origin --quiet` FIRST (mandatory).
+   - Test the REMOTE refs in the PR direction, never local HEAD:
+     `git merge-tree $(git merge-base origin/main origin/<branch>) origin/main origin/<branch>`
+   - Conflict if output contains `changed in both` or `<<<<<<<`.
+
+**Why local-HEAD tests give false negatives (the recurring bug):**
+- The `update-timestamp` GitHub Action pushes an extra `⏱️ Auto-update` commit to
+  the feature branch AFTER you push. Your local HEAD is then stale / behind
+  `origin/<branch>`, so a merge test against local HEAD tests the wrong tree.
+- A merge test needs a fresh `git fetch`; a stale `origin/main` ref also lies.
+- `git diff --diff-filter=U` only reports files during an ACTIVE merge — useless before one.
+
+**Root cause of the repeated conflicts (so we can avoid them):**
+- `docs/data.json` `lastUpdated` is edited on BOTH main (from previously merged PRs)
+  and the feature branch (by the Action). The same line diverges every time → guaranteed
+  conflict on that one line. Resolve by **keeping the newer timestamp** (`git checkout --ours docs/data.json` when merging main into the feature branch).
+- Reusing one long-lived branch makes histories cross (large "N ahead / N behind").
+  **Prefer fresh, short-lived branches per change**; delete the branch after its PR merges.
+
+**Other data sources:** `git status --porcelain` (workdir), `git log @{u}..HEAD`
+(unpushed), `git log HEAD..@{u}` (remote ahead), `git rev-list --count origin/main...HEAD`
+(vs main), `git stash list`, `git branch -r`, `mcp__github__list_pull_requests` (open PRs).
