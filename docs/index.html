@@ -4,13 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Git & Agent Learning Repository</title>
+    <script>
+        (function () {
+            var k = "testlearn-theme";
+            var s = localStorage.getItem(k);
+            var t = s === "light" || s === "dark"
+                ? s
+                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", t);
+        })();
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Git & Agent Learning Repository</h1>
-        <p class="subtitle">Git-Grundlagen, Agenten-Workflows und praktische Beispiele aus dem IT-Alltag. Mit automatischer Zeitstempel-Aktualisierung.</p>
-        <p id="last-updated" class="timestamp">Lädt Zeitstempel...</p>
+        <div class="header-bar">
+            <div class="header-content">
+                <h1>Git & Agent Learning Repository</h1>
+                <p class="subtitle">Git-Grundlagen, Agenten-Workflows und praktische Beispiele aus dem IT-Alltag. Mit automatischer Zeitstempel-Aktualisierung.</p>
+                <p id="last-updated" class="timestamp">Lädt Zeitstempel...</p>
+            </div>
+            <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Zu Dunkelmodus wechseln">Dunkelmodus</button>
+        </div>
     </header>
 
     <main>

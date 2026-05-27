@@ -1,3 +1,59 @@
+var THEME_STORAGE_KEY = "testlearn-theme";
+
+function getStoredTheme() {
+    var stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "light" || stored === "dark") {
+        return stored;
+    }
+    return null;
+}
+
+function getSystemTheme() {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+    }
+    return "light";
+}
+
+function getEffectiveTheme() {
+    return getStoredTheme() || getSystemTheme();
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    var toggle = document.getElementById("theme-toggle");
+    if (!toggle) {
+        return;
+    }
+    var isDark = theme === "dark";
+    toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
+    toggle.setAttribute(
+        "aria-label",
+        isDark ? "Zu Hellmodus wechseln" : "Zu Dunkelmodus wechseln"
+    );
+    toggle.textContent = isDark ? "Hellmodus" : "Dunkelmodus";
+}
+
+function toggleTheme() {
+    var current = document.documentElement.getAttribute("data-theme") || getEffectiveTheme();
+    var next = current === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_STORAGE_KEY, next);
+    applyTheme(next);
+}
+
+function initTheme() {
+    applyTheme(getEffectiveTheme());
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function() {
+        if (!getStoredTheme()) {
+            applyTheme(getSystemTheme());
+        }
+    });
+    var toggle = document.getElementById("theme-toggle");
+    if (toggle) {
+        toggle.addEventListener("click", toggleTheme);
+    }
+}
+
 function setActiveButton(button) {
     var buttons = document.querySelectorAll("button");
     buttons.forEach(function(btn) {
@@ -132,6 +188,7 @@ function updateLastModifiedTime() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    initTheme();
     updateLastModifiedTime();
 
     var buttons = document.querySelectorAll(".button-row button");

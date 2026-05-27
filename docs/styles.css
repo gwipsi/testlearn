@@ -1,12 +1,105 @@
 :root {
-    /* Fluent UI Color Palette */
-    --blue-dark: #0078D4;        /* Fluent Primary Blue */
-    --blue-light: #107C10;       /* Fluent Green (accent) */
-    --background: #F3F2F1;       /* Fluent Neutral Light */
-    --text: #323130;             /* Fluent Neutral Dark */
-    --muted: #666666;            /* Fluent Gray */
-    --card: #FFFFFF;             /* Fluent White */
-    --border: #E1DFDD;           /* Fluent Border Light */
+    color-scheme: light;
+    --blue-dark: #0078D4;
+    --blue-light: #1F9EFF;
+    --background: #F3F2F1;
+    --text: #323130;
+    --muted: #666666;
+    --card: #FFFFFF;
+    --border: #E1DFDD;
+    --header-text: #ffffff;
+    --header-subtitle: #e9f5ff;
+    --header-link: #e9f5ff;
+    --button-text: #ffffff;
+    --button-secondary-bg: transparent;
+    --button-secondary-text: var(--blue-dark);
+    --button-hover-bg: #f3f9ff;
+    --output-bg: #101828;
+    --output-text: #d7f7d7;
+    --status-bg: #eaf4ff;
+    --quickstart-bg: linear-gradient(135deg, #f5f9ff 0%, #fff5f7 100%);
+    --quickstart-border: #0078D4;
+    --quickstart-heading: #0078D4;
+    --quickstart-item-bg: #ffffff;
+    --quickstart-item-border: #e8e8e8;
+    --quickstart-code-bg: #f3f3f3;
+    --quickstart-code-text: #333333;
+    --story-bg: #F7F7F7;
+    --story-highlight-bg: rgba(31, 158, 255, 0.1);
+    --cloud-hinweis-bg: #e8f4fd;
+    --cloud-hinweis-border: #0078D4;
+    --summary-bg: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    --analogy-bg: #f0f6ff;
+    --infobox-blue-bg: #e8f4fd;
+    --infobox-yellow-bg: #fff8e1;
+    --infobox-yellow-border: #f9a825;
+    --infobox-green-bg: #e8f5e9;
+    --infobox-green-border: #2e7d32;
+    --praxis-bg: #f4faf0;
+    --praxis-border: #c5e1b0;
+    --praxis-accent: #4caf50;
+    --praxis-label: #2e7d32;
+    --badge-empfohlen-bg: #e8f5e9;
+    --badge-empfohlen-text: #2e7d32;
+    --badge-einsteiger-bg: #e8f4fd;
+    --badge-einsteiger-text: #0d47a1;
+    --badge-profi-bg: #f3e5f5;
+    --badge-profi-text: #6a1b9a;
+    --table-header-bg: #f5f5f5;
+    --learning-phase-end: #005a9e;
+    --theme-toggle-bg: rgba(255, 255, 255, 0.15);
+    --theme-toggle-border: rgba(255, 255, 255, 0.35);
+    --theme-toggle-hover: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --background: #1b1a19;
+    --text: #f3f2f1;
+    --muted: #a19f9d;
+    --card: #292827;
+    --border: #484644;
+    --header-subtitle: #c8e6ff;
+    --header-link: #c8e6ff;
+    --button-secondary-bg: transparent;
+    --button-secondary-text: #4da3ff;
+    --button-hover-bg: #323130;
+    --output-bg: #0b0f19;
+    --output-text: #b8f5b8;
+    --status-bg: #1a3a52;
+    --quickstart-bg: linear-gradient(135deg, #1e2a38 0%, #2a1f24 100%);
+    --quickstart-border: #4da3ff;
+    --quickstart-heading: #4da3ff;
+    --quickstart-item-bg: #292827;
+    --quickstart-item-border: #484644;
+    --quickstart-code-bg: #1b1a19;
+    --quickstart-code-text: #f3f2f1;
+    --story-bg: #252423;
+    --story-highlight-bg: rgba(77, 163, 255, 0.2);
+    --cloud-hinweis-bg: #1a2f42;
+    --cloud-hinweis-border: #4da3ff;
+    --summary-bg: linear-gradient(135deg, #252423 0%, #1e2a38 100%);
+    --analogy-bg: #1a2f42;
+    --infobox-blue-bg: #1a2f42;
+    --infobox-yellow-bg: #3d3520;
+    --infobox-yellow-border: #f9a825;
+    --infobox-green-bg: #1e3320;
+    --infobox-green-border: #66bb6a;
+    --praxis-bg: #1e3320;
+    --praxis-border: #3d6b40;
+    --praxis-accent: #66bb6a;
+    --praxis-label: #a5d6a7;
+    --badge-empfohlen-bg: #1e3320;
+    --badge-empfohlen-text: #a5d6a7;
+    --badge-einsteiger-bg: #1a2f42;
+    --badge-einsteiger-text: #90caf9;
+    --badge-profi-bg: #2d1f33;
+    --badge-profi-text: #ce93d8;
+    --table-header-bg: #323130;
+    --learning-phase-end: #004578;
+    --theme-toggle-bg: rgba(0, 0, 0, 0.25);
+    --theme-toggle-border: rgba(255, 255, 255, 0.2);
+    --theme-toggle-hover: rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -18,13 +111,46 @@ body {
     font-family: "Segoe UI", "Helvetica Neue", sans-serif;
     background: var(--background);
     color: var(--text);
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 header {
     padding: 40px 20px;
     background: var(--blue-dark);
-    color: #ffffff;
+    color: var(--header-text);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-bar {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.header-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.theme-toggle {
+    flex-shrink: 0;
+    border: 1px solid var(--theme-toggle-border);
+    border-radius: 4px;
+    padding: 8px 14px;
+    background: var(--theme-toggle-bg);
+    color: var(--header-text);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: inherit;
+    transition: background 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--theme-toggle-hover);
 }
 
 main {
@@ -41,7 +167,11 @@ h2 {
 .subtitle {
     max-width: 780px;
     margin: 8px 0 0 0;
-    color: #e9f5ff;
+    color: var(--header-subtitle);
+}
+
+.subtitle a {
+    color: var(--header-link);
 }
 
 .grid {
@@ -57,6 +187,7 @@ h2 {
     border: 1px solid var(--border);
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .card p {
@@ -76,7 +207,7 @@ button {
     border-radius: 2px;
     padding: 8px 16px;
     background: var(--blue-dark);
-    color: #ffffff;
+    color: var(--button-text);
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
@@ -84,18 +215,23 @@ button {
 }
 
 button.secondary {
-    background: transparent;
-    color: var(--blue-dark);
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
     border: 1px solid var(--border);
 }
 
-button:hover {
-    background: #f3f9ff;
+button.secondary:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-secondary-text);
+}
+
+button:not(.secondary):not(.theme-toggle):hover {
+    filter: brightness(1.1);
 }
 
 button.secondary.active {
     background: var(--blue-dark);
-    color: #ffffff !important;
+    color: var(--button-text) !important;
     border-color: var(--blue-dark);
 }
 
@@ -104,8 +240,8 @@ button.secondary.active {
     min-height: 96px;
     padding: 14px;
     border-radius: 10px;
-    background: #101828;
-    color: #d7f7d7;
+    background: var(--output-bg);
+    color: var(--output-text);
     font-family: Consolas, monospace;
     white-space: pre-wrap;
 }
@@ -114,7 +250,7 @@ button.secondary.active {
     display: inline-block;
     padding: 4px 8px;
     border-radius: 999px;
-    background: #eaf4ff;
+    background: var(--status-bg);
     color: var(--blue-dark);
     font-size: 12px;
     font-weight: bold;
@@ -131,7 +267,7 @@ footer {
 .timestamp {
     margin-top: 16px;
     font-size: 12px;
-    color: #ffffff;
+    color: var(--header-text);
     opacity: 0.9;
 }
 
@@ -149,14 +285,14 @@ footer {
 .quickstart {
     margin-top: 24px;
     padding: 24px;
-    background: linear-gradient(135deg, #f5f9ff 0%, #fff5f7 100%);
+    background: var(--quickstart-bg);
     border-radius: 8px;
-    border-left: 4px solid #0078D4;
+    border-left: 4px solid var(--quickstart-border);
 }
 
 .quickstart h2 {
     margin-top: 0;
-    color: #0078D4;
+    color: var(--quickstart-heading);
 }
 
 .quickstart-grid {
@@ -168,15 +304,15 @@ footer {
 
 .quickstart-item {
     padding: 16px;
-    background: #ffffff;
+    background: var(--quickstart-item-bg);
     border-radius: 6px;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--quickstart-item-border);
 }
 
 .quickstart-item h3 {
     margin: 0 0 12px 0;
     font-size: 14px;
-    color: #0078D4;
+    color: var(--quickstart-heading);
     font-weight: 600;
 }
 
@@ -189,18 +325,18 @@ footer {
 
 .quickstart-item code {
     display: block;
-    background: #f3f3f3;
+    background: var(--quickstart-code-bg);
     padding: 12px;
     border-radius: 4px;
     font-family: Consolas, monospace;
     font-size: 12px;
     overflow-x: auto;
     margin: 0;
-    color: #333;
+    color: var(--quickstart-code-text);
 }
 
 .quickstart-item a {
-    color: #0078D4;
+    color: var(--blue-dark);
     text-decoration: none;
     font-weight: 600;
 }
@@ -212,7 +348,7 @@ footer {
 .story-section {
     margin-top: 32px;
     padding: 24px;
-    background: #F7F7F7;
+    background: var(--story-bg);
     border-left: 4px solid var(--blue-dark);
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -230,7 +366,7 @@ footer {
 }
 
 .story-highlight {
-    background: rgba(31, 158, 255, 0.1);
+    background: var(--story-highlight-bg);
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: bold;
@@ -240,8 +376,8 @@ footer {
 .cloud-agent-hinweis {
     margin-top: 20px;
     padding: 16px 20px;
-    background: #e8f4fd;
-    border: 1px solid #0078D4;
+    background: var(--cloud-hinweis-bg);
+    border: 1px solid var(--cloud-hinweis-border);
     border-left: 4px solid var(--blue-dark);
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 120, 212, 0.12);
@@ -258,8 +394,60 @@ footer {
     padding: 4px 10px;
     border-radius: 999px;
     background: var(--blue-dark);
-    color: #ffffff;
+    color: var(--header-text);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.02em;
+}
+
+/* Git-Tutorial (Klassen aus git-tutorial.html) */
+.summary-box {
+    background: var(--summary-bg);
+}
+
+.analogy {
+    background: var(--analogy-bg);
+}
+
+.infobox.blue {
+    background: var(--infobox-blue-bg);
+}
+
+.infobox.yellow {
+    background: var(--infobox-yellow-bg);
+    border-left-color: var(--infobox-yellow-border);
+}
+
+.infobox.green {
+    background: var(--infobox-green-bg);
+    border-left-color: var(--infobox-green-border);
+}
+
+.praxis-box {
+    background: var(--praxis-bg);
+    border-color: var(--praxis-border);
+    border-left-color: var(--praxis-accent);
+}
+
+.praxis-box .praxis-label {
+    color: var(--praxis-label);
+}
+
+.badge-empfohlen {
+    background: var(--badge-empfohlen-bg);
+    color: var(--badge-empfohlen-text);
+}
+
+.badge-einsteiger {
+    background: var(--badge-einsteiger-bg);
+    color: var(--badge-einsteiger-text);
+}
+
+.badge-profi {
+    background: var(--badge-profi-bg);
+    color: var(--badge-profi-text);
+}
+
+.learning-phase {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--learning-phase-end) 100%);
 }
