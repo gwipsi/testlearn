@@ -121,9 +121,29 @@ button.secondary.active {
 }
 
 footer {
-    margin-top: 28px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 20px;
     color: var(--muted);
     font-size: 14px;
+}
+
+.timestamp {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.card--highlight {
+    margin-top: 20px;
+    border-top: 3px solid var(--blue-dark);
+}
+
+.story-quote {
+    margin-top: 20px;
+    font-style: italic;
+    color: var(--muted);
 }
 
 .story-section {
