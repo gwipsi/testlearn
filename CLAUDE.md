@@ -242,3 +242,54 @@ of trust. **NEVER report "no conflicts" based on a local test against local HEAD
 **Other data sources:** `git status --porcelain` (workdir), `git log @{u}..HEAD`
 (unpushed), `git log HEAD..@{u}` (remote ahead), `git rev-list --count origin/main...HEAD`
 (vs main), `git stash list`, `git branch -r`, `mcp__github__list_pull_requests` (open PRs).
+
+### Output Format & Fazit
+
+**Display as Markdown code block** with this structure:
+```
+🔍 testlearn  (gwipsi/testlearn)
+────────────────────────────────────────
+branch:   [current branch]
+
+✅ Workdir        sauber | ⚠️ [X files changed]
+⚠️ Nicht gepusht  [N] | ✅ Alles gepusht
+⚠️ Remote voraus  [N] | ✅ Lokal aktuell
+⚠️ Branch↔main   [X ahead / Y behind] | ✅ Syncron
+✅ Konflikte      keine | ⚠️ Ja
+✅ Offene PRs     [N] | ⚠️ [N] (blocked/dirty)
+🌿 Branches       [N] (außer main)
+📦 Stashes        [N]
+
+Letzter Commit:
+YYYY-MM-DD HH:MM  (vor Xm/Xh)
+[hash]  [message]
+
+Fazit: [Status summary]
+────────────────────────────────────────
+Trigger: repostat | gitstat
+```
+
+**Fazit Format (Multi-line when problems exist):**
+- If ✅ all green: `Fazit: ✅ [Summary]`
+- If ⚠️ problems exist: Show all three lines:
+  1. **Problem:** What's wrong (e.g., "PR #21 hat Konflikte")
+  2. **Grund:** Root cause in one line (e.g., "mergeable_state=dirty")
+  3. **Lösung:** Action user can take (e.g., "Schreib 'fix' → ich behebe es")
+
+Example:
+```
+Fazit: ⚠️ PR #21 hat Konflikte (mergeable_state=dirty)
+Grund: Main hat neue Commits, die mit dieser Branch kollidieren
+Lösung: Schreib "fix" → ich behebe die Konflikte
+```
+
+### `fix` — Auto-fix detected problems
+**Trigger:** User types "fix"
+
+**Action:** Scan current branch for common issues and attempt auto-fix:
+- **Unpushed commits** → `git push origin [branch]`
+- **Merge conflicts (PR dirty)** → `git pull origin main --no-rebase`, resolve with `git checkout --ours/--theirs` as needed, commit, push
+- **Branch behind main** → `git pull origin main`
+- **Stashed changes** → `git stash pop`
+
+**Output:** Show what was fixed (or what couldn't be), then run `gitstat` to display new status.
