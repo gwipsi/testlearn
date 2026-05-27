@@ -287,7 +287,7 @@
 
     <main>
 
-        <!-- INTRO SECTION -->
+        <!-- INTRO -->
         <section class="section" id="intro">
             <div class="section-header">
                 <div class="section-number">👋</div>
@@ -327,24 +327,20 @@
                 <li class="toc-group">Teil 2 · Mit Agenten arbeiten</li>
                 <li><a href="#agenten-grundlagen">Wie der Agent arbeitet</a></li>
                 <li><a href="#aufgaben-beschreiben">Aufgaben richtig beschreiben</a></li>
-                <li><a href="#ergebnisse-reviewen">Ergebnisse reviewen</a></li>
-                <li><a href="#merge-strategien">Merge-Strategien wählen</a></li>
+                <li><a href="#reviewen-mergen">Reviewen &amp; Mergen</a></li>
 
-                <li class="toc-group">Teil 2b · Automatisierung</li>
+                <li class="toc-group">Teil 3 · Automatisierung</li>
                 <li><a href="#hooks-vs-actions">Git Hooks vs GitHub Actions</a></li>
 
-                <li class="toc-group">Teil 3 · Die Interfaces</li>
-                <li><a href="#interfaces-uebersicht">GitHub Web, Desktop & Mobile</a></li>
-                <li><a href="#github-web">GitHub.com Web-Interface</a></li>
-                <li><a href="#andere-interfaces">Desktop & Mobile</a></li>
+                <li class="toc-group">Teil 4 · Die Oberflächen</li>
+                <li><a href="#oberflaechen">Welche Oberfläche wofür?</a></li>
 
-                <li class="toc-group">Teil 4 · Workflows</li>
+                <li class="toc-group">Teil 5 · Workflows</li>
                 <li><a href="#feature-workflow">Feature entwickeln</a></li>
-                <li><a href="#review-merge">Review & Merge</a></li>
                 <li><a href="#hotfix-workflow">Hotfixes</a></li>
                 <li><a href="#mehrere-projekte">Mehrere Projekte</a></li>
 
-                <li class="toc-group">Teil 5 · Tiefgang (optional)</li>
+                <li class="toc-group">Teil 6 · Tiefgang (optional)</li>
                 <li><a href="#git-intern">Wie Git intern funktioniert</a></li>
                 <li><a href="#weitere-konzepte">Weitere Konzepte</a></li>
 
@@ -447,7 +443,7 @@
                 <div class="concept-card">
                     <h3>Pull Request (PR)</h3>
                     <p>Ein formales „Schau dir meine Arbeit an und gib mir Feedback, bevor ich es in main merge." Ermöglicht Review und Diskussion auf GitHub.</p>
-                    <p class="analogy">Du reichst dein Experiment zur Qualitätskontrolle ein. Kollegen lesen, kommentieren, und geben freigabe.</p>
+                    <p class="analogy">Du reichst dein Experiment zur Qualitätskontrolle ein. Kollegen lesen, kommentieren, und geben Freigabe.</p>
                 </div>
 
             </div>
@@ -528,7 +524,7 @@
 
             <div class="infobox yellow" style="margin-top: 20px;">
                 <strong>Wichtig zu wissen:</strong>
-                Der Agent arbeitet in einer Remote-Sandbox (Cloud-Container). Er klont das Repo, macht Änderungen, und pushed zu GitHub. Das ist genau wie wenn ein Kollege remote arbeitet.
+                Der Agent arbeitet in einer Remote-Sandbox (Cloud-Container). Er klont das Repo, macht Änderungen, und pusht zu GitHub. Das ist genau wie wenn ein Kollege remote arbeitet.
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
@@ -570,106 +566,120 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 6. Ergebnisse reviewen -->
-        <section class="section" id="ergebnisse-reviewen">
+        <!-- 6. Reviewen & Mergen -->
+        <section class="section" id="reviewen-mergen">
             <div class="section-header">
                 <div class="section-number">6</div>
-                <h2>Ergebnisse reviewen – wie du Änderungen prüfst</h2>
+                <h2>Reviewen &amp; Mergen</h2>
             </div>
 
-            <p>Der Agent hat die Arbeit gemacht. Jetzt prüfst du sie. Hier sind die Stationen:</p>
+            <p>Der Agent hat gearbeitet und einen PR geöffnet. Jetzt prüfst du die Arbeit – und mergst sie, wenn alles passt. Das ist dein wichtigster Schritt: hier entscheidest du, was in <code>main</code> landet.</p>
 
-            <ol class="workflow-steps" style="margin-top: 20px;">
+            <h3 style="margin-top: 24px;">So reviewst du einen PR</h3>
+
+            <ol class="workflow-steps" style="margin-top: 16px;">
                 <li><div class="step-num">1</div>
                     <div>
-                        <strong>Schau dir den PR auf GitHub an</strong><br>
-                        Der PR zeigt dir genau, welche Zeilen geändert wurden (rot = weg, grün = neu). Du siehst sofort, ob was unreasonable ist.
+                        <strong>PR auf GitHub öffnen</strong><br>
+                        Repo → Tab „Pull Requests" → den PR anklicken. Unter „Files changed" siehst du jede geänderte Zeile (grün = neu, rot = entfernt).
                     </div>
                 </li>
                 <li><div class="step-num">2</div>
                     <div>
-                        <strong>Lies die Commit-Nachrichten</strong><br>
-                        Sind die aussagekräftig? „Add dark mode" ist gut. „fix" ist schlecht. Das ist wichtig für die Zukunft.
+                        <strong>Worauf du achtest</strong><br>
+                        Sind die <strong>Commits</strong> aussagekräftig? („Add dark mode" gut, „fix" schlecht.) Machen die <strong>Changes</strong> inhaltlich Sinn? Sind <strong>Tests</strong> grün? Ist es <strong>dokumentiert</strong> (Code-Kommentare oder PR-Beschreibung)?
                     </div>
                 </li>
                 <li><div class="step-num">3</div>
                     <div>
-                        <strong>Teste lokal (optional)</strong><br>
-                        Wenn es wichtig ist, klone den Branch lokal und teste die Änderungen. Meist ist das GitHub-Preview genug.
+                        <strong>Lokal testen (optional)</strong><br>
+                        Wenn es wichtig ist, klone den Branch und teste die Änderungen. Meist reicht die GitHub-Vorschau.
                     </div>
                 </li>
                 <li><div class="step-num">4</div>
                     <div>
-                        <strong>Kommentiere im PR, wenn Feedback nötig ist</strong><br>
-                        Der Agent liest Kommentare und kann weitere Commits machen. Dann wird der PR automatisch aktualisiert.
+                        <strong>Kommentieren, wenn Feedback nötig ist</strong><br>
+                        Der Agent liest Kommentare und macht weitere Commits. Der PR aktualisiert sich dann automatisch.
                     </div>
                 </li>
                 <li><div class="step-num">5</div>
                     <div>
-                        <strong>Gib frei (Approve)</strong><br>
-                        Wenn alles gut aussieht: „Approved" – der Agent oder deine CI/CD kann jetzt mergen.
+                        <strong>Freigeben (Approve)</strong><br>
+                        Wenn alles gut aussieht: „Approve" – damit ist der PR bereit zum Mergen.
                     </div>
                 </li>
             </ol>
 
-            <div class="infobox blue" style="margin-top: 20px;">
+            <div class="infobox blue">
                 <strong>Trick: Diff-View auf GitHub</strong>
                 <p style="margin: 8px 0 0 0;">Oben rechts im PR kannst du zwischen „Unified" (eine Spalte) und „Split" (zwei Spalten) umschalten. Split ist oft übersichtlicher für große Changes.</p>
             </div>
 
-            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
-        </section>
+            <h3 style="margin-top: 28px;">Die Merge-Strategie wählen</h3>
 
-        <!-- 7. Merge-Strategien -->
-        <section class="section" id="merge-strategien">
-            <div class="section-header">
-                <div class="section-number">7</div>
-                <h2>Merge-Strategien – wie die Commits zusammengefügt werden</h2>
-            </div>
+            <p>Beim Mergen wählst du, <em>wie</em> die Commits zusammengefügt werden. Drei Strategien, drei Ergebnisse:</p>
 
-            <p>Wenn du einen PR auf GitHub mergst, kannst du zwischen 3 Strategien wählen. Jede hat ein anderes Ergebnis:</p>
-
-            <div class="concept-grid" style="margin-top: 20px;">
+            <div class="concept-grid" style="margin-top: 16px;">
 
                 <div class="concept-card">
                     <h3>1️⃣ Merge Commit</h3>
                     <p><strong>Was passiert:</strong> Ein spezieller „Merge-Commit" wird erstellt, der zeigt: hier wurde ein Branch zusammengefügt.</p>
-                    <p><strong>History sieht aus wie:</strong> Zwei parallele Zeilen, dann vereinigen sich wieder.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Große Features mit mehreren Commits, wo man später nachvollziehen will, dass das eine Einheit war.</p>
+                    <p><strong>History:</strong> Zwei parallele Zeilen, die sich wieder vereinigen.</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Große Features mit mehreren Commits, wo man später sehen will, dass das eine Einheit war.</p>
                 </div>
 
                 <div class="concept-card">
-                    <h3>2️⃣ Squash & Merge</h3>
+                    <h3>2️⃣ Squash &amp; Merge</h3>
                     <p><strong>Was passiert:</strong> Alle Commits aus dem Feature-Branch werden zu 1 Commit kombiniert.</p>
-                    <p><strong>History sieht aus wie:</strong> Eine saubere, lineare Linie. Keine Verzweigungen.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Kleine Fixes, Single Features, wenn man nicht alle Zwischen-Commits braucht.</p>
+                    <p><strong>History:</strong> Eine saubere, lineare Linie. Keine Verzweigungen.</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Kleine Fixes, Single Features, wenn man die Zwischen-Commits nicht braucht.</p>
                 </div>
 
                 <div class="concept-card">
-                    <h3>3️⃣ Rebase & Merge</h3>
+                    <h3>3️⃣ Rebase &amp; Merge</h3>
                     <p><strong>Was passiert:</strong> Die Commits werden „umgesetzt", als wären sie direkt auf main gemacht worden.</p>
-                    <p><strong>History sieht aus wie:</strong> Linear, aber es wird verschleiert, dass ein Branch existierte.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Eher selten – nur wenn absolute lineare History wichtig ist.</p>
+                    <p><strong>History:</strong> Linear, aber es wird verschleiert, dass ein Branch existierte.</p>
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><strong>Wann:</strong> Eher selten – nur wenn absolut lineare History wichtig ist.</p>
                 </div>
 
             </div>
 
-            <div class="infobox green" style="margin-top: 20px;">
+            <div class="infobox green">
                 <strong>Praktische Empfehlung im IT-Systemhaus:</strong>
                 <ul style="margin: 8px 0 0 0; padding-left: 16px; font-size: 14px; color: var(--text); line-height: 1.8;">
-                    <li><strong>Squash & Merge:</strong> Kleine Fixes, Typos, einfache Features (Standard)</li>
-                    <li><strong>Merge Commit:</strong> Große Features, wo man später wissen will, dass das zusammenhängt</li>
-                    <li><strong>Rebase & Merge:</strong> Selten – nur wenn das Team das vereinbart</li>
+                    <li><strong>Squash &amp; Merge:</strong> Kleine Fixes, Typos, einfache Features (Standard)</li>
+                    <li><strong>Merge Commit:</strong> Große Features, wo der Zusammenhang erhalten bleiben soll</li>
+                    <li><strong>Rebase &amp; Merge:</strong> Selten – nur wenn das Team das vereinbart</li>
                 </ul>
+            </div>
+
+            <h3 style="margin-top: 28px;">Mergen – und danach</h3>
+
+            <ol style="color: var(--text); line-height: 2; font-size: 14px; margin: 12px 0 0 0;">
+                <li>Grüner Button <strong>„Merge pull request"</strong> (oben rechts im PR)</li>
+                <li>Dropdown-Pfeil → <strong>Strategie wählen</strong> (siehe oben)</li>
+                <li><strong>„Confirm merge"</strong></li>
+            </ol>
+
+            <div class="infobox blue">
+                <strong>Was danach passiert:</strong>
+                <p style="margin: 8px 0 0 0;">Der Branch wird mit main zusammengefügt und ist dann „merged" – er wird nicht mehr gebraucht. GitHub bietet an, ihn zu löschen: <strong>mach das immer</strong>, damit die Branch-Liste sauber bleibt. Danach läuft dein Deploy (z.B. GitHub Pages) automatisch.</p>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 8. Git Hooks vs GitHub Actions -->
+        <!-- ===== TEIL 3: AUTOMATISIERUNG ===== -->
+        <div class="learning-phase">
+            <div class="phase-label">Teil 3 · Automatisierung</div>
+            <h2>Dinge automatisch passieren lassen</h2>
+            <p>Wann läuft welches Automatisierungs-System – und warum das für Agenten-Teams entscheidend ist.</p>
+        </div>
+
+        <!-- 7. Git Hooks vs GitHub Actions -->
         <section class="section" id="hooks-vs-actions">
             <div class="section-header">
-                <div class="section-number">8</div>
+                <div class="section-number">7</div>
                 <h2>Automatisierung: Git Hooks vs GitHub Actions</h2>
             </div>
 
@@ -687,7 +697,7 @@
 
                 <div class="concept-card">
                     <h3>⚡ GitHub Actions</h3>
-                    <p><strong>Was das ist:</strong> Automatisierungs-Workflows, die auf <em>GitHub's Servern</em> laufen, wenn bestimmte Events passieren (z.B. Push zu main).</p>
+                    <p><strong>Was das ist:</strong> Automatisierungs-Workflows, die auf <em>GitHubs Servern</em> laufen, wenn bestimmte Events passieren (z.B. Push zu main).</p>
                     <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wo sie leben:</strong> Im Repository in <code>.github/workflows/</code></p>
                     <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Wann sie laufen:</strong> Bei jedem Push, Merge, oder anderen GitHub-Events</p>
                     <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Vorteil:</strong> ✅ Funktioniert überall ✅ Funktioniert mit Agenten ✅ Funktioniert mit GitHub Web</p>
@@ -732,7 +742,7 @@
 
             <div class="infobox green" style="margin-top: 20px;">
                 <strong>Die Faustregel:</strong>
-                <p style="margin: 8px 0 0 0;"><strong>Für Teams mit Agenten:</strong> Nutze GitHub Actions, nicht Git Hooks. Actions funktionieren überall – lokal, in Remote-Sandboxen, auf GitHub.com, überall.</p>
+                <p style="margin: 8px 0 0 0;"><strong>Für Teams mit Agenten:</strong> Nutze GitHub Actions, nicht Git Hooks. Actions funktionieren überall – lokal, in Remote-Sandboxen, auf GitHub.com.</p>
             </div>
 
             <h3 style="margin-top: 28px;">Praktisches Beispiel: Dynamische Daten mit Client-Side Fetching</h3>
@@ -741,181 +751,93 @@
                 <span class="praxis-label">🔧 In diesem Projekt</span>
                 <p style="margin: 0; margin-bottom: 8px;"><strong>Das Problem:</strong> Nach jedem Merge soll die Website zeigen „Letztes Update: vor 2 Sekunden" statt „vor 3 Tagen".</p>
 
-                <p style="margin: 8px 0;"><strong>Mit Git Hook:</strong> ❌ Funktioniert nur, wenn du lokal commitest. Wenn der Agent pusht oder du auf GitHub.com merkst, passiert nichts.</p>
+                <p style="margin: 8px 0;"><strong>Mit Git Hook:</strong> ❌ Funktioniert nur, wenn du lokal committest. Wenn der Agent pusht oder du auf GitHub.com mergst, passiert nichts.</p>
 
-                <p style="margin: 8px 0;"><strong>Mit GitHub Action:</strong> ⚠️ Ein Workflow würde das zwar tun, führt aber zu Merge-Konflikten, wenn Git-Hooks oder die Action unterschiedliche Werte schreiben.</p>
+                <p style="margin: 8px 0;"><strong>Mit GitHub Action:</strong> ⚠️ Ein Workflow würde das zwar tun, führt aber zu Merge-Konflikten, wenn unterschiedliche Branches denselben Timestamp-Wert schreiben.</p>
 
-                <p style="margin: 8px 0;"><strong>Bessere Lösung – Client-Side Fetch:</strong> ✅ Ein JavaScript-Skript im Browser fetcht die neueste Commit-Zeit direkt von der GitHub API (<code>GET /repos/gwipsi/testlearn/commits?path=docs&per_page=1</code>) und zeigt diese an. Keine committed Werte, keine Konflikte. Das Skript aktualisiert die Anzeige automatisch beim Laden der Seite – sofort, immer aktuell, zuverlässig.</p>
+                <p style="margin: 8px 0;"><strong>Bessere Lösung – Client-Side Fetch:</strong> ✅ Ein JavaScript im Browser holt die neueste Commit-Zeit direkt von der GitHub API (<code>GET /repos/gwipsi/testlearn/commits?path=docs&amp;per_page=1</code>) und zeigt sie an. Keine committeten Werte, keine Konflikte – sofort, immer aktuell, zuverlässig.</p>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- ===== TEIL 3: DIE INTERFACES ===== -->
+        <!-- ===== TEIL 4: DIE OBERFLÄCHEN ===== -->
         <div class="learning-phase">
-            <div class="phase-label">Teil 3 · Oberflächen</div>
-            <h2>GitHub Web, Desktop & Mobile – wo klickst du?</h2>
+            <div class="phase-label">Teil 4 · Oberflächen</div>
+            <h2>Wo klickst du? GitHub Web, Desktop &amp; Mobile</h2>
             <p>Git hat mehrere Oberflächen. Jede ist für andere Aufgaben optimiert.</p>
         </div>
 
-        <!-- 9. Interfaces Übersicht -->
-        <section class="section" id="interfaces-uebersicht">
+        <!-- 8. Oberflächen -->
+        <section class="section" id="oberflaechen">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">8</div>
                 <h2>Welche Oberfläche für welche Aufgabe?</h2>
             </div>
 
-            <div class="concept-grid" style="margin-top: 20px;">
-                <div class="concept-card">
-                    <h3>🌐 GitHub.com (Web)</h3>
-                    <p><strong>Das ist:</strong> Die Browser-Seite github.com. Keine Installation nötig, überall erreichbar.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Perfekt für:</strong> PRs reviewen, mergen, Dateien schnell editieren, Branches verwalten.</p>
-                </div>
-
-                <div class="concept-card">
-                    <h3>🖥️ GitHub Desktop</h3>
-                    <p><strong>Das ist:</strong> Eine Desktop-App – grafisches Interface für Git-Operationen, ohne Terminal.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Perfekt für:</strong> Lokale Arbeit, Branches anschauen, Diffs vergleichen, Commits erstellen.</p>
-                </div>
-
-                <div class="concept-card">
-                    <h3>📱 GitHub Mobile</h3>
-                    <p><strong>Das ist:</strong> Die App fürs Handy – GitHub im Miniformat.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Perfekt für:</strong> PRs reviewen unterwegs, Kommentare, im Notfall schnell freigeben.</p>
-                </div>
-
-                <div class="concept-card">
-                    <h3>⌨️ Terminal</h3>
-                    <p><strong>Das ist:</strong> PowerShell, CMD, oder Unix-Shell – für die, die alles kontrollieren wollen.</p>
-                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;"><strong>Perfekt für:</strong> Agenten (die arbeiten immer im Terminal), wenn dir die UIs nicht reichen.</p>
-                </div>
-            </div>
-
-            <div class="infobox blue" style="margin-top: 20px;">
+            <div class="infobox blue">
                 <strong>Im IT-Systemhaus – realistisch:</strong>
-                <p style="margin: 8px 0 0 0;">90% der Arbeit passiert in GitHub.com (Web). Das ist deine Zentrale. GitHub Desktop brauchst du, wenn du lokal entwickeln willst (selten). Terminal brauchst du fast nie. Handy ist praktisch, wenn du unterwegs einen PR freigeben musst.</p>
+                <p style="margin: 8px 0 0 0;">90% deiner Arbeit passiert auf <strong>GitHub.com</strong> (Web) – das ist deine Zentrale. GitHub Desktop oder Fork brauchst du, wenn du lokal entwickeln willst (selten). Das Terminal brauchst du fast nie – dort arbeiten die Agenten. Das Handy ist praktisch, um unterwegs einen PR freizugeben.</p>
             </div>
 
-            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
-        </section>
-
-        <!-- 10. GitHub Web -->
-        <section class="section" id="github-web">
-            <div class="section-header">
-                <div class="section-number">18</div>
-                <h2>GitHub.com – deine zentrale Kommandozentrale</h2>
-            </div>
-
-            <h3 style="margin-top: 20px;">Was du auf GitHub.com machst:</h3>
-
-            <ul style="color: var(--text); line-height: 2; font-size: 14px; margin: 12px 0 0 0;">
-                <li><strong>Pull Requests ansehen</strong> – Code-Changes, Diskussionen, Reviews</li>
-                <li><strong>PRs reviewen und freigeben</strong> – „Looks good to me" oder Feedback geben</li>
-                <li><strong>PRs mergen</strong> – Merge-Strategie wählen (Merge Commit, Squash, Rebase)</li>
-                <li><strong>Branches verwalten</strong> – erstellen, löschen, anschauen</li>
-                <li><strong>Dateien direkt editieren</strong> – schnelle Fixes, ohne lokal zu arbeiten</li>
-                <li><strong>Commits direkt erstellen</strong> – wenn du das Web-Interface benutzt, statt Terminal</li>
-                <li><strong>History ansehen</strong> – wer hat was wann geändert</li>
-            </ul>
-
-            <h3 style="margin-top: 28px;">Der typische Workflow auf GitHub:</h3>
-
-            <ol class="workflow-steps" style="margin-top: 16px;">
-                <li><div class="step-num">1</div>
-                    <div>
-                        <strong>PR-Seite öffnen</strong> – Auf deinem Repo → „Pull Requests" Tab
-                    </div>
-                </li>
-                <li><div class="step-num">2</div>
-                    <div>
-                        <strong>PR lesen</strong> – Title, Description, was wurde geändert
-                    </div>
-                </li>
-                <li><div class="step-num">3</div>
-                    <div>
-                        <strong>„Files changed" anschauen</strong> – Zeige dir die Diffs (grün = neu, rot = entfernt)
-                    </div>
-                </li>
-                <li><div class="step-num">4</div>
-                    <div>
-                        <strong>Kommentieren oder freigeben</strong> – Feedback geben oder „Approve"
-                    </div>
-                </li>
-                <li><div class="step-num">5</div>
-                    <div>
-                        <strong>Merge-Strategie wählen und mergen</strong> – Grüner Button „Merge pull request" → Dropdown → Wahl → „Confirm merge"
-                    </div>
-                </li>
-            </ol>
-
-            <div class="infobox green" style="margin-top: 20px;">
-                <strong>GitHub Web-Tricks:</strong>
-                <ul style="margin: 8px 0 0 0; padding-left: 16px; font-size: 14px; color: var(--text); line-height: 1.8;">
-                    <li>Drücke <strong>p</strong> auf einer PR-Seite, um zum PR zu gehen (Keyboard-Shortcut)</li>
-                    <li>Mit <strong>?</strong> siehst du alle Keyboard-Shortcuts</li>
-                    <li>Im Diff-View: Rechts oben → „Split" statt „Unified" für zwei-spaltig Ansicht</li>
+            <div class="tool-card" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="tool-badge badge-empfohlen">Deine Zentrale</div>
+                <h3 style="margin-top: 0;">🌐 GitHub.com (Web)</h3>
+                <p>Die Browser-Seite github.com. Keine Installation, überall erreichbar. Hier passiert der Großteil deiner Arbeit:</p>
+                <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
+                    <li>✅ Pull Requests ansehen, reviewen, freigeben und mergen (siehe Abschnitt 6)</li>
+                    <li>✅ Branches verwalten – erstellen, löschen, anschauen</li>
+                    <li>✅ Dateien direkt editieren – schnelle Fixes ohne lokal zu arbeiten</li>
+                    <li>✅ History ansehen – wer hat was wann geändert</li>
                 </ul>
-            </div>
-
-            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
-        </section>
-
-        <!-- 11. Andere Interfaces -->
-        <section class="section" id="andere-interfaces">
-            <div class="section-header">
-                <div class="section-number">18</div>
-                <h2>GitHub Desktop, Mobile, Terminal – wenn du mehr brauchst</h2>
+                <p style="margin: 12px 0 0 0; font-size: 13px; color: var(--muted);"><strong>Tricks:</strong> Drücke <code>?</code> für alle Keyboard-Shortcuts. Im Diff-View rechts oben „Split" statt „Unified" für eine zwei-spaltige Ansicht.</p>
             </div>
 
             <div class="tool-card" style="margin-bottom: 20px;">
                 <div class="tool-badge badge-einsteiger">Für lokale Arbeit</div>
-                <h3 style="margin-top: 0;">GitHub Desktop</h3>
-                <p>Wenn du lokal entwickeln willst (was selten ist, wenn du mit Agenten arbeitest), ist GitHub Desktop praktisch:</p>
+                <h3 style="margin-top: 0;">🖥️ GitHub Desktop</h3>
+                <p>Eine kostenlose Desktop-App – grafisches Interface für Git ohne Terminal. Praktisch, wenn du lokal entwickeln willst:</p>
                 <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
                     <li>✅ Branches visuell wechseln</li>
-                    <li>✅ Diffs visuell sehen (rot/grün, Side-by-side)</li>
-                    <li>✅ Commits lokal erstellen</li>
-                    <li>✅ Einfache Merges handhaben</li>
+                    <li>✅ Diffs side-by-side sehen (rot/grün)</li>
+                    <li>✅ Commits lokal erstellen, einfache Merges</li>
                     <li>❌ Nicht geeignet für komplexe Merge-Konflikte</li>
                 </ul>
             </div>
 
             <div class="tool-card" style="margin-bottom: 20px;">
-                <div class="tool-badge badge-einsteiger">Professionelle Alternative</div>
-                <h3 style="margin-top: 0;">Fork (Desktop-App)</h3>
-                <p>Ein moderner, mächtiger Git-Client der Profi-Workflows unterstützt:</p>
+                <div class="tool-badge badge-profi">Profi-Alternative</div>
+                <h3 style="margin-top: 0;">🍴 Fork (Desktop-App)</h3>
+                <p>Ein moderner, mächtiger Git-Client für Profi-Workflows – die Stufe über GitHub Desktop:</p>
                 <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
-                    <li>✅ <strong>Rebase &amp; Squash:</strong> Visuell und einfach, im Gegensatz zu Terminal-Befehlen</li>
-                    <li>✅ <strong>Advanced Merge:</strong> Komplexe Konflikte mit kontext-bewusstem Resolver</li>
-                    <li>✅ <strong>Patch-Staging:</strong> Einzelne Zeilen commiten, nicht ganze Dateien</li>
-                    <li>✅ <strong>Interactive Rebase:</strong> Commits visuell umordnen, squashen, editieren</li>
-                    <li>✅ <strong>Code Review:</strong> Inline-Kommentare, Diffs im Detail</li>
-                    <li>💰 <strong>Einmalige Lizenz (~50 EUR):</strong> Unbegrenzte Nutzung, kein Abo. Wert: Effizientere Workflows, weniger Terminal-Fehler, schnellere Merges</li>
+                    <li>✅ <strong>Rebase &amp; Squash:</strong> visuell statt Terminal-Befehle</li>
+                    <li>✅ <strong>Advanced Merge:</strong> komplexe Konflikte mit kontext-bewusstem Resolver</li>
+                    <li>✅ <strong>Patch-Staging:</strong> einzelne Zeilen committen statt ganze Dateien</li>
+                    <li>✅ <strong>Interactive Rebase:</strong> Commits umordnen, squashen, editieren</li>
+                    <li>💰 Einmalige Lizenz (~50 EUR), kein Abo</li>
                 </ul>
-                <p style="margin: 12px 0 0 0; font-size: 13px; color: var(--muted);"><strong>Vergleich mit GitHub Desktop:</strong> GitHub Desktop ist kostenlos, aber sehr einfach. Fork kostet einmal, bietet aber Git-Power für Teams, die mehr brauchen als Branch-Wechsel und einfache Commits. Besonders für Rebase-Workflows und komplexe Konflikte ist Fork überlegen.</p>
+                <p style="margin: 12px 0 0 0; font-size: 13px; color: var(--muted);"><strong>Desktop vs. Fork:</strong> GitHub Desktop ist kostenlos und einfach. Fork kostet einmalig, bietet aber echte Git-Power – besonders für Rebase-Workflows und komplexe Konflikte.</p>
             </div>
 
             <div class="tool-card" style="margin-bottom: 20px;">
                 <div class="tool-badge badge-einsteiger">Unterwegs</div>
-                <h3 style="margin-top: 0;">GitHub Mobile App</h3>
-                <p>Handy, wenn du nicht am Computer sitzt:</p>
+                <h3 style="margin-top: 0;">📱 GitHub Mobile</h3>
+                <p>Die App fürs Handy – GitHub im Miniformat, wenn du nicht am Computer sitzt:</p>
                 <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
-                    <li>✅ PRs ansehen und lesen</li>
-                    <li>✅ Kommentare hinzufügen</li>
+                    <li>✅ PRs ansehen und lesen, Kommentare hinzufügen</li>
                     <li>✅ PRs freigeben (Approve/Request Changes)</li>
                     <li>✅ Im Notfall mergen</li>
                     <li>❌ Nicht für komplexe Entwicklung</li>
                 </ul>
             </div>
 
-            <div class="tool-card" style="margin-bottom: 20px;">
+            <div class="tool-card">
                 <div class="tool-badge badge-profi">Nur wenn nötig</div>
-                <h3 style="margin-top: 0;">Terminal</h3>
-                <p>Der direkte Zugang zu allem. Brauchst du normalerweise nicht.</p>
+                <h3 style="margin-top: 0;">⌨️ Terminal</h3>
+                <p>PowerShell, CMD oder Unix-Shell – der direkte Zugang zu allem. Brauchst du normalerweise nicht:</p>
                 <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
                     <li>✅ 100% der Git-Funktionalität</li>
                     <li>✅ Agenten arbeiten hier (Cloud-Sandbox)</li>
-                    <li>✅ Wenn dir die UIs nicht reichen</li>
                     <li>⚠️ Steilere Lernkurve, mehr Fehler möglich</li>
                 </ul>
             </div>
@@ -923,17 +845,17 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- ===== TEIL 4: WORKFLOWS ===== -->
+        <!-- ===== TEIL 5: WORKFLOWS ===== -->
         <div class="learning-phase">
-            <div class="phase-label">Teil 4 · Szenarien</div>
+            <div class="phase-label">Teil 5 · Szenarien</div>
             <h2>Praktische Workflows</h2>
-            <p>Schritt-für-Schritt, was passiert in echten Situationen.</p>
+            <p>Schritt-für-Schritt, was in echten Situationen passiert.</p>
         </div>
 
-        <!-- 12. Feature Workflow -->
+        <!-- 9. Feature Workflow -->
         <section class="section" id="feature-workflow">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">9</div>
                 <h2>Szenario: Ein neues Feature entwickeln</h2>
             </div>
 
@@ -957,23 +879,15 @@
                 <div class="scenario-step-icon">📢</div>
                 <div class="scenario-step-content">
                     <h4>Agent öffnet einen PR</h4>
-                    <p>Der PR ist jetzt auf GitHub sichtbar. Title: „Add dark mode support to dashboard". Description erklärt, was gemacht wurde und warum.</p>
+                    <p>Der PR ist jetzt auf GitHub sichtbar. Titel: „Add dark mode support to dashboard". Die Beschreibung erklärt, was gemacht wurde und warum.</p>
                 </div>
             </div>
 
             <div class="scenario-step">
                 <div class="scenario-step-icon">👀</div>
                 <div class="scenario-step-content">
-                    <h4>Du reviewst</h4>
-                    <p>Du öffnest den PR auf GitHub.com, schaust dir die Changes an. Sieht alles gut aus. Du klickst auf „Approve".</p>
-                </div>
-            </div>
-
-            <div class="scenario-step">
-                <div class="scenario-step-icon">✅</div>
-                <div class="scenario-step-content">
-                    <h4>Du mergst</h4>
-                    <p>Button „Merge pull request" → Dropdown → „Squash and merge" (kleine Feature) → „Confirm merge". Fertig.</p>
+                    <h4>Du reviewst &amp; mergst</h4>
+                    <p>Du öffnest den PR, prüfst die Changes (wie in Abschnitt 6), klickst „Approve" und mergst mit „Squash and merge" (kleines Feature).</p>
                 </div>
             </div>
 
@@ -981,51 +895,17 @@
                 <div class="scenario-step-icon">🚀</div>
                 <div class="scenario-step-content">
                     <h4>Automatisch deployed</h4>
-                    <p>GitHub Pages (oder dein CI/CD) buildet automatisch und deployed. Dein Liveserver zeigt jetzt Dark Mode.</p>
+                    <p>GitHub Pages (oder dein CI/CD) buildet automatisch und deployed. Dein Live-Server zeigt jetzt Dark Mode.</p>
                 </div>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 13. Review <!-- 12. Review & Merge --> Merge -->
-        <section class="section" id="review-merge">
-            <div class="section-header">
-                <div class="section-number">18</div>
-                <h2>Deep Dive: PRs reviewen und mergen</h2>
-            </div>
-
-            <h3>Was du in einem PR checkst:</h3>
-
-            <ul style="color: var(--text); line-height: 2; font-size: 14px; margin: 12px 0 0 0;">
-                <li><strong>Die Commits</strong> – Sind die aussagekräftig beschrieben? („Add" = neu, „Fix" = Bugfix, „Update" = Verbesserung)</li>
-                <li><strong>Die Changes</strong> – Macht das inhaltlich Sinn? Sind da Fehler?</li>
-                <li><strong>Die Tests</strong> – Wenn es Tests gibt, grün sie?</li>
-                <li><strong>Die Dokumentation</strong> – Ist das, was der Agent gemacht hat, dokumentiert (in Code-Comments oder in der PR-Description)?</li>
-            </ul>
-
-            <h3 style="margin-top: 28px;">Merge-Strategie wählen (auf GitHub.com):</h3>
-
-            <p style="margin-top: 12px; font-size: 14px; color: var(--muted);">Wenn alles gut aussieht:</p>
-
-            <ol style="color: var(--text); line-height: 2; font-size: 14px; margin: 12px 0 0 0;">
-                <li>Button „Merge pull request" (grün, oben rechts)</li>
-                <li>Dropdown-Arrow → wähle eine Strategie</li>
-                <li>„Confirm merge"</li>
-            </ol>
-
-            <div class="infobox blue" style="margin-top: 20px;">
-                <strong>Was danach passiert:</strong>
-                <p style="margin: 8px 0 0 0;">Der Branch wird mit main zusammengefügt. Der Feature-Branch ist dann „merged" und wird nicht mehr gebraucht. GitHub bietet an, den Branch zu löschen – mach das immer.</p>
-            </div>
-
-            <a href="#" class="back-to-top">↑ Zurück nach oben</a>
-        </section>
-
-        <!-- 14. Hotfix Workflow -->
+        <!-- 10. Hotfix Workflow -->
         <section class="section" id="hotfix-workflow">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">10</div>
                 <h2>Notfall: Ein Hotfix in Produktion</h2>
             </div>
 
@@ -1035,7 +915,7 @@
                 <div class="scenario-step-icon">🚨</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 1: Fehler verstehen</h4>
-                    <p>Was ist kaputt? Ein Fehler-Screenshot? Einen Link zur Live-Website? Das brauchst du, um dem Agenten zu helfen.</p>
+                    <p>Was ist kaputt? Ein Fehler-Screenshot, ein Link zur Live-Website? Das brauchst du, um dem Agenten zu helfen.</p>
                 </div>
             </div>
 
@@ -1043,7 +923,7 @@
                 <div class="scenario-step-icon">🤖</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 2: Agenten instruieren</h4>
-                    <p>„Hotfix nötig: Die CSS ist kaputt, weil ... Erstelle einen Branch `hotfix/css-bug`, behebe das, und öffne einen PR nach main."</p>
+                    <p>„Hotfix nötig: Die CSS ist kaputt, weil … Erstelle einen Branch <code>hotfix/css-bug</code>, behebe das, und öffne einen PR nach main."</p>
                 </div>
             </div>
 
@@ -1051,7 +931,7 @@
                 <div class="scenario-step-icon">⚡</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 3: Schnell reviewen</h4>
-                    <p>Der Agent öffnet den PR. Du schaust schnell drauf – macht das Sinn? Ist es ein richtiger Fix oder nur ein Pflaster? Review schnell.</p>
+                    <p>Der Agent öffnet den PR. Du schaust schnell drauf – ist es ein richtiger Fix oder nur ein Pflaster?</p>
                 </div>
             </div>
 
@@ -1059,22 +939,22 @@
                 <div class="scenario-step-icon">✅</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 4: Schnell mergen</h4>
-                    <p>Merge sofort (normalerweise mit Squash & Merge). Der Deploy läuft automatisch. Live ist wieder gut.</p>
+                    <p>Merge sofort (meist Squash &amp; Merge). Der Deploy läuft automatisch. Live ist wieder gut.</p>
                 </div>
             </div>
 
             <div class="infobox yellow" style="margin-top: 20px;">
                 <strong>Wichtig bei Hotfixes:</strong>
-                <p style="margin: 8px 0 0 0;">Das ist kein Test mehr – du reviewst schnell und gründlich genug, um sicher zu sein, dass es hilft und nicht mehr kaputtmacht. Hotfixes sind immer ein bisschen stressig, aber das ist normal.</p>
+                <p style="margin: 8px 0 0 0;">Du reviewst schnell, aber gründlich genug, um sicher zu sein, dass es hilft und nichts Neues kaputtmacht. Hotfixes sind immer ein bisschen stressig – das ist normal.</p>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 15. Mehrere Projekte -->
+        <!-- 11. Mehrere Projekte -->
         <section class="section" id="mehrere-projekte">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">11</div>
                 <h2>Mehrere Projekte – mehrere Repositories</h2>
             </div>
 
@@ -1093,7 +973,7 @@
 
             <h3 style="margin-top: 28px;">Große Teams: GitHub Organisationen</h3>
 
-            <p>Wenn dein Team groß ist und viele Repos verwaltet, legt man auf GitHub eine <strong>Organisation</strong> an (z.B. <code>github.com/dein-unternehmen</code>).</p>
+            <p>Wenn dein Team groß ist und viele Repos verwaltet, legt man auf GitHub eine <strong>Organisation</strong> an (z.B. <code>github.com/dein-unternehmen</code>):</p>
 
             <ul style="color: var(--text); line-height: 2; font-size: 14px; margin: 12px 0 0 0;">
                 <li>Alle Repos unter einem Dach</li>
@@ -1105,17 +985,17 @@
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- ===== TEIL 5: TIEFGANG ===== -->
+        <!-- ===== TEIL 6: TIEFGANG ===== -->
         <div class="learning-phase">
-            <div class="phase-label">Teil 5 · Tiefgang (optional)</div>
+            <div class="phase-label">Teil 6 · Tiefgang (optional)</div>
             <h2>Wenn du mehr wissen willst</h2>
             <p>Wie Git intern funktioniert – nice to know, aber nicht nötig für den Alltag.</p>
         </div>
 
-        <!-- 16. Git intern -->
+        <!-- 12. Git intern -->
         <section class="section" id="git-intern">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">12</div>
                 <h2>Wie Git intern funktioniert</h2>
             </div>
 
@@ -1147,17 +1027,17 @@
             <p>Commits bilden einen <strong>gerichteten azyklischen Graphen</strong>. Jeder Commit zeigt auf seinen Vorgänger. Branches sind dabei nur leichtgewichtige Zeiger.</p>
 
             <div class="infobox green" style="margin-top: 20px;">
-                <strong>Das wichtigste zum Mitnehmen:</strong>
-                <p style="margin: 8px 0 0 0;">Da Commits unveränderlich sind und in einer Kette stehen, kann Git alles rekonstruieren. Kein Commit ist verloren – selbst wenn du einen Branch löschst, sind die Commits noch im Reflog 30 Tage erreichbar.</p>
+                <strong>Das Wichtigste zum Mitnehmen:</strong>
+                <p style="margin: 8px 0 0 0;">Da Commits unveränderlich sind und in einer Kette stehen, kann Git alles rekonstruieren. Kein Commit ist verloren – selbst wenn du einen Branch löschst, sind die Commits noch 30 Tage im Reflog erreichbar.</p>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
 
-        <!-- 17. Weitere Konzepte -->
+        <!-- 13. Weitere Konzepte -->
         <section class="section" id="weitere-konzepte">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">13</div>
                 <h2>Weitere Konzepte – für Fortgeschrittene</h2>
             </div>
 
@@ -1195,14 +1075,14 @@
             <p>Wie ein echtes Kundenprojekt mit Git läuft – Start bis zum Deploy.</p>
         </div>
 
-        <!-- 18. Praktisches Beispiel -->
+        <!-- 14. Praktisches Beispiel -->
         <section class="section" id="praktisches-beispiel">
             <div class="section-header">
-                <div class="section-number">18</div>
+                <div class="section-number">14</div>
                 <h2>Praxis: Kunde Bauer GmbH – Monitoring-Tool</h2>
             </div>
 
-            <p><strong>Szenario:</strong> Du sollst für Kunde Bauer GmbH ein PowerShell-Skript schreiben, das täglich Festplattenplatz prüft und den Admin alarmiert, wenn unter 10% freier Platz.</p>
+            <p><strong>Szenario:</strong> Du sollst für Kunde Bauer GmbH ein PowerShell-Skript schreiben, das täglich den Festplattenplatz prüft und den Admin alarmiert, wenn unter 10% freier Platz sind.</p>
 
             <div class="scenario-step">
                 <div class="scenario-step-icon">📁</div>
@@ -1217,7 +1097,7 @@
                 <div class="scenario-step-icon">✏️</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 2: Erstes Skript</h4>
-                    <p><strong>Was passiert:</strong> Du (oder der Agent) schreibt die Grundstruktur des PowerShell-Skripts. Es läuft lokal, macht einfache Disk-Checks.</p>
+                    <p><strong>Was passiert:</strong> Du (oder der Agent) schreibst die Grundstruktur des PowerShell-Skripts. Es läuft lokal, macht einfache Disk-Checks.</p>
                     <p><strong>Commit:</strong> „Add initial disk check script with basic logging"</p>
                     <p><strong>Nach Schritt 2:</strong> Das Skript läuft, ist im Repo dokumentiert, andere können es sehen.</p>
                 </div>
@@ -1232,15 +1112,15 @@
                         <br/>• „Add email notification function"
                         <br/>• „Test email sending in lab environment"
                     </p>
-                    <p><strong>Nach Schritt 3:</strong> Ein PR auf GitHub, warte auf dein Review.</p>
+                    <p><strong>Nach Schritt 3:</strong> Ein PR auf GitHub, wartet auf dein Review.</p>
                 </div>
             </div>
 
             <div class="scenario-step">
                 <div class="scenario-step-icon">👀</div>
                 <div class="scenario-step-content">
-                    <h4>Schritt 4: Review & Merge</h4>
-                    <p><strong>Was du tust:</strong> Du schaust den PR an, die Commits sind saubbar, die E-Mail-Funktion sieht gut aus. Du klickst „Approve" und „Squash and Merge".</p>
+                    <h4>Schritt 4: Review &amp; Merge</h4>
+                    <p><strong>Was du tust:</strong> Du schaust den PR an, die Commits sind sauber, die E-Mail-Funktion sieht gut aus. Du klickst „Approve" und „Squash and Merge".</p>
                     <p><strong>Nach Schritt 4:</strong> Die E-Mail-Funktion ist in main, automatisch deployed.</p>
                 </div>
             </div>
@@ -1260,7 +1140,7 @@
                 <div class="scenario-step-icon">📚</div>
                 <div class="scenario-step-content">
                     <h4>Schritt 6: Ein neuer Kollege kommt</h4>
-                    <p><strong>Was passiert:</strong> Nach 6 Monaten tritt ein neuer Kollege ein. Er braucht zu verstehen, was das Projekt ist. Er schaut sich nicht auf Word-Dokumente an – er schaut sich die Git-History an:</p>
+                    <p><strong>Was passiert:</strong> Nach 6 Monaten tritt ein neuer Kollege ein. Er muss verstehen, was das Projekt ist. Er schaut sich keine Word-Dokumente an – er schaut sich die Git-History an:</p>
                     <p style="font-size: 13px; margin-top: 8px; color: var(--muted);">
                         <code>a3f9c12 Fix null reference when network drive is unreachable</code><br/>
                         <code>8b2e4a1 Add email alert when disk space below 10%</code><br/>
@@ -1280,15 +1160,15 @@
 
         <!-- ===== ADVANCED ===== -->
         <div class="learning-phase">
-            <div class="phase-label">Advanced · Automation & DevOps</div>
+            <div class="phase-label">Advanced · Automation &amp; DevOps</div>
             <h2>Automatisierte Deployments mit Secrets Management</h2>
             <p>Wie man sicher automatisiert deployed – mit Azure Key Vault und GitHub Actions.</p>
         </div>
 
-        <!-- 19. Automatisierte Deployments -->
+        <!-- 15. Automatisierte Deployments -->
         <section class="section" id="automatisierte-deployments">
             <div class="section-header">
-                <div class="section-number">19</div>
+                <div class="section-number">15</div>
                 <h2>Automatisierte Deployments mit Azure Key Vault</h2>
             </div>
 
@@ -1296,91 +1176,46 @@
 
             <h3>Warum nicht einfach GitHub Secrets?</h3>
             <div class="infobox yellow">
-                <p><strong>Das Problem:</strong> GitHub Secrets sind verschlüsselt, aber zentral im GitHub-Konto. Wenn mehrere Teams/Projekte arbeiten, ist die Credential-Verwaltung schnell chaotisch. Außerdem: keine echte Rotation, keine granularen Berechtigungen.</p>
-                <p><strong>Die Lösung:</strong> <strong>Azure Key Vault</strong> — ein sicherer Tresor, den nur autorisierte Services nutzen können. Credentials werden dort verschlüsselt verwahrt und GitHub Actions holt sie <em>nur zur Runtime</em>.</p>
+                <p><strong>Das Problem:</strong> GitHub Secrets sind verschlüsselt, aber zentral im GitHub-Konto. Bei vielen Teams/Projekten wird die Credential-Verwaltung schnell chaotisch – keine echte Rotation, keine granularen Berechtigungen.</p>
+                <p style="margin-bottom: 0;"><strong>Die Lösung:</strong> <strong>Azure Key Vault</strong> — ein sicherer Tresor, den nur autorisierte Services nutzen. Credentials liegen dort verschlüsselt, GitHub Actions holt sie <em>nur zur Runtime</em>.</p>
             </div>
 
-            <h3>Setup: Schritt für Schritt</h3>
+            <h3 style="margin-top: 28px;">Der Ablauf – konzeptionell</h3>
+            <ol class="workflow-steps" style="margin-top: 16px;">
+                <li><div class="step-num">1</div>
+                    <div><strong>Service Principal anlegen</strong> – ein „Roboter-Benutzer", der sich bei Azure ohne interaktiven Login anmeldet.</div>
+                </li>
+                <li><div class="step-num">2</div>
+                    <div><strong>Key Vault anlegen</strong> und die <em>echten</em> Credentials (z.B. SharePoint-Secret) dort als Secrets ablegen.</div>
+                </li>
+                <li><div class="step-num">3</div>
+                    <div><strong>Zugriff begrenzen</strong> – der Service Principal bekommt nur <em>Read</em> auf den Vault, nicht mehr.</div>
+                </li>
+                <li><div class="step-num">4</div>
+                    <div><strong>In GitHub nur die Azure-Login-Daten</strong> als Secrets hinterlegen (Client-ID, Secret, Tenant, Subscription, Vault-Name) – <em>nicht</em> die echten SharePoint-Secrets.</div>
+                </li>
+                <li><div class="step-num">5</div>
+                    <div><strong>Die Action holt zur Runtime</strong> – sie loggt sich bei Azure ein und zieht die echten Secrets erst beim Deploy aus dem Vault.</div>
+                </li>
+            </ol>
 
-            <h4>Schritt 1: Azure Service Principal erstellen</h4>
-            <p>Ein Service Principal ist eine Art "Roboter-Benutzer", der sich bei Azure anmelden kann ohne interaktive Login-Prompts.</p>
-            <pre><code>az ad sp create-for-rbac \
-  --name "testlearn-deployer" \
-  --role "Contributor" \
-  --scopes /subscriptions/{subscription-id} \
-  --output json
-</code></pre>
-            <p><strong>Das gibt dir:</strong></p>
-            <pre><code>{
-  "clientId": "xxxxxxxx-xxxx-...",
-  "clientSecret": "***",
-  "tenantId": "yyyyyyyy-yyyy-...",
-  "subscriptionId": "zzzz..."
-}
-</code></pre>
-
-            <h4>Schritt 2: Azure Key Vault anlegen</h4>
-            <pre><code>az keyvault create \
-  --name "testlearn-kv" \
-  --resource-group "my-rg" \
-  --location "East US"
-</code></pre>
-
-            <h4>Schritt 3: Secrets in den Vault legen</h4>
-            <pre><code>az keyvault secret set \
-  --vault-name "testlearn-kv" \
-  --name "SharePointClientSecret" \
-  --value "your-actual-secret-here"
-
-az keyvault secret set \
-  --vault-name "testlearn-kv" \
-  --name "SharePointClientId" \
-  --value "your-client-id-here"
-
-az keyvault secret set \
-  --vault-name "testlearn-kv" \
-  --name "SharePointTenant" \
-  --value "yourtenant.onmicrosoft.com"
-</code></pre>
-
-            <h4>Schritt 4: Service Principal Zugriff auf Key Vault geben</h4>
-            <pre><code>az keyvault set-policy \
-  --name "testlearn-kv" \
-  --spn {clientId-des-service-principals} \
-  --secret-permissions get list
-</code></pre>
-
-            <h4>Schritt 5: GitHub Actions Secrets für Azure-Login</h4>
-            <p>Gehe zu <strong>GitHub Repo → Settings → Secrets and variables → Actions</strong> und erstelle:</p>
-            <pre><code>AZURE_CLIENT_ID = (aus Schritt 1)
-AZURE_CLIENT_SECRET = (aus Schritt 1)
-AZURE_TENANT_ID = (aus Schritt 1)
-AZURE_SUBSCRIPTION_ID = (aus Schritt 1)
-AZURE_KEYVAULT_NAME = testlearn-kv
-</code></pre>
-            <p><strong>Wichtig:</strong> Nur diese 5 Secrets in GitHub. Die echten SharePoint-Credentials bleiben im Key Vault!</p>
-
-            <h3>GitHub Actions Workflow</h3>
-            <p>Neue Datei: <code>.github/workflows/deploy.yml</code></p>
-            <pre><code>name: Deploy to SharePoint
-
+            <h3 style="margin-top: 28px;">Die GitHub Action (Kern)</h3>
+            <p>Datei: <code>.github/workflows/deploy.yml</code> – auf das Wesentliche reduziert:</p>
+            <pre><code>name: Deploy
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
-  contents: read
+  contents: read          # nur lesen, keine Schreibrechte
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Code checken
       - uses: actions/checkout@v4
 
-      # 2. Bei Azure anmelden (benutzt nur die 5 GitHub Secrets)
+      # 1. Bei Azure anmelden (nutzt nur die GitHub-Login-Secrets)
       - name: Azure Login
         uses: Azure/login@v1
         with:
@@ -1388,159 +1223,39 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # 3. Secrets aus Key Vault holen
-      - name: Get secrets from Azure Key Vault
+      # 2. Echte Secrets aus dem Key Vault holen
+      - name: Secrets aus Key Vault
         uses: Azure/get-keyvault-secrets@v1
         with:
           keyvault: ${{ secrets.AZURE_KEYVAULT_NAME }}
-          secrets: 'SharePointClientSecret,SharePointClientId,SharePointTenant'
-        id: kvSecrets
+          secrets: 'SharePointClientId,SharePointClientSecret'
+        id: kv
 
-      # 4. Dateien filtern (Whitelist)
-      - name: Filter files for deployment
-        run: |
-          mkdir -p deploy_staging
-          # Nur docs/ deployen
-          cp -r docs/* deploy_staging/ 2>/dev/null || true
-          # Nur PowerShell-Skripte deployen
-          cp scripts/Get-SystemInfo.ps1 deploy_staging/ 2>/dev/null || true
-          echo "Files ready for deployment:"
-          ls -la deploy_staging/
-
-      # 5. Deploy zu SharePoint
-      - name: Deploy to SharePoint
+      # 3. Deployen – Secrets nur als Umgebungsvariablen
+      - name: Deploy
         env:
-          SP_CLIENT_ID: ${{ steps.kvSecrets.outputs.SharePointClientId }}
-          SP_CLIENT_SECRET: ${{ steps.kvSecrets.outputs.SharePointClientSecret }}
-          SP_TENANT: ${{ steps.kvSecrets.outputs.SharePointTenant }}
-        run: |
-          # Oder Python-Script aufrufen:
-          # python3 scripts/deploy_to_sharepoint.py
-          echo "Deployment gestartet..."
-          # (hier kommt dein Deploy-Script rein)
-
-      # 6. Bei Fehler: Notification (optional)
-      - name: Notify on failure
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '⚠️ Deployment zu SharePoint fehlgeschlagen. Siehe [Actions Log](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})'
-            })
+          SP_CLIENT_ID: ${{ steps.kv.outputs.SharePointClientId }}
+          SP_CLIENT_SECRET: ${{ steps.kv.outputs.SharePointClientSecret }}
+        run: ./deploy.sh   # liest die Secrets aus den Umgebungsvariablen
 </code></pre>
+            <p style="font-size: 14px; color: var(--muted);">Das eigentliche Deploy-Skript (z.B. Python oder Bash) liest die Werte aus den Umgebungsvariablen – im Code selbst steht <strong>kein einziges Geheimnis</strong>.</p>
 
-            <h3>Python-Script für SharePoint-Upload</h3>
-            <p>Datei: <code>scripts/deploy_to_sharepoint.py</code></p>
-            <pre><code>#!/usr/bin/env python3
-import os
-import requests
-import json
-
-# Credentials aus Umgebungsvariablen (von GitHub Actions)
-client_id = os.getenv("SP_CLIENT_ID")
-client_secret = os.getenv("SP_CLIENT_SECRET")
-tenant = os.getenv("SP_TENANT")
-
-# 1. Token von Azure AD holen
-def get_access_token():
-    url = f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token"
-    payload = {
-        "client_id": client_id,
-        "client_secret": client_secret,
-        "scope": "https://graph.microsoft.com/.default",
-        "grant_type": "client_credentials"
-    }
-    response = requests.post(url, data=payload)
-    if response.status_code != 200:
-        raise Exception(f"Auth failed: {response.text}")
-    return response.json()["access_token"]
-
-# 2. Dateien zu SharePoint hochladen
-def upload_files(access_token, site_id, drive_id):
-    headers = {"Authorization": f"Bearer {access_token}"}
-
-    for file in os.listdir("deploy_staging"):
-        file_path = os.path.join("deploy_staging", file)
-
-        # Nur reguläre Dateien, keine Verzeichnisse
-        if not os.path.isfile(file_path):
-            continue
-
-        with open(file_path, "rb") as f:
-            # SharePoint REST API Endpoint
-            upload_url = (
-                f"https://graph.microsoft.com/v1.0/sites/{site_id}/"
-                f"drive/root:/{file}:/content"
-            )
-            response = requests.put(upload_url, headers=headers, data=f.read())
-
-            if response.status_code in [200, 201]:
-                print(f"✅ Uploaded: {file}")
-            else:
-                print(f"❌ Failed: {file} — {response.text}")
-
-if __name__ == "__main__":
-    try:
-        print("🔐 Authentifizierung...")
-        token = get_access_token()
-
-        print("📤 Uploading to SharePoint...")
-        # Hier: site_id und drive_id müssen du konfigurieren
-        # oder dynamisch abrufen
-        upload_files(token, "YOUR_SITE_ID", "YOUR_DRIVE_ID")
-
-        print("✅ Deployment erfolgreich!")
-    except Exception as e:
-        print(f"❌ Deployment fehlgeschlagen: {e}")
-        exit(1)
-</code></pre>
-
-            <h3>Whitelist-Konfiguration</h3>
-            <p>Datei: <code>deploy_config.yml</code> (optional, für mehr Kontrolle)</p>
-            <pre><code">deploy:
-  # Was deployt werden SOLL
-  include:
-    - "docs/**"              # Alle HTML/CSS/JS
-    - "scripts/Get-SystemInfo.ps1"
-    - "README.md"
-
-  # Was NICHT deployt werden darf (Sicherheit)
-  exclude:
-    - "**/.env"
-    - "**/*.log"
-    - "**/node_modules"
-    - "**/.git"
-    - "CLAUDE.md"
-    - ".github/**"
-</code></pre>
-
-            <h3>Sicherheits-Checkliste</h3>
+            <h3 style="margin-top: 28px;">Sicherheits-Checkliste</h3>
             <div class="infobox green">
                 <strong>Bevor du live gehst:</strong>
-                <ul style="margin: 12px 0; padding-left: 24px;">
-                    <li>✅ Service Principal hat <strong>nur Read-Zugriff</strong> auf Key Vault (nicht Admin!)</li>
-                    <li>✅ GitHub-Secrets enthalten <strong>nur Azure-Credentials</strong>, nicht die eigentlichen SharePoint-Secrets</li>
-                    <li>✅ Workflow hat <code>permissions: contents: read</code> (nur Lesen, keine Schreibzugriffe)</li>
-                    <li>✅ Agents (wie Claude) haben <strong>keinen Schreibzugriff</strong> auf <code>.github/workflows/</code></li>
-                    <li>✅ <code>deploy_config.yml</code> ist im Repo und versioniert (damit änderungen sichtbar sind)</li>
-                    <li>✅ Log-Maskierung: GitHub maskiert Secrets automatisch — aber teste es!</li>
-                    <li>✅ Branch-Protection: PRs müssen reviewed werden vor Merge</li>
+                <ul style="margin: 12px 0 0 0; padding-left: 24px; line-height: 1.8;">
+                    <li>✅ Service Principal hat <strong>nur Read-Zugriff</strong> auf den Key Vault (kein Admin)</li>
+                    <li>✅ GitHub-Secrets enthalten <strong>nur Azure-Login-Daten</strong>, nicht die echten SharePoint-Secrets</li>
+                    <li>✅ Workflow nutzt <code>permissions: contents: read</code></li>
+                    <li>✅ Agenten (wie Claude) haben <strong>keinen Schreibzugriff</strong> auf <code>.github/workflows/</code></li>
+                    <li>✅ Branch-Protection: PRs müssen vor dem Merge reviewt werden</li>
                 </ul>
             </div>
 
-            <h3>Troubleshooting</h3>
-            <p><strong>„Authentication failed"</strong><br/>
-            → Service Principal ist nicht korrekt konfiguriert. Prüfe: <code>az ad sp list --filter "displayName eq 'testlearn-deployer'"</code></p>
-
-            <p><strong>„Permission denied on Key Vault"</strong><br/>
-            → Key Vault Policy ist nicht gesetzt. Wiederhole Schritt 4.</p>
-
-            <p><strong>„Secrets sind leer in Workflow"</strong><br/>
-            → Die Azure-Login ist vor dem get-keyvault-secrets fehlgeschlagen. Schau in die Logs.</p>
+            <h3 style="margin-top: 28px;">Troubleshooting</h3>
+            <p><strong>„Authentication failed"</strong> → Service Principal falsch konfiguriert (Azure-Login schlägt fehl, bevor Secrets geholt werden).</p>
+            <p><strong>„Permission denied on Key Vault"</strong> → Die Vault-Policy für den Service Principal fehlt (Schritt 3).</p>
+            <p><strong>„Secrets sind leer im Workflow"</strong> → Das Azure-Login lief nicht durch – schau ins Actions-Log.</p>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
         </section>
