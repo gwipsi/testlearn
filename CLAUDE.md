@@ -155,6 +155,19 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 **When user types these keywords, execute the corresponding git commands and format the output exactly as specified:**
 
+#### **`fix`** — Auto-fix detected problems
+When user types "fix", scan current branch for common issues and attempt to fix them:
+
+**Auto-detect and fix:**
+- **Unpushed commits** → Run `git push origin [branch]`
+- **Merge conflicts (PR mergeable_state=dirty)** → Run `git pull origin main` then resolve conflicts with `git checkout --ours` for feature branch files, or `git checkout --theirs` for main files. Then commit and push.
+- **Branch behind main** → Run `git pull origin main` to sync
+- **Stashed changes** → Offer to pop stashes with `git stash pop`
+
+**Output:** Show what was fixed or what couldn't be auto-fixed, then run `gitstat` to show new status.
+
+---
+
 #### **`gitstat`** — Quick working tree check
 Execute: `git status`
 Output format: Show basic status (branch, changes, tracking). No explanation needed.
