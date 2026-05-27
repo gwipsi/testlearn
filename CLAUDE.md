@@ -200,3 +200,34 @@ The homepage displays "Letztes Update: [date] ([minutes ago])" so users always s
 - **Applies to all branches** → future branches created by agents work automatically without configuration
 
 **If something goes wrong:** Check `.github/workflows/update-timestamp.yml` for proper `permissions: contents: write` setting.
+
+---
+
+## Quick Commands
+
+### `repostat` / `gitstat`
+**Trigger:** User types "repostat" or "gitstat"
+
+**Action:** Display comprehensive git + GitHub status:
+- Current branch and working directory state
+- Unpushed commits, remote ahead status
+- Comparison with main branch
+- **Merge conflict detection** (real test, not just working directory)
+- Stashes, branches
+- Open pull requests
+- Summary: all synchronized ✅ or outstanding issues ⚠️
+
+**Data sources:**
+- `git fetch --quiet` (before every measurement)
+- `git status --porcelain` (working directory)
+- `git log @{u}..HEAD` (unpushed commits)
+- `git log HEAD..@{u}` (remote ahead)
+- `git log HEAD..origin/main` / `origin/main..HEAD` (vs main)
+- **`git merge --no-commit --no-ff origin/main` (ACTUAL merge test, then abort)** ⚠️ RELIABLE
+  - NOT: `git diff --diff-filter=U` (only works during active merge)
+- `git stash list` (stashed changes)
+- `git branch -r` (remote branches)
+- GitHub MCP: `mcp__github__list_pull_requests` (open PRs)
+- Time calculation: hours or days since last commit
+
+**⚠️ CRITICAL:** The `git diff --diff-filter=U` method is UNRELIABLE for detecting merge conflicts before a merge attempt. Always perform an actual dry-run merge with `--no-commit --no-ff` and then abort to detect real conflicts.
