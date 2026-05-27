@@ -171,35 +171,28 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### ✅ Timestamp Auto-Update (GitHub Actions)
+### ✅ "Letztes Update" — client-side, no committed timestamp
 
-**No manual action needed!** A GitHub Actions workflow automatically updates the timestamp whenever `/docs/` files are modified.
+The homepage shows "Letztes Update: [date] ([relative])" by fetching the date of
+the **latest commit touching `docs/`** directly from the GitHub API at page load.
 
 **How it works:**
+- `script.js` → `updateLastModifiedTime()` calls
+  `https://api.github.com/repos/gwipsi/testlearn/commits?path=docs&per_page=1`
+- It reads `commit.committer.date` of the newest commit and renders it.
+- On error / rate limit it shows "⏱ Zeitstempel nicht verfügbar" (graceful fallback).
 
-1. You push changes to **any branch** that modify files in `/docs/`
-2. GitHub Actions workflow is triggered (`update-timestamp.yml`)
-3. **Workflow automatically:**
-   - Reads current date/time in UTC
-   - Updates `lastUpdated` in `docs/data.json`
-   - Commits change as `⏱️ Auto-update: timestamp for /docs changes`
-   - Pushes the commit back to the same branch
-4. When you merge the PR to `main`, the updated timestamp comes with it
+**Why this design (important — do NOT reintroduce a committed timestamp):**
+- Previously a GitHub Action wrote `lastUpdated` into `docs/data.json` on every push.
+  That value diverged between `main` and feature branches and caused a **merge conflict
+  on the same line every single time**. See the conflict-detection notes below.
+- Nothing per-push-changing is committed anymore → **zero timestamp merge conflicts**,
+  no bot `⏱️ Auto-update` commits cluttering history, no branch-protection workarounds.
+- Tradeoff: one unauthenticated GitHub API call per page load (60/hr per IP). Fine for a
+  learning demo; covered by a fallback message.
 
-The homepage displays "Letztes Update: [date] ([minutes ago])" so users always see the latest version.
-
-**When it triggers:**
-- ✅ Any push to **any branch** that modifies files in `/docs/`
-- ✅ HTML/CSS/JS changes
-- ✅ Feature additions or bug fixes
-- ❌ NOT triggered: Changes to scripts/, CLAUDE.md, etc. (files outside `/docs/`)
-
-**Why this design:**
-- **Branch protection on main** prevents direct pushes → GitHub Actions has special permissions to work around this
-- **Timestamp updates on feature branches** → correct value arrives on main automatically when PR is merged
-- **Applies to all branches** → future branches created by agents work automatically without configuration
-
-**If something goes wrong:** Check `.github/workflows/update-timestamp.yml` for proper `permissions: contents: write` setting.
+**If the timestamp shows "nicht verfügbar":** usually API rate limiting — it recovers on
+its own. There is no Action and no `lastUpdated` field to maintain.
 
 ---
 
