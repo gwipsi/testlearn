@@ -58,6 +58,7 @@ This file documents the repository structure, conventions, and workflows for AI 
 - **2026-05-25:** Separated CSS and JavaScript from `index.html` into `styles.css` and `script.js` for better maintainability and professional structure.
 - **2026-05-25:** Renamed `/web` folder to `/docs` for GitHub Pages deployment compatibility.
 - **2026-05-25:** Deployed with GitHub Pages (public repository) instead of private alternatives due to educational/learning context.
+- **2026-05-27:** Added a shared light/dark theme toggle for the dashboard and Git tutorial pages. Theme state is stored client-side in `localStorage` under `testlearn-theme`; no server or build step is involved.
 
 ## Project Overview
 
@@ -116,26 +117,34 @@ testlearn/
 #### `index.html` (HTML Structure)
 - **Language:** German UI text throughout.
 - **Imports:** `<link rel="stylesheet" href="styles.css">` and `<script src="script.js"></script>`
+- **Theme bootstrapping:** Contains a tiny inline script in `<head>` that sets `<html data-theme="...">` before CSS loads. Keep this inline snippet in pages that support themes to avoid a flash of the wrong theme.
 - **Content:** Clean structure with header, main sections, footer.
+- **Theme toggle:** Header includes `<button id="theme-toggle">`; text, `aria-label`, and `aria-pressed` are updated by `script.js`.
 - **Story Section:** "Die Geschichte von testlearn" — demonstrates styled narrative content.
 - **Interactive Demo:** Buttons trigger JavaScript functions; output rendered in `<div id="output">`.
 
 #### `styles.css` (Styling)
 - **CSS custom properties** in `:root`:
-  - `--blue-dark: #0074C7`, `--blue-light: #1F9EFF` (primary brand colors)
-  - `--background: #f4f7fb`, `--card: #ffffff`, `--text: #172033`, `--muted: #627086`, `--border: #d8e1ee`
+  - `--blue-dark: #0078D4`, `--blue-light: #1F9EFF` (primary brand colors)
+  - `--background`, `--card`, `--text`, `--muted`, `--border`, and component-specific variables for cards, buttons, quickstart, story, and tutorial sections.
+- **Dark theme:** `[data-theme="dark"]` overrides the same variables instead of duplicating component rules.
+- **Design style:** Uses a Fluent-UI-inspired look (`Segoe UI`, Microsoft blue `#0078D4`, subtle borders, simple cards).
 - **Layout:** CSS Grid (`repeat(auto-fit, minmax(240px, 1fr))`) with a max-width of 980px.
-- **Components:** `.card`, `.button-row`, `.output`, `.story-section`, etc.
+- **Components:** `.card`, `.button-row`, `.output`, `.story-section`, `.theme-toggle`, tutorial boxes, badges, and tables.
 - **Separation benefit:** Easier to maintain, reuse styles across projects, professional structure.
 
 #### `script.js` (JavaScript Logic)
 - **Functions:**
+  - `getStoredTheme()` / `getSystemTheme()` / `getEffectiveTheme()` — resolve saved theme or OS preference.
+  - `applyTheme(theme)` — writes `data-theme` and synchronizes toggle text/accessibility state.
+  - `toggleTheme()` / `initTheme()` — persist the user's choice and react to OS theme changes while no manual choice is stored.
   - `writeOutput(lines)` — updates the output terminal area.
   - `showSystemExample()` — renders mock system-info.
   - `showGitExercise()` — renders Git workflow reminder.
   - `loadProjectData()` — fetches and displays data from `data.json` (demonstrates fetch API).
   - `clearOutput()` — resets output to `"Bereit."`.
 - **Separation benefit:** Cleaner code, professional structure, can be linted/tested separately.
+- **Theme storage contract:** Only the values `"light"` and `"dark"` are valid in `localStorage`; any other value falls back to the OS preference.
 
 #### `data.json` (Sample Data)
 - Contains project metadata, commits list, and statistics.
@@ -175,7 +184,9 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 4. **German text is canonical.** UI strings, log messages, and documentation should remain in German unless the user requests otherwise.
 5. **Do not commit log files.** The `Logs/` directory is gitignored. Never stage or commit anything from it.
 6. **PowerShell 5.1 only.** The script uses `Get-WmiObject`, which is not available in PowerShell 7+ Core cross-platform. Do not port to `Get-CimInstance` or cross-platform equivalents unless asked.
-7. **GitHub Pages deployment:** Changes to `/docs/` are automatically live. Test locally with `python -m http.server` before pushing.
+7. **GitHub Pages deployment:** Changes to `/docs/` are automatically live. Test locally from `/docs` with `python3 -m http.server 8000` (or `py -m http.server 8000` on Windows) before pushing.
+8. **Theme changes:** Add new colors as CSS custom properties in `:root` and, when needed, override them in `[data-theme="dark"]`. Do not hardcode light-only colors in component rules.
+9. **Theme persistence:** Keep the key `testlearn-theme` stable; changing it resets users' saved theme choices.
 
 ## Hosting & Deployment
 
@@ -209,6 +220,22 @@ the **latest commit touching `docs/`** directly from the GitHub API at page load
 
 **If the timestamp shows "nicht verfügbar":** usually API rate limiting — it recovers on
 its own. There is no Action and no `lastUpdated` field to maintain.
+
+### Light/Dark Theme Toggle
+
+Both `docs/index.html` and `docs/git-tutorial.html` support the same client-side theme flow.
+
+**How it works:**
+- The inline `<head>` script reads `localStorage.getItem("testlearn-theme")`.
+- If the stored value is `"light"` or `"dark"`, that value wins.
+- If nothing valid is stored, `window.matchMedia("(prefers-color-scheme: dark)")` selects the OS preference.
+- The script sets `document.documentElement.setAttribute("data-theme", theme)` before `styles.css` loads.
+- `script.js` re-applies the effective theme on `DOMContentLoaded`, wires the `#theme-toggle` button, and updates automatically when the OS preference changes and no manual theme is stored.
+
+**Operational notes:**
+- No backend, cookie, build tool, or GitHub Action is involved.
+- To reset local testing state, delete the browser's `testlearn-theme` localStorage key or use a private window.
+- When adding another themed page, copy the same head bootstrap snippet and include `<button id="theme-toggle" class="theme-toggle" ...>`.
 
 ---
 

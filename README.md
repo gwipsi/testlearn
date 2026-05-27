@@ -16,6 +16,7 @@ Du lernst hier schrittweise:
 - Pull Requests verstehen
 - PowerShell-Skripte versionieren
 - Eine Webseite mit getrennten HTML-, CSS- und JavaScript-Dateien bearbeiten
+- Den Hell-/Dunkelmodus einer statischen GitHub-Pages-Seite nachvollziehen
 
 Die strukturierten Übungen findest du in [`Aufgaben.md`](Aufgaben.md).
 
@@ -58,6 +59,15 @@ Webseite öffnen:
 Start-Process .\docs\index.html
 ```
 
+Für die komplette Browser-Demo mit `data.json` und GitHub-API-Zeitstempel ist ein lokaler Webserver hilfreicher:
+
+```powershell
+cd docs
+python3 -m http.server 8000
+```
+
+Danach im Browser `http://localhost:8000` öffnen. Unter Windows kann der Befehl je nach Installation auch `py -m http.server 8000` oder `python -m http.server 8000` heißen.
+
 ## Erste Git-Übung
 
 Ändere im Skript den Wert von `$ScriptVersion`, führe das Skript aus und erstelle danach deinen ersten Commit:
@@ -79,6 +89,17 @@ git add docs\styles.css docs\index.html
 git commit -m "Update dashboard demo"
 git push
 ```
+
+### Hell-/Dunkelmodus
+
+Das Dashboard und der Git-Leitfaden unterstützen einen Hell-/Dunkelmodus:
+
+- `docs\index.html` und `docs\git-tutorial.html` setzen beim Laden früh das Attribut `data-theme`, damit die Seite direkt im richtigen Modus startet.
+- `docs\script.js` speichert die Auswahl im Browser unter `testlearn-theme`. Ohne gespeicherte Auswahl wird `prefers-color-scheme` des Betriebssystems genutzt.
+- `docs\styles.css` enthält die Designwerte als CSS-Variablen in `:root` und überschreibt sie für `[data-theme="dark"]`.
+- Der Button `Dunkelmodus`/`Hellmodus` aktualisiert Text, `aria-label` und `aria-pressed`.
+
+Wenn der Modus nicht wie erwartet wechselt, lösche im Browser den Local-Storage-Eintrag `testlearn-theme` oder teste in einem privaten Fenster.
 
 ## Hinweis
 
