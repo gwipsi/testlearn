@@ -200,3 +200,30 @@ The homepage displays "Letztes Update: [date] ([minutes ago])" so users always s
 - **Applies to all branches** → future branches created by agents work automatically without configuration
 
 **If something goes wrong:** Check `.github/workflows/update-timestamp.yml` for proper `permissions: contents: write` setting.
+
+---
+
+## Quick Commands
+
+### `repostat` / `gitstat`
+**Trigger:** User types "repostat" or "gitstat"
+
+**Action:** Display comprehensive git + GitHub status:
+- Current branch and working directory state
+- Unpushed commits, remote ahead status
+- Comparison with main branch
+- Merge conflicts, stashes
+- Open pull requests
+- Summary: all synchronized ✅ or outstanding issues ⚠️
+
+**Data sources:**
+- `git fetch --quiet` (before every measurement)
+- `git status --porcelain` (working directory)
+- `git log @{u}..HEAD` (unpushed commits)
+- `git log HEAD..@{u}` (remote ahead)
+- `git log HEAD..origin/main` / `origin/main..HEAD` (vs main)
+- `git diff --diff-filter=U` (merge conflicts)
+- `git stash list` (stashed changes)
+- `git branch -r` (remote branches)
+- GitHub MCP: `mcp__github__list_pull_requests` (open PRs)
+- Time calculation: hours or days since last commit
