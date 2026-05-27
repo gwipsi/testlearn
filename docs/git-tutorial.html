@@ -732,15 +732,17 @@
                 <p style="margin: 8px 0 0 0;"><strong>Für Teams mit Agenten:</strong> Nutze GitHub Actions, nicht Git Hooks. Actions funktionieren überall – lokal, in Remote-Sandboxen, auf GitHub.com, überall.</p>
             </div>
 
-            <h3 style="margin-top: 28px;">Praktisches Beispiel: Timestamp-Automation</h3>
+            <h3 style="margin-top: 28px;">Praktisches Beispiel: Dynamische Daten mit Client-Side Fetching</h3>
 
             <div class="praxis-box">
                 <span class="praxis-label">🔧 In diesem Projekt</span>
-                <p style="margin: 0; margin-bottom: 8px;"><strong>Das Problem:</strong> Nach jedem Merge soll der Timestamp in <code>data.json</code> aktualisiert werden, damit die Website sagt „Letztes Update: vor 2 Sekunden" statt „vor 3 Tagen".</p>
+                <p style="margin: 0; margin-bottom: 8px;"><strong>Das Problem:</strong> Nach jedem Merge soll die Website zeigen „Letztes Update: vor 2 Sekunden" statt „vor 3 Tagen".</p>
 
                 <p style="margin: 8px 0;"><strong>Mit Git Hook:</strong> ❌ Funktioniert nur, wenn du lokal commitest. Wenn der Agent pusht oder du auf GitHub.com merkst, passiert nichts.</p>
 
-                <p style="margin: 8px 0;"><strong>Mit GitHub Action:</strong> ✅ Workflow in <code>.github/workflows/update-timestamp.yml</code> triggert bei jedem Push zu <code>/docs/</code>. Timestamp wird automatisch aktualisiert. Überall.</p>
+                <p style="margin: 8px 0;"><strong>Mit GitHub Action:</strong> ⚠️ Ein Workflow würde das zwar tun, führt aber zu Merge-Konflikten, wenn Git-Hooks oder die Action unterschiedliche Werte schreiben.</p>
+
+                <p style="margin: 8px 0;"><strong>Bessere Lösung – Client-Side Fetch:</strong> ✅ Ein JavaScript-Skript im Browser fetcht die neueste Commit-Zeit direkt von der GitHub API (<code>GET /repos/gwipsi/testlearn/commits?path=docs&per_page=1</code>) und zeigt diese an. Keine committed Werte, keine Konflikte. Das Skript aktualisiert die Anzeige automatisch beim Laden der Seite – sofort, immer aktuell, zuverlässig.</p>
             </div>
 
             <a href="#" class="back-to-top">↑ Zurück nach oben</a>
@@ -873,6 +875,21 @@
                     <li>✅ Einfache Merges handhaben</li>
                     <li>❌ Nicht geeignet für komplexe Merge-Konflikte</li>
                 </ul>
+            </div>
+
+            <div class="tool-card" style="margin-bottom: 20px;">
+                <div class="tool-badge badge-einsteiger">Professionelle Alternative</div>
+                <h3 style="margin-top: 0;">Fork (Desktop-App)</h3>
+                <p>Ein moderner, mächtiger Git-Client der Profi-Workflows unterstützt:</p>
+                <ul style="color: var(--muted); font-size: 14px; line-height: 1.8; margin: 8px 0 0 0;">
+                    <li>✅ <strong>Rebase &amp; Squash:</strong> Visuell und einfach, im Gegensatz zu Terminal-Befehlen</li>
+                    <li>✅ <strong>Advanced Merge:</strong> Komplexe Konflikte mit kontext-bewusstem Resolver</li>
+                    <li>✅ <strong>Patch-Staging:</strong> Einzelne Zeilen commiten, nicht ganze Dateien</li>
+                    <li>✅ <strong>Interactive Rebase:</strong> Commits visuell umordnen, squashen, editieren</li>
+                    <li>✅ <strong>Code Review:</strong> Inline-Kommentare, Diffs im Detail</li>
+                    <li>💰 <strong>Einmalige Lizenz (~50 EUR):</strong> Unbegrenzte Nutzung, kein Abo. Wert: Effizientere Workflows, weniger Terminal-Fehler, schnellere Merges</li>
+                </ul>
+                <p style="margin: 12px 0 0 0; font-size: 13px; color: var(--muted);"><strong>Vergleich mit GitHub Desktop:</strong> GitHub Desktop ist kostenlos, aber sehr einfach. Fork kostet einmal, bietet aber Git-Power für Teams, die mehr brauchen als Branch-Wechsel und einfache Commits. Besonders für Rebase-Workflows und komplexe Konflikte ist Fork überlegen.</p>
             </div>
 
             <div class="tool-card" style="margin-bottom: 20px;">
