@@ -58,6 +58,16 @@ Webseite öffnen:
 Start-Process .\docs\index.html
 ```
 
+## Dashboard-Hinweise
+
+Die Webseite liegt im Ordner `docs`, weil GitHub Pages diesen Ordner direkt veröffentlicht. HTML, CSS und JavaScript sind getrennt:
+
+- `docs\index.html` enthält die sichtbare Struktur.
+- `docs\styles.css` enthält Farben, Layout und den Hell-/Dunkelmodus.
+- `docs\script.js` enthält die Button-Logik, den Datenabruf aus `data.json` und die Theme-Umschaltung.
+
+Der Theme-Schalter oben rechts nutzt zunächst die Systemeinstellung (`prefers-color-scheme`). Sobald du ihn anklickst, wird deine Auswahl als `testlearn-theme` im Browser gespeichert.
+
 ## Erste Git-Übung
 
 Ändere im Skript den Wert von `$ScriptVersion`, führe das Skript aus und erstelle danach deinen ersten Commit:

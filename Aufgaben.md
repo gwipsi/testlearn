@@ -65,32 +65,34 @@ Baue eine kleine falsche Variable ein, fuehre das Skript aus und beobachte die F
 
 Danach den Fehler korrigieren und committen.
 
-## Aufgabe 7: HTML-Demo oeffnen
+## Aufgabe 7: HTML-Demo öffnen
 
-Oeffne die standalone HTML-Datei im Browser:
+Öffne die standalone HTML-Datei im Browser:
 
 ```powershell
-Start-Process .\web\index.html
+Start-Process .\docs\index.html
 ```
 
-Klicke die Buttons in der Seite an und pruefe, wie die Ausgabe durch Inline-JavaScript veraendert wird.
+Klicke die Buttons in der Seite an und prüfe, wie die Ausgabe durch `docs\script.js` verändert wird.
 
-## Aufgabe 8: HTML sichtbar aendern
+Teste auch den Schalter oben rechts: Er wechselt zwischen Hell- und Dunkelmodus. Ohne gespeicherte Auswahl folgt die Seite der Systemeinstellung des Browsers.
 
-Aendere in `web\index.html` im Bereich `:root` den Wert von `--blue-dark` oder passe einen Kartentext an.
+## Aufgabe 8: Dashboard sichtbar ändern
+
+Ändere in `docs\styles.css` im Bereich `:root` den Wert von `--blue-dark` oder passe einen Kartentext in `docs\index.html` an.
 
 Danach:
 
 ```powershell
 git status
-git add web\index.html
+git add docs\styles.css docs\index.html
 git commit -m "Change dashboard demo"
 git push
 ```
 
 ## Aufgabe 9: Sinnvolle Trennung diskutieren
 
-Die HTML-Datei nutzt absichtlich Inline-CSS und Inline-JavaScript. Notiere fuer dich, ab wann du CSS und JavaScript in eigene Dateien auslagern wuerdest.
+HTML, CSS und JavaScript liegen absichtlich in getrennten Dateien. Notiere für dich, warum diese Trennung Pull Requests leichter lesbar macht und ab wann sie in größeren Projekten besonders wichtig wird.
 
 ## Kritischer Hinweis
 

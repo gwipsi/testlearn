@@ -58,6 +58,7 @@ This file documents the repository structure, conventions, and workflows for AI 
 - **2026-05-25:** Separated CSS and JavaScript from `index.html` into `styles.css` and `script.js` for better maintainability and professional structure.
 - **2026-05-25:** Renamed `/web` folder to `/docs` for GitHub Pages deployment compatibility.
 - **2026-05-25:** Deployed with GitHub Pages (public repository) instead of private alternatives due to educational/learning context.
+- **2026-05-27:** Added a dashboard theme toggle with Fluent UI-inspired light/dark color tokens, system-theme detection, persisted browser choice, and accessible sun/moon icon button.
 
 ## Project Overview
 
@@ -117,25 +118,33 @@ testlearn/
 - **Language:** German UI text throughout.
 - **Imports:** `<link rel="stylesheet" href="styles.css">` and `<script src="script.js"></script>`
 - **Content:** Clean structure with header, main sections, footer.
+- **Theme bootstrap:** A small inline `<script>` in `<head>` sets `data-theme` before CSS loads. This prevents a light/dark flash before `script.js` runs.
+- **Theme toggle:** Header button `#theme-toggle` is icon-only; accessible text is maintained through `aria-label`, `aria-pressed`, and `title` in `script.js`.
 - **Story Section:** "Die Geschichte von testlearn" — demonstrates styled narrative content.
 - **Interactive Demo:** Buttons trigger JavaScript functions; output rendered in `<div id="output">`.
 
 #### `styles.css` (Styling)
 - **CSS custom properties** in `:root`:
-  - `--blue-dark: #0074C7`, `--blue-light: #1F9EFF` (primary brand colors)
-  - `--background: #f4f7fb`, `--card: #ffffff`, `--text: #172033`, `--muted: #627086`, `--border: #d8e1ee`
+  - `--blue-dark: #0078D4`, `--blue-light: #1F9EFF` (primary Fluent UI-inspired brand colors)
+  - `--background: #F3F2F1`, `--card: #FFFFFF`, `--text: #323130`, `--muted: #666666`, `--border: #E1DFDD`
+- **Dark mode:** `[data-theme="dark"]` overrides the same tokens for dark surfaces, borders, buttons, badges, tutorial boxes, and the theme toggle.
 - **Layout:** CSS Grid (`repeat(auto-fit, minmax(240px, 1fr))`) with a max-width of 980px.
-- **Components:** `.card`, `.button-row`, `.output`, `.story-section`, etc.
+- **Components:** `.card`, `.button-row`, `.output`, `.story-section`, `.theme-toggle`, etc.
 - **Separation benefit:** Easier to maintain, reuse styles across projects, professional structure.
 
 #### `script.js` (JavaScript Logic)
 - **Functions:**
+  - `initTheme()` — applies the effective theme and wires the header toggle.
+  - `getStoredTheme()` / `getSystemTheme()` / `getEffectiveTheme()` — choose between `localStorage` and `prefers-color-scheme`.
+  - `applyTheme(theme)` — updates `data-theme`, ARIA state, title, and the sun/moon SVG icon.
+  - `toggleTheme()` — switches between light and dark and persists the choice as `testlearn-theme`.
   - `writeOutput(lines)` — updates the output terminal area.
   - `showSystemExample()` — renders mock system-info.
   - `showGitExercise()` — renders Git workflow reminder.
   - `loadProjectData()` — fetches and displays data from `data.json` (demonstrates fetch API).
   - `clearOutput()` — resets output to `"Bereit."`.
 - **Separation benefit:** Cleaner code, professional structure, can be linted/tested separately.
+- **Theme constraint:** Keep the inline head bootstrap in sync with `script.js` if the storage key or system-theme logic changes.
 
 #### `data.json` (Sample Data)
 - Contains project metadata, commits list, and statistics.
