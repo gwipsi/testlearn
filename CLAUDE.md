@@ -19,6 +19,26 @@ This file documents the repository structure, conventions, and workflows for AI 
 - **Vision Analysis:** Only on explicit request. Do NOT automatically analyze images with Claude's vision capabilities (expensive in tokens).
 - **Token Efficiency:** Avoid unnecessary image processing. Trust code correctness for logic changes.
 
+### AI Assistant Workflow Rules
+
+**IMPORTANT: Always follow this workflow for code changes:**
+
+1. **Create feature branch** or work on assigned branch (e.g., `claude/demo-headline-colors-NuUZE`)
+2. **Make changes** and commit with clear messages
+3. **Push to feature branch** (`git push -u origin <branch-name>`)
+4. **Create PR to main** using `mcp__github__create_pull_request` — never push directly to main
+5. **Let user merge** the PR (via web interface or git app)
+
+**Why:** 
+- `main` is branch-protected (requires PR reviews)
+- AI assistants must respect this protection
+- User merges the PR, maintaining control over what lands on main
+
+**Common mistake to avoid:**
+- ❌ Push changes directly to `main` without PR
+- ❌ Forget to create PR after pushing to feature branch
+- ✅ Always create PR, always let user merge
+
 ### Decision Log
 
 - **2026-05-25:** Separated CSS and JavaScript from `index.html` into `styles.css` and `script.js` for better maintainability and professional structure.
@@ -151,36 +171,32 @@ There are no automated tests, CI pipelines, linters, or formatters configured. T
 
 ## Maintenance Tasks
 
-### ✅ Timestamp Auto-Update (Git Hook)
+### ✅ Timestamp Auto-Update (GitHub Actions)
 
-**No manual action needed!** A Git Pre-commit Hook automatically updates the timestamp whenever you commit changes to `/docs/`.
+**No manual action needed!** A GitHub Actions workflow automatically updates the timestamp whenever `/docs/` files are modified.
 
 **How it works:**
 
-1. You make changes to HTML/CSS/JS in `/docs/`
-2. You run `git commit -m "Your message"`
-3. **Hook automatically:**
-   - Updates `lastUpdated` in `data.json` with current UTC time
-   - Adds the updated file to your commit
-   - Shows: `✅ Timestamp auto-updated: 2026-05-25T08:07:30Z`
-4. Commit succeeds with both your changes AND the timestamp update
+1. You push changes to **any branch** that modify files in `/docs/`
+2. GitHub Actions workflow is triggered (`update-timestamp.yml`)
+3. **Workflow automatically:**
+   - Reads current date/time in UTC
+   - Updates `lastUpdated` in `docs/data.json`
+   - Commits change as `⏱️ Auto-update: timestamp for /docs changes`
+   - Pushes the commit back to the same branch
+4. When you merge the PR to `main`, the updated timestamp comes with it
 
 The homepage displays "Letztes Update: [date] ([minutes ago])" so users always see the latest version.
 
-**Example commit flow:**
-```bash
-$ git add docs/index.html
-$ git commit -m "Fix button styling"
-
-✅ Timestamp auto-updated: 2026-05-25T08:07:30Z
-[main abc1234] Fix button styling
- 2 files changed, 3 insertions(+), 1 deletion(-)
-```
-
 **When it triggers:**
-- ✅ Any commit that changes files in `/docs/`
+- ✅ Any push to **any branch** that modifies files in `/docs/`
 - ✅ HTML/CSS/JS changes
 - ✅ Feature additions or bug fixes
-- ❌ NOT needed: Changes to scripts/, CLAUDE.md, etc. (files outside `/docs/`)
+- ❌ NOT triggered: Changes to scripts/, CLAUDE.md, etc. (files outside `/docs/`)
 
-**If something goes wrong:** The hook will show an error. Just run the commit again.
+**Why this design:**
+- **Branch protection on main** prevents direct pushes → GitHub Actions has special permissions to work around this
+- **Timestamp updates on feature branches** → correct value arrives on main automatically when PR is merged
+- **Applies to all branches** → future branches created by agents work automatically without configuration
+
+**If something goes wrong:** Check `.github/workflows/update-timestamp.yml` for proper `permissions: contents: write` setting.
