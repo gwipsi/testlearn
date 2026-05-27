@@ -2,6 +2,8 @@ name: Update Timestamp
 
 on:
   push:
+    branches-ignore:
+      - main
     paths:
       - 'docs/**'
 
