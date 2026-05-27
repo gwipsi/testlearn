@@ -239,6 +239,21 @@ of trust. **NEVER report "no conflicts" based on a local test against local HEAD
 - Reusing one long-lived branch makes histories cross (large "N ahead / N behind").
   **Prefer fresh, short-lived branches per change**; delete the branch after its PR merges.
 
+**⚠️ Squash-Merge „Phantom-Commits" — do NOT panic about commits „not in main":**
+After a PR is **squash-merged**, the original feature-branch commits stay on the branch
+and still appear as „not in main" (`git log origin/main..HEAD` lists them; gitstat shows
+„N voraus"). That is EXPECTED and harmless: squash creates a *new* commit on main, so the
+originals are not ancestors of main even though their **content is already merged**.
+- **Truth check (content, not commits):** `git diff origin/main HEAD --stat`.
+  - Empty output → branch == main; those commits are phantoms (already merged). Safe to discard.
+  - Non-empty → there is real, unmerged work; do NOT reset.
+- **Why it matters:** if you keep building on such a branch, the next PR's merge-base is the
+  *pre-squash* commit, so GitHub re-shows the already-merged diff (the „histories cross" noise).
+- **Clean fix after a squash-merge:** once `git diff origin/main HEAD` is empty, realign the
+  branch and continue from there:
+  `git reset --hard origin/main` then `git push --force-with-lease origin <branch>`.
+  (Force-push is safe here precisely because the overwritten content already lives in main.)
+
 **Other data sources:** `git status --porcelain` (workdir), `git log @{u}..HEAD`
 (unpushed), `git log HEAD..@{u}` (remote ahead), `git rev-list --count origin/main...HEAD`
 (vs main), `git stash list`, `git branch -r`, `mcp__github__list_pull_requests` (open PRs).
