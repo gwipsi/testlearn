@@ -265,8 +265,6 @@ YYYY-MM-DD HH:MM  (vor Xm/Xh)
 [hash]  [message]
 
 Fazit: [Status summary]
-────────────────────────────────────────
-Trigger: repostat | gitstat
 ```
 
 **Fazit Format (Multi-line when problems exist):**
